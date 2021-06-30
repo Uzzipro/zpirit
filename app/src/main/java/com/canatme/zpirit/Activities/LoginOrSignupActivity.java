@@ -70,6 +70,25 @@ public class LoginOrSignupActivity extends AppCompatActivity {
     private void insertLoginFragment() {
         LoginFragment loginFragment = new LoginFragment();
         final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+
+
+
+
+
+
+
+        transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
+
+
+
+
+
+
+
+
+
+
         transaction.replace(R.id.flLoginSignup, loginFragment);
         transaction.addToBackStack(Constants.LOGIN_FRAGMENT);
         transaction.commit();
@@ -77,6 +96,15 @@ public class LoginOrSignupActivity extends AppCompatActivity {
     private void insertSignupFragment() {
         SignupFragment signupFragment = new SignupFragment();
         final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+
+
+
+        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
+
+
+
+
         transaction.replace(R.id.flLoginSignup, signupFragment);
         transaction.addToBackStack(Constants.SIGNUP_FRAGMENT);
         transaction.commit();
