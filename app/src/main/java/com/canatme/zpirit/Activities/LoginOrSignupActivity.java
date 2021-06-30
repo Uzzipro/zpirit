@@ -41,13 +41,8 @@ public class LoginOrSignupActivity extends AppCompatActivity {
         flLoginSignup = findViewById(R.id.flLoginSignup);
 
         /*Default chosen should be login*/
-        vLogin.setVisibility(View.VISIBLE);
-        vSignup.setVisibility(View.GONE);
-/*        Window window = LoginOrSignupActivity.this.getWindow();
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(ContextCompat.getColor(LoginOrSignupActivity.this, R.color.white));*/
+        loginClick();
+        /*                              */
 
         llLogin.setOnClickListener(view -> loginClick());
         llSignup.setOnClickListener(view -> signupClick());
@@ -59,12 +54,16 @@ public class LoginOrSignupActivity extends AppCompatActivity {
         vLogin.setVisibility(View.VISIBLE);
         vSignup.setVisibility(View.GONE);
         insertLoginFragment();
+        vSignup.animate().alpha(0.0f);
+        vLogin.animate().alpha(1.0f);
     }
 
     private void signupClick()
     {
         vLogin.setVisibility(View.GONE);
         vSignup.setVisibility(View.VISIBLE);
+        vSignup.animate().alpha(1.0f);
+        vLogin.animate().alpha(0.0f);
         insertSignupFragment();
     }
 
@@ -74,14 +73,6 @@ public class LoginOrSignupActivity extends AppCompatActivity {
         transaction.replace(R.id.flLoginSignup, loginFragment);
         transaction.addToBackStack(Constants.LOGIN_FRAGMENT);
         transaction.commit();
-//
-//        FragmentTransaction transaction = this.getSupportFragmentManager().beginTransaction();
-//        transaction.replace(R.id.flLoginSignup, loginFragment, Constants
-//                .LOGIN_FRAGMENT).commit();
-//
-//
-//
-
     }
     private void insertSignupFragment() {
         SignupFragment signupFragment = new SignupFragment();
