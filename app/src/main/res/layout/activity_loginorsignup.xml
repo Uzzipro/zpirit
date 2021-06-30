@@ -6,26 +6,96 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".Activities.LoginOrSignupActivity">
+
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
         android:id="@+id/llRoundTop"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_height="200dp"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
         android:background="@drawable/loginsignuptopround"
-        android:elevation="20dp"
-        android:orientation="vertical">
+        android:elevation="@dimen/_8_dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="20dp"
+            android:padding="@dimen/_40_dp"
+            app:srcCompat="@drawable/ic_logozpirit_outlinesfortext" />
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/llButtonholder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:fontFamily="@font/sfproroundedsemibold"
+                    android:gravity="center"
+                    android:text="@string/login"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_23_sp" />
+
+                <View
+                    android:id="@+id/vLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginHorizontal="35dp"
+                    android:background="@drawable/tablayoutbottomstripbg" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llSignup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvSignup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:fontFamily="@font/sfproroundedsemibold"
+                    android:gravity="center"
+                    android:text="@string/sign_up"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_23_sp" />
+
+                <View
+                    android:id="@+id/vSignup"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginHorizontal="35dp"
+                    android:background="@drawable/tablayoutbottomstripbg"
+                    android:visibility="gone" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:textSize="20sp"
-        android:fontFamily="@font/sfproroundedbold"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+    <FrameLayout
+        android:id="@+id/flLoginSignup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/llRoundTop"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
