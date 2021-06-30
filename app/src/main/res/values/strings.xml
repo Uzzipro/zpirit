@@ -9,4 +9,6 @@
     <string name="first_name">First name</string>
     <string name="last_name">Last name</string>
     <string name="confirm_password">Confirm password</string>
+    <string name="loading">Loading. . . .</string>
+
 </resources>
