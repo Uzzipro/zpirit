@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bggrey"
+    tools:context=".Fragments.SignupFragment">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp"
+                android:paddingTop="50dp">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/llFirstName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvFirstName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sfproroundedsemibold"
+                        android:text="@string/first_name"
+                        android:textColor="@color/grey"
+                        android:textSize="16dp" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/etFirstName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="30dp"
+                        android:backgroundTint="@color/black"
+                        android:fontFamily="@font/sfproroundedsemibold"
+                        android:inputType="textPersonName"
+                        android:maxLines="1"
+                        android:textColor="@color/black" />
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/llLastName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvLastName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sfproroundedsemibold"
+                        android:text="@string/last_name"
+                        android:textColor="@color/grey"
+                        android:textSize="16dp" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/etLastName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="30dp"
+                        android:backgroundTint="@color/black"
+                        android:fontFamily="@font/sfproroundedsemibold"
+                        android:inputType="textPersonName"
+                        android:maxLines="1"
+                        android:textColor="@color/black" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/llEmailAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvEmailAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sfproroundedsemibold"
+                        android:text="@string/email_address"
+                        android:textColor="@color/grey"
+                        android:textSize="16dp" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/etEmailAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="30dp"
+                        android:backgroundTint="@color/black"
+                        android:fontFamily="@font/sfproroundedsemibold"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1"
+                        android:textColor="@color/black" />
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/llPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvPassword"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sfproroundedsemibold"
+                            android:text="@string/password"
+                            android:textColor="@color/grey"
+                            android:textSize="16dp" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/etPassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="30dp"
+                            android:backgroundTint="@color/black"
+                            android:fontFamily="@font/sfproroundedsemibold"
+                            android:inputType="textPassword"
+                            android:maxLines="1"
+                            android:textColor="@color/black" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/llConfirmPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvConfirmPasswrd"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sfproroundedsemibold"
+                            android:text="@string/confirm_password"
+                            android:textColor="@color/grey"
+                            android:textSize="16dp" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/etConfirmPassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="30dp"
+                            android:backgroundTint="@color/black"
+                            android:fontFamily="@font/sfproroundedsemibold"
+                            android:inputType="textPassword"
+                            android:maxLines="1"
+                            android:textColor="@color/black" />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Password does not match!"
+                            android:fontFamily="@font/sfproroundedsemibold"
+                            android:textColor="@color/orange"
+                            android:id="@+id/tvPasswordMatch"/>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llbtLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:layout_marginHorizontal="50dp"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical">
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/login"
+                    android:textSize="15sp"
+                    android:textAllCaps="false"
+                    android:fontFamily="@font/sfproroundedsemibold"
+                    android:textColor="@color/white"
+                    android:background="@drawable/btbg"
+                    android:id="@+id/btLogin"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </ScrollView>
+
+</FrameLayout>

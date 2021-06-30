@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "823461347849",
+    "project_id": "zpirit-faee9",
+    "storage_bucket": "zpirit-faee9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:823461347849:android:7193c7f50a6ea1cb786ed8",
+        "android_client_info": {
+          "package_name": "com.canatme.zpirit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "823461347849-fs1746oerhrtgehl2vvm4cc3nmvtjfjd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbEp9Jgho3LHs2tFUUVVnZj0Ld6VM349w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "823461347849-fs1746oerhrtgehl2vvm4cc3nmvtjfjd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
