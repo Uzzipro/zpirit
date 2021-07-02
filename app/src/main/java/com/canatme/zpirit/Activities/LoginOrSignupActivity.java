@@ -79,7 +79,6 @@ public class LoginOrSignupActivity extends AppCompatActivity {
             animation_view.cancelAnimation();
             loadingDialog.dismiss();
         });
-
     }
 
     private void loginClick()
@@ -91,7 +90,7 @@ public class LoginOrSignupActivity extends AppCompatActivity {
         insertLoginFragment();
         llLogin.setOnClickListener(null);
         llSignup.setOnClickListener(view -> signupClick());
-        loadingScreen();
+//        loadingScreen();
 
     }
 
