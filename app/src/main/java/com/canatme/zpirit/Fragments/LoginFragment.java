@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.canatme.zpirit.Activities.MainActivity;
 import com.canatme.zpirit.R;
 
 /**
@@ -88,8 +89,8 @@ public class LoginFragment extends Fragment {
 
         if(stEmailAddress.equals("ujjwal6669") || stPassword.equals("ujjwal6669"))
         {
-//            Intent i = new Intent(getActivity(), Home.class);
-//            getActivity().startActivity(i);
+            Intent i = new Intent(getActivity(), MainActivity.class);
+            getActivity().startActivity(i);
         }
         else
         {
