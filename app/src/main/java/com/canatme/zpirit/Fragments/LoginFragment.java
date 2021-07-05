@@ -1,5 +1,6 @@
 package com.canatme.zpirit.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +8,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.canatme.zpirit.R;
 
@@ -16,6 +20,10 @@ import com.canatme.zpirit.R;
  * create an instance of this fragment.
  */
 public class LoginFragment extends Fragment {
+    private EditText etEmailAddress, etPassword;
+    private Button btLogin;
+
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -61,6 +69,32 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false);
+         View v = inflater.inflate(R.layout.fragment_login, container, false);
+
+         etEmailAddress = v.findViewById(R.id.etEmailAddress);
+         etPassword = v.findViewById(R.id.etPassword);
+         btLogin = v.findViewById(R.id.btLogin);
+         btLogin.setOnClickListener(view -> checkCredentials());
+
+        return v;
+    }
+
+    private void checkCredentials()
+    {
+        String stEmailAddress, stPassword;
+
+        stEmailAddress = etEmailAddress.getText().toString().trim();
+        stPassword = etPassword.getText().toString().trim();
+
+        if(stEmailAddress.equals("ujjwal6669") || stPassword.equals("ujjwal6669"))
+        {
+//            Intent i = new Intent(getActivity(), Home.class);
+//            getActivity().startActivity(i);
+        }
+        else
+        {
+            Toast.makeText(getActivity(), "Please enter correct credentials", Toast.LENGTH_LONG).show();
+        }
+
     }
 }
