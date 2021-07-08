@@ -11,5 +11,7 @@
     <color name="grey">#9E9D9D</color>
     <color name="icongrey">#807E7E</color>
     <color name="bggrey">#FAFAFA</color>
+    <color name="lightGrey">#CCCCCC</color>
+
 
 </resources>

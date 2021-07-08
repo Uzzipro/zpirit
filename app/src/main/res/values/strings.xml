@@ -21,5 +21,7 @@
 
     <string name="drinks">Drinks</string>
     <string name="snacks">Snacks</string>
+    <string name="select_drink_type">Select drink type</string>
+    <string name="add_to_cart">Add to cart</string>
 
 </resources>
