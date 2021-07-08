@@ -1,11 +1,12 @@
 package com.canatme.zpirit.Fragments.ui.home;
 
-import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -29,11 +30,13 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 
+    private static final String TAG = "HomeFragment";
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
     private LinearLayoutCompat llDrinks, llSnacks;
     private TextView tvDrinks, tvSnacks;
     private View vDrinks, vSnacks;
+    private LinearLayoutCompat llProductNotFound, llRv;
     private Spinner spinnerDrinkType;
     /*Adapter components, lists and adapters*/
     private List<ProductDto> listProduct;
@@ -52,6 +55,8 @@ public class HomeFragment extends Fragment {
         /*Linear layouts*/
         llDrinks = binding.llDrinks;
         llSnacks = binding.llSnacks;
+        llProductNotFound = binding.llProductNotFound;
+        llRv = binding.llRv;
         /**/
 
         /*Text Views*/
@@ -83,7 +88,7 @@ public class HomeFragment extends Fragment {
         int numberOfColumns = 2;
         rvProduct.setLayoutManager(new GridLayoutManager(getActivity(), numberOfColumns));
         rvProduct.setAdapter(adapter);
-        getProducts();
+        getProducts("all");
 
         /**/
 
@@ -101,8 +106,7 @@ public class HomeFragment extends Fragment {
     }
 
 
-    private void getProducts()
-    {
+    private void getProducts(String itemType) {
         String[] productID = {"pd1", "pd2", "pd3", "pd4"};
         String[] productImg = {"https://i.ibb.co/sKrh6xz/brocode.png", "https://i.ibb.co/1s75D5L/allseasonspng.png", "https://i.ibb.co/TbZsDtM/absolut.png", "https://i.ibb.co/mC4Dxss/oldmonk.png"};
         String[] productType = {"Beer", "Whiskey", "Vodka", "Rum"};
@@ -110,36 +114,83 @@ public class HomeFragment extends Fragment {
         String[] productMeasurement = {"250ml", "750ml", "700ml", "300ml"};
         String[] productPrice = {"120", "700", "1200", "400"};
         String[] productInfo = {getResources().getString(R.string.product_info_testtext), getResources().getString(R.string.product_info_testtext), getResources().getString(R.string.product_info_testtext), getResources().getString(R.string.product_info_testtext)};
+        listProduct.clear();
 
-        for(int i = 0; i<productID.length; i++)
+        if (itemType.equalsIgnoreCase("all")) {
+            llRv.setVisibility(View.VISIBLE);
+            llProductNotFound.setVisibility(View.GONE);
+            for (int i = 0; i < productID.length; i++) {
+                ProductDto productDto = new ProductDto();
+                productDto.setProductID(productID[i]);
+                productDto.setProductType(productType[i]);
+                productDto.setProductImg(productImg[i]);
+                productDto.setProductName(productName[i]);
+                productDto.setProductMeasurement(productMeasurement[i]);
+                productDto.setProductPrice(productPrice[i]);
+                productDto.setProductInfo(productInfo[i]);
+                listProduct.add(productDto);
+                adapter.notifyDataSetChanged();
+            }
+        }
+
+        if(itemType.equalsIgnoreCase("all") && itemType.equalsIgnoreCase("Select Drink type"))
         {
-            ProductDto productDto = new ProductDto();
-            productDto.setProductID(productID[i]);
-            productDto.setProductType(productType[i]);
-            productDto.setProductImg(productImg[i]);
-            productDto.setProductName(productName[i]);
-            productDto.setProductMeasurement(productMeasurement[i]);
-            productDto.setProductPrice(productPrice[i]);
-            productDto.setProductInfo(productInfo[i]);
-            listProduct.add(productDto);
-            adapter.notifyDataSetChanged();
+
+        }
+        else
+            {
+            llRv.setVisibility(View.VISIBLE);
+            llProductNotFound.setVisibility(View.GONE);
+            for (int i = 0; i < productID.length; i++) {
+                if (productType[i].equalsIgnoreCase(itemType)) {
+                    ProductDto productDto = new ProductDto();
+                    productDto.setProductID(productID[i]);
+                    productDto.setProductType(productType[i]);
+                    productDto.setProductImg(productImg[i]);
+                    productDto.setProductName(productName[i]);
+                    productDto.setProductMeasurement(productMeasurement[i]);
+                    productDto.setProductPrice(productPrice[i]);
+                    productDto.setProductInfo(productInfo[i]);
+                    listProduct.add(productDto);
+                }
+                if (listProduct.size() == 0) {
+                    llRv.setVisibility(View.GONE);
+                    llProductNotFound.setVisibility(View.VISIBLE);
+                } else {
+                    llRv.setVisibility(View.VISIBLE);
+                    llProductNotFound.setVisibility(View.GONE);
+                }
+                adapter.notifyDataSetChanged();
+            }
+
         }
     }
 
-    private void setSpinner()
-    {
-        String[] arraySpinner = new String[] {
+    private void setSpinner() {
+        String[] arraySpinner = new String[]{
                 "Select Drink type", "Whiskey", "Beer", "Breezer", "Vodka", "Rum", "Gin", "Wine", "Desi"
 
         };
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_item, arraySpinner);
         adapter.setDropDownViewResource(R.layout.spinner_item);
-
         spinnerDrinkType.setAdapter(adapter);
+
+        spinnerDrinkType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.e(TAG, "onItemSelected: " + spinnerDrinkType.getSelectedItem().toString());
+                getProducts(spinnerDrinkType.getSelectedItem().toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
-    private void drinksClick()
-    {
+
+    private void drinksClick() {
         vDrinks.setVisibility(View.VISIBLE);
         vSnacks.setVisibility(View.GONE);
         vSnacks.animate().alpha(0.0f);
@@ -154,8 +205,7 @@ public class HomeFragment extends Fragment {
 
     }
 
-    private void snacksClick()
-    {
+    private void snacksClick() {
         vDrinks.setVisibility(View.GONE);
         vSnacks.setVisibility(View.VISIBLE);
         vDrinks.animate().alpha(0.0f);
