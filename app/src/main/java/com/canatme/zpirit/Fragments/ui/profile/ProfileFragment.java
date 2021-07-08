@@ -1,10 +1,9 @@
-package com.canatme.zpirit.Activities.ui.profile;
+package com.canatme.zpirit.Fragments.ui.profile;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

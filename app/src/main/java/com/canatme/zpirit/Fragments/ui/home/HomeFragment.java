@@ -1,5 +1,6 @@
-package com.canatme.zpirit.Activities.ui.home;
+package com.canatme.zpirit.Fragments.ui.home;
 
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,9 +16,16 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.canatme.zpirit.Adapters.ProductAdapter;
+import com.canatme.zpirit.Dataclasses.ProductDto;
 import com.canatme.zpirit.R;
 import com.canatme.zpirit.databinding.FragmentHomeBinding;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeFragment extends Fragment {
 
@@ -27,6 +35,10 @@ public class HomeFragment extends Fragment {
     private TextView tvDrinks, tvSnacks;
     private View vDrinks, vSnacks;
     private Spinner spinnerDrinkType;
+    /*Adapter components, lists and adapters*/
+    private List<ProductDto> listProduct;
+    private ProductAdapter adapter;
+    private RecyclerView rvProduct;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -56,9 +68,24 @@ public class HomeFragment extends Fragment {
         spinnerDrinkType = binding.spinnerDrinkType;
         setSpinner();
         /**/
+
         /*Default chosen should be drinks*/
         drinksClick();
-        /*                              */
+        /**/
+
+        /*Recycler View*/
+        rvProduct = binding.rvProduct;
+        /**/
+
+        /*Setting adapters and populating it*/
+        listProduct = new ArrayList<>();
+        adapter = new ProductAdapter(getActivity(), listProduct);
+        int numberOfColumns = 2;
+        rvProduct.setLayoutManager(new GridLayoutManager(getActivity(), numberOfColumns));
+        rvProduct.setAdapter(adapter);
+        getProducts();
+
+        /**/
 
         homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -73,6 +100,29 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
+
+    private void getProducts()
+    {
+        String[] productID = {"pd1", "pd2", "pd3", "pd4"};
+        String[] productImg = {"https://i.ibb.co/sKrh6xz/brocode.png", "https://i.ibb.co/1s75D5L/allseasonspng.png", "https://i.ibb.co/TbZsDtM/absolut.png", "https://i.ibb.co/mC4Dxss/oldmonk.png"};
+        String[] productType = {"Beer", "Whiskey", "Vodka", "Rum"};
+        String[] productName = {"Bro Code", "All Seasons", "Absolut", "Old Monk"};
+        String[] productMeasurement = {"250ml", "750ml", "700ml", "300ml"};
+        String[] productPrice = {"120", "700", "1200", "400"};
+
+        for(int i = 0; i<productID.length; i++)
+        {
+            ProductDto productDto = new ProductDto();
+            productDto.setProductID(productID[i]);
+            productDto.setProductType(productType[i]);
+            productDto.setProductImg(productImg[i]);
+            productDto.setProductName(productName[i]);
+            productDto.setProductMeasurement(productMeasurement[i]);
+            productDto.setProductPrice(productPrice[i]);
+            listProduct.add(productDto);
+            adapter.notifyDataSetChanged();
+        }
+    }
 
     private void setSpinner()
     {

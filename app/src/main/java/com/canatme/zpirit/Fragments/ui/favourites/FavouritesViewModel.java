@@ -1,16 +1,16 @@
-package com.canatme.zpirit.Activities.ui.profile;
+package com.canatme.zpirit.Fragments.ui.favourites;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class ProfileViewModel extends ViewModel {
+public class FavouritesViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public ProfileViewModel() {
+    public FavouritesViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is Profile fragment");
+        mText.setValue("This is Favourites fragment");
     }
 
     public LiveData<String> getText() {

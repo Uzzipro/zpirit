@@ -3,8 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="190dp"
     android:layout_height="420dp"
-    android:layout_margin="@dimen/_20_dp"
-    android:background="@color/bggrey"
     android:clipChildren="false"
     android:clipToPadding="false"
     android:paddingHorizontal="@dimen/_10_dp"
@@ -14,10 +12,10 @@
         android:id="@+id/llMain"
         android:layout_width="170dp"
         android:layout_height="320dp"
-        android:orientation="vertical"
         android:layout_marginTop="50dp"
         android:background="@drawable/productlayoutbg"
         android:elevation="5dp"
+        android:orientation="vertical"
         android:paddingBottom="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,14 +37,15 @@
             android:id="@+id/tvProductName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:fontFamily="@font/sfproroundedsemibold"
             android:gravity="center"
             android:maxLines="1"
             android:minEms="3"
-            android:ellipsize="end"
             android:text="This is the new daru we have honey woooossss"
             android:textColor="@color/black"
             android:textSize="@dimen/_22_sp" />
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvProductMeasurement"
             android:layout_width="match_parent"
@@ -56,29 +55,30 @@
             android:text="750ml"
             android:textColor="@color/grey"
             android:textSize="@dimen/_14_sp" />
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvProductPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5_dp"
             android:fontFamily="@font/sfproroundedsemibold"
             android:gravity="center"
-            android:layout_marginTop="@dimen/_5_dp"
             android:text="Rs. 700"
             android:textColor="@color/orange"
             android:textSize="@dimen/_22_sp" />
 
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btAddToCart"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_35_dp"
-            android:background="@drawable/btbg"
-            android:layout_marginTop="@dimen/_30_dp"
-            android:id="@+id/btAddToCart"
-            android:fontFamily="@font/sfproroundedsemibold"
-            android:textColor="@color/white"
             android:layout_marginHorizontal="@dimen/_15_dp"
-            android:textSize="@dimen/_10_sp"
-            android:text="@string/add_to_cart"/>
+            android:layout_marginTop="@dimen/_30_dp"
+            android:background="@drawable/btbg"
+            android:fontFamily="@font/sfproroundedsemibold"
+            android:text="@string/add_to_cart"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10_sp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -87,7 +87,6 @@
         android:layout_width="48dp"
         android:layout_height="160dp"
         android:elevation="5dp"
-        android:src="@drawable/testbottleimg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

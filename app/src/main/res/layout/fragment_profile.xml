@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bggrey"
-    tools:context=".Activities.ui.profile.ProfileFragment">
+    tools:context=".Fragments.ui.profile.ProfileFragment">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/toolbarHome"
