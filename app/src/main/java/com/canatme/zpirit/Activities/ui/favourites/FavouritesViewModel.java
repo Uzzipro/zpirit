@@ -1,16 +1,16 @@
-package com.canatme.zpirit.Activities.ui.dashboard;
+package com.canatme.zpirit.Activities.ui.favourites;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class DashboardViewModel extends ViewModel {
+public class FavouritesViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public DashboardViewModel() {
+    public FavouritesViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is dashboard fragment");
+        mText.setValue("This is Favourites fragment");
     }
 
     public LiveData<String> getText() {
