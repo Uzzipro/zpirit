@@ -1,6 +1,7 @@
 package com.canatme.zpirit.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.canatme.zpirit.Activities.ProductDetailActivity;
 import com.canatme.zpirit.Dataclasses.ProductDto;
 import com.canatme.zpirit.R;
+import com.canatme.zpirit.Utils.Constants;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -50,13 +54,32 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         if (cardData.getProductImg() != null) {
             Picasso.get().load(cardData.getProductImg()).into(holder.ivProductImg);
         }
-
         Log.e(TAG, "onBindViewHolder: "+cardData.getProductID());
         holder.tvProductName.setText(cardData.getProductName());
         holder.tvProductType.setText(cardData.getProductType());
         holder.tvProductMeasurement.setText(cardData.getProductMeasurement());
         holder.tvProductPrice.setText("Rs. " + cardData.getProductPrice());
+        holder.clProductMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                productDetailClick(position);
+            }
+        });
+    }
 
+    private void productDetailClick(int pos)
+    {
+        final ProductDto cardData = cardinfoList.get(pos);
+
+        Intent i = new Intent(context, ProductDetailActivity.class);
+        i.putExtra(Constants.PRODUCT_ID, cardData.getProductID());
+        i.putExtra(Constants.PRODUCT_IMG, cardData.getProductImg());
+        i.putExtra(Constants.PRODUCT_TYPE, cardData.getProductType());
+        i.putExtra(Constants.PRODUCT_NAME, cardData.getProductName());
+        i.putExtra(Constants.PRODUCT_MEASUREMENT, cardData.getProductMeasurement());
+        i.putExtra(Constants.PRODUCT_PRICE, cardData.getProductPrice());
+        i.putExtra(Constants.PRODUCT_INFO, cardData.getProductInfo());
+        context.startActivity(i);
     }
 
 
@@ -192,6 +215,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tvProductName, tvProductType, tvProductMeasurement, tvProductPrice;
+        private ConstraintLayout clProductMain;
         private ImageView ivProductImg;
         private Button btAddToCart;
 
@@ -201,9 +225,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
             tvProductType = view.findViewById(R.id.tvProductType);
             tvProductMeasurement = view.findViewById(R.id.tvProductMeasurement);
             tvProductPrice = view.findViewById(R.id.tvProductPrice);
-//            tvViewMoreDetails = view.findViewById(R.id.tvViewMoreDetails);
             ivProductImg = view.findViewById(R.id.ivProductImg);
             btAddToCart = view.findViewById(R.id.btAddToCart);
+            clProductMain = view.findViewById(R.id.clProductMain);
 
         }
     }

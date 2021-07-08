@@ -11,10 +11,12 @@
         android:theme="@style/Theme.Zpirit"
         android:windowSoftInputMode="adjustResize|stateHidden">
         <activity
+            android:name=".Activities.ProductDetailActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        <activity
             android:name=".Activities.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,9 +25,7 @@
         </activity>
         <activity
             android:name=".Activities.SplashActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
-        </activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
         <activity android:name=".Activities.LoginOrSignupActivity" />
     </application>
 

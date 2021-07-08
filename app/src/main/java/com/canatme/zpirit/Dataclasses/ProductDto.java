@@ -7,16 +7,8 @@ public class ProductDto {
     private String productName;
     private String productMeasurement;
     private String productPrice;
+    private String productInfo;
 
-
-    public ProductDto(String productID, String productImg, String productType, String productName, String productMeasurement, String productPrice) {
-        this.productID = productID;
-        this.productImg = productImg;
-        this.productType = productType;
-        this.productName = productName;
-        this.productMeasurement = productMeasurement;
-        this.productPrice = productPrice;
-    }
 
     public String getProductID() {
         return productID;
@@ -64,6 +56,24 @@ public class ProductDto {
 
     public void setProductPrice(String productPrice) {
         this.productPrice = productPrice;
+    }
+
+    public String getProductInfo() {
+        return productInfo;
+    }
+
+    public void setProductInfo(String productInfo) {
+        this.productInfo = productInfo;
+    }
+
+    public ProductDto(String productID, String productImg, String productType, String productName, String productMeasurement, String productPrice, String productInfo) {
+        this.productID = productID;
+        this.productImg = productImg;
+        this.productType = productType;
+        this.productName = productName;
+        this.productMeasurement = productMeasurement;
+        this.productPrice = productPrice;
+        this.productInfo = productInfo;
     }
 
     public ProductDto() {

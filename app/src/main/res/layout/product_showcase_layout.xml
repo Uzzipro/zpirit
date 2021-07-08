@@ -5,6 +5,7 @@
     android:layout_height="420dp"
     android:clipChildren="false"
     android:clipToPadding="false"
+    android:id="@+id/clProductMain"
     android:paddingHorizontal="@dimen/_10_dp"
     android:paddingBottom="@dimen/_20_dp">
 
@@ -77,6 +78,7 @@
             android:background="@drawable/btbg"
             android:fontFamily="@font/sfproroundedsemibold"
             android:text="@string/add_to_cart"
+            android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/_10_sp" />
 

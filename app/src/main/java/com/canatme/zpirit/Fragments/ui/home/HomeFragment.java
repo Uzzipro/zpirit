@@ -109,6 +109,7 @@ public class HomeFragment extends Fragment {
         String[] productName = {"Bro Code", "All Seasons", "Absolut", "Old Monk"};
         String[] productMeasurement = {"250ml", "750ml", "700ml", "300ml"};
         String[] productPrice = {"120", "700", "1200", "400"};
+        String[] productInfo = {getResources().getString(R.string.product_info_testtext), getResources().getString(R.string.product_info_testtext), getResources().getString(R.string.product_info_testtext), getResources().getString(R.string.product_info_testtext)};
 
         for(int i = 0; i<productID.length; i++)
         {
@@ -119,6 +120,7 @@ public class HomeFragment extends Fragment {
             productDto.setProductName(productName[i]);
             productDto.setProductMeasurement(productMeasurement[i]);
             productDto.setProductPrice(productPrice[i]);
+            productDto.setProductInfo(productInfo[i]);
             listProduct.add(productDto);
             adapter.notifyDataSetChanged();
         }
