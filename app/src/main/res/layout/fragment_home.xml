@@ -13,8 +13,8 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/bggrey"
         android:orientation="horizontal"
-        android:weightSum="1"
         android:padding="@dimen/_10_dp"
+        android:weightSum="1"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -23,8 +23,8 @@
             android:layout_height="match_parent"
             android:layout_weight="0.2"
             android:fontFamily="@font/sfproroundedbold"
-            android:paddingLeft="20dp"
             android:gravity="center_vertical"
+            android:paddingLeft="20dp"
             android:text="@string/categories"
             android:textColor="@color/black"
             android:textSize="@dimen/_24_sp"
@@ -40,21 +40,91 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_20_dp"
-        android:id="@+id/etSearch"
+        android:layout_marginLeft="@dimen/_20_dp"
         android:layout_marginTop="@dimen/_10_dp"
-        android:maxLines="1"
+        android:background="@drawable/etbg"
         android:drawableLeft="@drawable/ic_search"
         android:drawablePadding="@dimen/_20_dp"
-        android:padding="@dimen/_10_dp"
-        android:layout_marginLeft="@dimen/_20_dp"
-        app:layout_constraintTop_toBottomOf="@id/llToolbarHome"
-        android:hint="@string/search"
-        android:textColorHint="@color/grey"
         android:fontFamily="@font/sfproroundedsemibold"
-        android:background="@drawable/etbg"/>
+        android:hint="@string/search"
+        android:maxLines="1"
+        android:padding="@dimen/_10_dp"
+        android:textColorHint="@color/grey"
+        app:layout_constraintTop_toBottomOf="@id/llToolbarHome" />
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/llButtonholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_30_dp"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        app:layout_constraintTop_toBottomOf="@id/etSearch">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/llDrinks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDrinks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/sfproroundedmedium"
+                android:gravity="center"
+                android:text="@string/drinks"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/_15_sp" />
+
+            <View
+                android:id="@+id/vDrinks"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginHorizontal="50dp"
+                android:animateLayoutChanges="true"
+                android:background="@drawable/tablayoutbottomstripbg" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/llSnacks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvSnacks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/sfproroundedmedium"
+                android:gravity="center"
+                android:text="@string/snacks"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/_15_sp" />
+
+            <View
+                android:id="@+id/vSnacks"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginHorizontal="50dp"
+                android:background="@drawable/tablayoutbottomstripbg"
+                android:visibility="gone" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -25,4 +25,5 @@
     <dimen name="_5_dp">5dp</dimen>
     <dimen name="_24_dp">24dp</dimen>
     <dimen name="_24_sp">24sp</dimen>
+    <dimen name="_15_sp">15sp</dimen>
 </resources>
