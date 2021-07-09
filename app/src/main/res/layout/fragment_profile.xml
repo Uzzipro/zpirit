@@ -13,8 +13,8 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/bggrey"
         android:orientation="horizontal"
-        android:weightSum="1"
         android:padding="@dimen/_10_dp"
+        android:weightSum="1"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -23,8 +23,8 @@
             android:layout_height="match_parent"
             android:layout_weight="0.2"
             android:fontFamily="@font/sfproroundedbold"
-            android:paddingLeft="20dp"
             android:gravity="center_vertical"
+            android:paddingLeft="20dp"
             android:text="@string/title_profile"
             android:textColor="@color/black"
             android:textSize="@dimen/_24_sp"
@@ -35,8 +35,253 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.8"
-            android:visibility="gone"
             android:padding="@dimen/_5_dp"
-            android:src="@drawable/ic_cart" />
+            android:src="@drawable/ic_cart"
+            android:visibility="gone" />
     </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbarHome"
+        android:layout_marginTop="@dimen/_20_sp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPersonalDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_30_dp"
+                android:layout_marginTop="@dimen/_20_dp"
+                android:fontFamily="@font/sfproroundedbold"
+                android:gravity="center_vertical"
+                android:text="@string/personal_details"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_20_sp"
+                app:layout_constraintBottom_toTopOf="@id/llPersonalDetails"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.05"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvChangeDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/sfproroundedbold"
+                android:gravity="center_vertical"
+                android:text="change"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/_15_sp"
+                app:layout_constraintBottom_toTopOf="@id/llPersonalDetails"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.826"
+                app:layout_constraintStart_toEndOf="@+id/tvPersonalDetails" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llPersonalDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_30_dp"
+                android:layout_marginTop="@dimen/_10_dp"
+                android:background="@drawable/llbg"
+                android:orientation="horizontal"
+                android:padding="@dimen/_10_dp"
+                android:weightSum="1"
+                app:layout_constraintTop_toBottomOf="@id/tvPersonalDetails">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivDisplayPicture"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    app:srcCompat="@drawable/ic_profileplaceholder" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sfproroundedsemibold"
+                        android:text="Ujjwal Bassi"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_18_sp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvEmailAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sfproroundedregular"
+                        android:text="ubassi15@gmail.com"
+                        android:textColor="@color/darkgrey"
+                        android:textSize="@dimen/_15_sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_marginVertical="@dimen/_5_dp"
+                        android:background="@color/grey" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPhNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sfproroundedregular"
+                        android:text="+91 9780512382"
+                        android:textColor="@color/darkgrey"
+                        android:textSize="@dimen/_15_sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_marginVertical="@dimen/_5_dp"
+                        android:background="@color/grey" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvBio"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/sfproroundedregular"
+                        android:text="I need more whiskey."
+                        android:textColor="@color/darkgrey"
+                        android:textSize="@dimen/_15_sp" />
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llOrders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_30_dp"
+                android:layout_marginTop="@dimen/_10_dp"
+                android:background="@drawable/llbg"
+                android:orientation="horizontal"
+                android:padding="@dimen/_10_dp"
+                android:weightSum="1"
+                app:layout_constraintTop_toBottomOf="@id/llPersonalDetails">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:fontFamily="@font/sfproroundedsemibold"
+                    android:padding="@dimen/_10_dp"
+                    android:text="Orders"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_15_sp" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.8"
+                    app:srcCompat="@drawable/ic_chevron_left" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llAddresses"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_30_dp"
+                android:layout_marginTop="@dimen/_10_dp"
+                android:background="@drawable/llbg"
+                android:orientation="horizontal"
+                android:padding="@dimen/_10_dp"
+                android:weightSum="1"
+                app:layout_constraintTop_toBottomOf="@id/llOrders">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:fontFamily="@font/sfproroundedsemibold"
+                    android:padding="@dimen/_10_dp"
+                    android:text="Address Book"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_15_sp" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.8"
+                    app:srcCompat="@drawable/ic_chevron_left" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llFaq"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_30_dp"
+                android:layout_marginTop="@dimen/_10_dp"
+                android:background="@drawable/llbg"
+                android:orientation="horizontal"
+                android:padding="@dimen/_10_dp"
+                android:weightSum="1"
+                app:layout_constraintTop_toBottomOf="@id/llAddresses">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:fontFamily="@font/sfproroundedsemibold"
+                    android:padding="@dimen/_10_dp"
+                    android:text="Faq"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_15_sp" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.8"
+                    app:srcCompat="@drawable/ic_chevron_left" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llHelp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_30_dp"
+                android:layout_marginTop="@dimen/_10_dp"
+                android:background="@drawable/llbg"
+                android:orientation="horizontal"
+                android:padding="@dimen/_10_dp"
+                android:weightSum="1"
+                app:layout_constraintTop_toBottomOf="@id/llFaq">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:fontFamily="@font/sfproroundedsemibold"
+                    android:padding="@dimen/_10_dp"
+                    android:text="Help"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_15_sp" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.8"
+                    app:srcCompat="@drawable/ic_chevron_left" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,8 +9,11 @@
     <color name="white">#FFFFFFFF</color>
     <color name="orange">#FA4A0C</color>
     <color name="grey">#9E9D9D</color>
+    <color name="darkgrey">#787878</color>
     <color name="icongrey">#807E7E</color>
     <color name="bggrey">#FAFAFA</color>
+    <color name="green">#00C92C</color>
+    <color name="red">#FF0000</color>
     <color name="lightGrey">#CCCCCC</color>
 
 

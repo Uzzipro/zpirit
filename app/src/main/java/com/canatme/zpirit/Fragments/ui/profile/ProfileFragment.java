@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.canatme.zpirit.databinding.FragmentProfileBinding;
 
+
 public class ProfileFragment extends Fragment {
 
     private ProfileViewModel profileViewModel;

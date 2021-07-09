@@ -25,17 +25,18 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         final boolean logininfo = getSharedPreferences(Constants.ACCESS_PREFS, Context.MODE_PRIVATE).getBoolean(Constants.LOGIN_INFO, false);
-        Log.e(TAG, "onCreate: "+logininfo);
         if(logininfo)
         {
             Intent loggedinActivity = new Intent(SplashActivity.this, MainActivity.class);
             loggedinActivity.putExtra(Constants.WELCOME_BACK, "Welcome Back");
             startActivity(loggedinActivity);
+            finish();
         }
         else
         {
             Intent loggedinActivity = new Intent(SplashActivity.this, LoginOrSignupActivity.class);
             startActivity(loggedinActivity);
+            finish();
         }
 
 //        final Handler handler = new Handler();
