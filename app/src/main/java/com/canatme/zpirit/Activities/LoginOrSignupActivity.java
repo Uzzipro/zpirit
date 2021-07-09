@@ -33,9 +33,6 @@ public class LoginOrSignupActivity extends AppCompatActivity {
     private View vLogin, vSignup;
     private AlertDialog loadingDialog;
 
-
-
-
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +78,7 @@ public class LoginOrSignupActivity extends AppCompatActivity {
         });
     }
 
-    private void loginClick()
+    public void loginClick()
     {
         vLogin.setVisibility(View.VISIBLE);
         vSignup.setVisibility(View.GONE);

@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import com.canatme.zpirit.Activities.MainActivity;
 import com.canatme.zpirit.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,8 +23,12 @@ import com.canatme.zpirit.R;
  * create an instance of this fragment.
  */
 public class LoginFragment extends Fragment {
+    /**Components**/
     private EditText etEmailAddress, etPassword;
     private Button btLogin;
+    /**/
+
+    private DatabaseReference dbRefLogin;
 
 
 
@@ -72,6 +78,7 @@ public class LoginFragment extends Fragment {
         // Inflate the layout for this fragment
          View v = inflater.inflate(R.layout.fragment_login, container, false);
 
+         dbRefLogin = FirebaseDatabase.getInstance().getReference("users");
          etEmailAddress = v.findViewById(R.id.etEmailAddress);
          etPassword = v.findViewById(R.id.etPassword);
          btLogin = v.findViewById(R.id.btLogin);
