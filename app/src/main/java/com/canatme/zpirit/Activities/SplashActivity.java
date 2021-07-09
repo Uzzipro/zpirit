@@ -29,7 +29,7 @@ public class SplashActivity extends AppCompatActivity {
                 Intent i = new Intent(SplashActivity.this, LoginOrSignupActivity.class);
                 startActivity(i);
             }
-        }, 2000);
+        }, 1000);
         //Change this with login check(if the user is logged in or not)
 
     }

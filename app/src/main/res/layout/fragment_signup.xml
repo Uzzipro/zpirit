@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/bggrey"
     tools:context=".Fragments.SignupFragment">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -12,6 +13,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingBottom="@dimen/_10_dp"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -19,8 +21,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingLeft="40dp"
-                android:paddingRight="40dp"
-                android:paddingTop="50dp">
+                android:paddingTop="50dp"
+                android:paddingRight="40dp">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/llFirstName"
@@ -78,6 +80,36 @@
                         android:maxLines="1"
                         android:textColor="@color/black" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/llPhNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPhNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sfproroundedsemibold"
+                        android:text="@string/ph_number"
+                        android:textColor="@color/grey"
+                        android:textSize="16dp" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/etPhNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="30dp"
+                        android:backgroundTint="@color/black"
+                        android:maxLength="10"
+                        android:fontFamily="@font/sfproroundedsemibold"
+                        android:inputType="phone"
+                        android:maxLines="1"
+                        android:textColor="@color/black" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/llEmailAddress"
                     android:layout_width="match_parent"
@@ -104,6 +136,7 @@
                         android:inputType="textEmailAddress"
                         android:maxLines="1"
                         android:textColor="@color/black" />
+
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/llPassword"
                         android:layout_width="match_parent"
@@ -131,6 +164,7 @@
                             android:maxLines="1"
                             android:textColor="@color/black" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
+
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/llConfirmPassword"
                         android:layout_width="match_parent"
@@ -157,13 +191,13 @@
                             android:inputType="textPassword"
                             android:maxLines="1"
                             android:textColor="@color/black" />
+
                         <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvPasswordMatch"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Password does not match!"
                             android:fontFamily="@font/sfproroundedsemibold"
-                            android:textColor="@color/orange"
-                            android:id="@+id/tvPasswordMatch"/>
+                            android:textColor="@color/orange" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -173,20 +207,21 @@
                 android:id="@+id/llbtLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="bottom"
                 android:layout_marginHorizontal="50dp"
                 android:layout_marginTop="30dp"
+                android:paddingBottom="10dp"
                 android:orientation="vertical">
+
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btSignUp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/login"
-                    android:textSize="15sp"
-                    android:textAllCaps="false"
-                    android:fontFamily="@font/sfproroundedsemibold"
-                    android:textColor="@color/white"
                     android:background="@drawable/btbg"
-                    android:id="@+id/btLogin"/>
+                    android:fontFamily="@font/sfproroundedsemibold"
+                    android:text="@string/sign_up"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.appcompat.widget.LinearLayoutCompat>

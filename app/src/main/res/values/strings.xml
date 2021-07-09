@@ -8,6 +8,7 @@
     <string name="forgot_password">Forgot password?</string>
     <string name="first_name">First name</string>
     <string name="last_name">Last name</string>
+    <string name="ph_number">Phone number</string>
     <string name="confirm_password">Confirm password</string>
     <string name="loading">Loading. . . .</string>
     <string name="title_activity_home">MainActivity</string>
