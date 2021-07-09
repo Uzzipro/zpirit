@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -41,6 +42,7 @@ public class HomeFragment extends Fragment {
     /*Adapter components, lists and adapters*/
     private List<ProductDto> listProduct;
     private ProductAdapter adapter;
+    private RelativeLayout rlDrinkType;
     private RecyclerView rvProduct;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -59,6 +61,9 @@ public class HomeFragment extends Fragment {
         llRv = binding.llRv;
         /**/
 
+        /*Relative layouts*/
+        rlDrinkType = binding.rlDrinkType;
+        /**/
         /*Text Views*/
         tvDrinks = binding.tvDrinks;
         tvSnacks = binding.tvSnacks;
@@ -74,9 +79,6 @@ public class HomeFragment extends Fragment {
         setSpinner();
         /**/
 
-        /*Default chosen should be drinks*/
-        drinksClick();
-        /**/
 
         /*Recycler View*/
         rvProduct = binding.rvProduct;
@@ -88,8 +90,11 @@ public class HomeFragment extends Fragment {
         int numberOfColumns = 2;
         rvProduct.setLayoutManager(new GridLayoutManager(getActivity(), numberOfColumns));
         rvProduct.setAdapter(adapter);
-        getProducts("all");
+        getProducts("drinks");
+        /**/
 
+        /*Default chosen should be drinks*/
+        drinksClick();
         /**/
 
         homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
@@ -107,6 +112,7 @@ public class HomeFragment extends Fragment {
 
 
     private void getProducts(String itemType) {
+        Log.e(TAG, "getProducts: " + itemType);
         String[] productID = {"pd1", "pd2", "pd3", "pd4"};
         String[] productImg = {"https://i.ibb.co/sKrh6xz/brocode.png", "https://i.ibb.co/1s75D5L/allseasonspng.png", "https://i.ibb.co/TbZsDtM/absolut.png", "https://i.ibb.co/mC4Dxss/oldmonk.png"};
         String[] productType = {"Beer", "Whiskey", "Vodka", "Rum"};
@@ -114,36 +120,45 @@ public class HomeFragment extends Fragment {
         String[] productMeasurement = {"250ml", "750ml", "700ml", "300ml"};
         String[] productPrice = {"120", "700", "1200", "400"};
         String[] productInfo = {getResources().getString(R.string.product_info_testtext), getResources().getString(R.string.product_info_testtext), getResources().getString(R.string.product_info_testtext), getResources().getString(R.string.product_info_testtext)};
-        listProduct.clear();
 
+        String[] productIDSnacks = {"pd1", "pd2"};
+        String[] productImgSnacks = {"https://i.ibb.co/zGF2Wyg/sp.png", "https://i.ibb.co/82drqDP/bluelays.jpg"};
+        String[] productTypeSnacks = {"snacks", "snacks"};
+        String[] productNameSnacks = {"Salted Peanuts", "Blue Lays"};
+        String[] productMeasurementSnacks = {"450gm", "52gm"};
+        String[] productPriceSnacks = {"20", "20"};
+        String[] productInfoSnacks = {getResources().getString(R.string.product_info_testtext), getResources().getString(R.string.product_info_testtext)};
 
-        if(itemType.equalsIgnoreCase("all") || itemType.equalsIgnoreCase("Select Drink type"))
+        if(listProduct != null)
         {
-            Log.e(TAG, "getProducts: all or select drink type");
-            for(int i = 0; i<productID.length; i++)
-            {
-            llRv.setVisibility(View.VISIBLE);
-            llProductNotFound.setVisibility(View.GONE);
-            ProductDto productDto = new ProductDto();
-            productDto.setProductID(productID[i]);
-            productDto.setProductType(productType[i]);
-            productDto.setProductImg(productImg[i]);
-            productDto.setProductName(productName[i]);
-            productDto.setProductMeasurement(productMeasurement[i]);
-            productDto.setProductPrice(productPrice[i]);
-            productDto.setProductInfo(productInfo[i]);
-            listProduct.add(productDto);
-            adapter.notifyDataSetChanged();
+            listProduct.clear();
+        }
+
+
+        /*If user selects Drinks and the default screen is drinks*/
+        if (itemType.equalsIgnoreCase("drinks") || itemType.equalsIgnoreCase("Select Drink type")) {
+            rlDrinkType.setVisibility(View.VISIBLE);
+            for (int i = 0; i < productID.length; i++) {
+                llRv.setVisibility(View.VISIBLE);
+                llProductNotFound.setVisibility(View.GONE);
+                ProductDto productDto = new ProductDto();
+                productDto.setProductID(productID[i]);
+                productDto.setProductType(productType[i]);
+                productDto.setProductImg(productImg[i]);
+                productDto.setProductName(productName[i]);
+                productDto.setProductMeasurement(productMeasurement[i]);
+                productDto.setProductPrice(productPrice[i]);
+                productDto.setProductInfo(productInfo[i]);
+                listProduct.add(productDto);
+                adapter.notifyDataSetChanged();
             }
         }
-        else
-        {
-            Log.e(TAG, "getProducts: else");
-
-            for(int x = 0; x < productID.length; x++)
-            {
-                if(productType[x].equalsIgnoreCase(itemType))
-                {
+        if(!itemType.equalsIgnoreCase("snacks")) {
+            rlDrinkType.setVisibility(View.VISIBLE);
+            llProductNotFound.setVisibility(View.GONE);
+            llRv.setVisibility(View.VISIBLE);
+            for (int x = 0; x < productID.length; x++) {
+                if (productType[x].equalsIgnoreCase(itemType)) {
                     Log.e(TAG, "getProducts: addding product");
 
                     ProductDto productDto = new ProductDto();
@@ -157,14 +172,32 @@ public class HomeFragment extends Fragment {
                     listProduct.add(productDto);
                     adapter.notifyDataSetChanged();
                 }
-                
             }
-            if(listProduct.size() == 0)
-            {
+            if (listProduct.size() == 0) {
                 Log.e(TAG, "getProducts: empty");
 
                 llProductNotFound.setVisibility(View.VISIBLE);
                 llRv.setVisibility(View.GONE);
+            }
+        }
+
+        /*If user selects Snacks*/
+        if (itemType.equalsIgnoreCase("snacks")) {
+            rlDrinkType.setVisibility(View.GONE);
+            Log.e(TAG, "getProducts: snacks");
+            listProduct.clear();
+            for(int y = 0; y < productIDSnacks.length; y++)
+            {
+                ProductDto productDto = new ProductDto();
+                productDto.setProductID(productIDSnacks[y]);
+                productDto.setProductType(productTypeSnacks[y]);
+                productDto.setProductImg(productImgSnacks[y]);
+                productDto.setProductName(productNameSnacks[y]);
+                productDto.setProductMeasurement(productMeasurementSnacks[y]);
+                productDto.setProductPrice(productPriceSnacks[y]);
+                productDto.setProductInfo(productInfoSnacks[y]);
+                listProduct.add(productDto);
+                adapter.notifyDataSetChanged();
             }
         }
 
@@ -173,7 +206,6 @@ public class HomeFragment extends Fragment {
     private void setSpinner() {
         String[] arraySpinner = new String[]{
                 "Select Drink type", "Whiskey", "Beer", "Breezer", "Vodka", "Rum", "Gin", "Wine", "Desi"
-
         };
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_item, arraySpinner);
@@ -184,7 +216,13 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 Log.e(TAG, "onItemSelected: " + spinnerDrinkType.getSelectedItem().toString());
-                getProducts(spinnerDrinkType.getSelectedItem().toString());
+
+                if (spinnerDrinkType.getSelectedItem().toString().equalsIgnoreCase("Select Drink type")) {
+                    getProducts("drinks");
+                }
+                else {
+                    getProducts(spinnerDrinkType.getSelectedItem().toString());
+                }
             }
 
             @Override
@@ -206,7 +244,7 @@ public class HomeFragment extends Fragment {
 
         tvDrinks.setTextColor(Color.parseColor("#FA4A0C"));
         tvSnacks.setTextColor(Color.parseColor("#B1B1B3"));
-
+        getProducts("drinks");
     }
 
     private void snacksClick() {
@@ -219,6 +257,7 @@ public class HomeFragment extends Fragment {
         llDrinks.setOnClickListener(view -> drinksClick());
         tvSnacks.setTextColor(Color.parseColor("#FA4A0C"));
         tvDrinks.setTextColor(Color.parseColor("#B1B1B3"));
+        getProducts("snacks");
     }
 
     @Override
