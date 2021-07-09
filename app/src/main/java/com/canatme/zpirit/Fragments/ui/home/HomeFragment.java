@@ -132,13 +132,7 @@ public class HomeFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
         }
-
-        if(itemType.equalsIgnoreCase("all") && itemType.equalsIgnoreCase("Select Drink type"))
-        {
-
-        }
-        else
-            {
+        if(!itemType.equalsIgnoreCase("all") && !itemType.equalsIgnoreCase("Select Drink type")) {
             llRv.setVisibility(View.VISIBLE);
             llProductNotFound.setVisibility(View.GONE);
             for (int i = 0; i < productID.length; i++) {
