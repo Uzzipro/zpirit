@@ -116,48 +116,58 @@ public class HomeFragment extends Fragment {
         String[] productInfo = {getResources().getString(R.string.product_info_testtext), getResources().getString(R.string.product_info_testtext), getResources().getString(R.string.product_info_testtext), getResources().getString(R.string.product_info_testtext)};
         listProduct.clear();
 
-        if (itemType.equalsIgnoreCase("all")) {
-            llRv.setVisibility(View.VISIBLE);
-            llProductNotFound.setVisibility(View.GONE);
-            for (int i = 0; i < productID.length; i++) {
-                ProductDto productDto = new ProductDto();
-                productDto.setProductID(productID[i]);
-                productDto.setProductType(productType[i]);
-                productDto.setProductImg(productImg[i]);
-                productDto.setProductName(productName[i]);
-                productDto.setProductMeasurement(productMeasurement[i]);
-                productDto.setProductPrice(productPrice[i]);
-                productDto.setProductInfo(productInfo[i]);
-                listProduct.add(productDto);
-                adapter.notifyDataSetChanged();
-            }
-        }
-        if(!itemType.equalsIgnoreCase("all") && !itemType.equalsIgnoreCase("Select Drink type")) {
-            llRv.setVisibility(View.VISIBLE);
-            llProductNotFound.setVisibility(View.GONE);
-            for (int i = 0; i < productID.length; i++) {
-                if (productType[i].equalsIgnoreCase(itemType)) {
-                    ProductDto productDto = new ProductDto();
-                    productDto.setProductID(productID[i]);
-                    productDto.setProductType(productType[i]);
-                    productDto.setProductImg(productImg[i]);
-                    productDto.setProductName(productName[i]);
-                    productDto.setProductMeasurement(productMeasurement[i]);
-                    productDto.setProductPrice(productPrice[i]);
-                    productDto.setProductInfo(productInfo[i]);
-                    listProduct.add(productDto);
-                }
-                if (listProduct.size() == 0) {
-                    llRv.setVisibility(View.GONE);
-                    llProductNotFound.setVisibility(View.VISIBLE);
-                } else {
-                    llRv.setVisibility(View.VISIBLE);
-                    llProductNotFound.setVisibility(View.GONE);
-                }
-                adapter.notifyDataSetChanged();
-            }
 
+        if(itemType.equalsIgnoreCase("all") || itemType.equalsIgnoreCase("Select Drink type"))
+        {
+            Log.e(TAG, "getProducts: all or select drink type");
+            for(int i = 0; i<productID.length; i++)
+            {
+            llRv.setVisibility(View.VISIBLE);
+            llProductNotFound.setVisibility(View.GONE);
+            ProductDto productDto = new ProductDto();
+            productDto.setProductID(productID[i]);
+            productDto.setProductType(productType[i]);
+            productDto.setProductImg(productImg[i]);
+            productDto.setProductName(productName[i]);
+            productDto.setProductMeasurement(productMeasurement[i]);
+            productDto.setProductPrice(productPrice[i]);
+            productDto.setProductInfo(productInfo[i]);
+            listProduct.add(productDto);
+            adapter.notifyDataSetChanged();
+            }
         }
+        else
+        {
+            Log.e(TAG, "getProducts: else");
+
+            for(int x = 0; x < productID.length; x++)
+            {
+                if(productType[x].equalsIgnoreCase(itemType))
+                {
+                    Log.e(TAG, "getProducts: addding product");
+
+                    ProductDto productDto = new ProductDto();
+                    productDto.setProductID(productID[x]);
+                    productDto.setProductType(productType[x]);
+                    productDto.setProductImg(productImg[x]);
+                    productDto.setProductName(productName[x]);
+                    productDto.setProductMeasurement(productMeasurement[x]);
+                    productDto.setProductPrice(productPrice[x]);
+                    productDto.setProductInfo(productInfo[x]);
+                    listProduct.add(productDto);
+                    adapter.notifyDataSetChanged();
+                }
+                
+            }
+            if(listProduct.size() == 0)
+            {
+                Log.e(TAG, "getProducts: empty");
+
+                llProductNotFound.setVisibility(View.VISIBLE);
+                llRv.setVisibility(View.GONE);
+            }
+        }
+
     }
 
     private void setSpinner() {
