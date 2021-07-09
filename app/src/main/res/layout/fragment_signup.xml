@@ -36,6 +36,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sfproroundedsemibold"
                         android:text="@string/first_name"
+                        android:inputType="textPersonName"
                         android:textColor="@color/grey"
                         android:textSize="16dp" />
 

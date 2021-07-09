@@ -34,18 +34,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sfproroundedsemibold"
-                        android:text="@string/email_address"
+                        android:text="@string/ph_number"
                         android:textColor="@color/grey"
                         android:textSize="16dp" />
 
                     <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/etEmailAddress"
+                        android:id="@+id/etPhNumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="30dp"
                         android:backgroundTint="@color/black"
                         android:fontFamily="@font/sfproroundedsemibold"
-                        android:inputType="textEmailAddress"
+                        android:inputType="phone"
+                        android:maxLength="10"
                         android:maxLines="1"
                         android:textColor="@color/black" />
 

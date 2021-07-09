@@ -1,14 +1,21 @@
 package com.canatme.zpirit.Fragments;
 
+import android.app.AlertDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,9 +25,12 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.canatme.zpirit.Activities.LoginOrSignupActivity;
+import com.canatme.zpirit.Activities.MainActivity;
 import com.canatme.zpirit.Dataclasses.UserDto;
 import com.canatme.zpirit.R;
+import com.canatme.zpirit.Utils.Constants;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,6 +41,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link SignupFragment#newInstance} factory method to
@@ -39,6 +51,10 @@ import org.jetbrains.annotations.NotNull;
 public class SignupFragment extends Fragment {
     /*Strings*/
     private final static String TAG = "SignupFragment";
+    /**/
+
+    /*Alert dialog box for loading screen*/
+    private AlertDialog loadingDialog;
     /**/
 
     /*Boolean for password match*/
@@ -156,6 +172,25 @@ public class SignupFragment extends Fragment {
         Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
     }
 
+    private void loadingScreen()
+    {
+        LayoutInflater factory = LayoutInflater.from(getActivity());
+        final View dialogLoading = factory.inflate(R.layout.loading, null);
+        loadingDialog = new AlertDialog.Builder(getActivity()).create();
+        Window window = loadingDialog.getWindow();
+        WindowManager.LayoutParams wlp = window.getAttributes();
+        wlp.gravity = Gravity.CENTER;
+//        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        window.setAttributes(wlp);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        loadingDialog.setCancelable(false);
+        loadingDialog.setView(dialogLoading);
+        loadingDialog.show();
+        TextView tvLoading = dialogLoading.findViewById(R.id.tvLoading);
+        LottieAnimationView animation_view = dialogLoading.findViewById(R.id.animation_view);
+        tvLoading.setText("Signing you up...");
+    }
+
     private void btSignUpClick() {
         if (TextUtils.isEmpty(etFirstName.getText().toString().trim())) {
             showToast("Please fill first name");
@@ -171,6 +206,7 @@ public class SignupFragment extends Fragment {
             showToast("Please Confirm your password");
         } else {
             if (passwordMatch) {
+                loadingScreen();
                 Query checkIfAlreadyRegistered = dbRefSignup.orderByChild("phNumber").equalTo(etPhNumber.getText().toString().trim());
                 checkIfAlreadyRegistered.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -178,17 +214,30 @@ public class SignupFragment extends Fragment {
                         if (snapshot.hasChildren()) {
                             for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
                                 UserDto UD = dataSnapshot1.getValue(UserDto.class);
-                                Log.e(TAG, "onDataChange: " + UD.getEmailAddress());
                                 Snackbar.make(getActivity().findViewById(android.R.id.content), "Phone number already exists. Please login", Snackbar.LENGTH_LONG)
                                         .setAction("Login", view -> ((LoginOrSignupActivity)getActivity()).loginClick())
                                         .setActionTextColor(ContextCompat.getColor(getActivity(), R.color.orange))
                                         .show();
+                                loadingDialog.dismiss();
 
                             }
                         } else {
                             UserDto registerUserDto = new UserDto(etFirstName.getText().toString().trim(), etLastName.getText().toString().trim(), etPhNumber.getText().toString().trim(), etEmailAddress.getText().toString().trim(), etPassword.getText().toString().trim(), "0", "0", "0", "false");
                             dbRefSignup.push().setValue(registerUserDto);
                             showToast("Registered");
+
+                            SharedPreferences.Editor editor = getActivity().getSharedPreferences(Constants.
+                                    ACCESS_PREFS, MODE_PRIVATE).edit();
+                            editor.putString(Constants.PH_NUMBER, etPhNumber.getText().toString().trim());
+                            editor.putBoolean(Constants.LOGIN_INFO, true);
+                            editor.commit();
+                            Intent loggedinActivity = new Intent(getActivity(), MainActivity.class);
+                            loggedinActivity.putExtra(Constants.WELCOME_BACK, "Welcome Back");
+                            loadingDialog.dismiss();
+                            startActivity(loggedinActivity);
+                            getActivity().finish();
+
+
                         }
 
                     }

@@ -91,7 +91,7 @@ public class LoginOrSignupActivity extends AppCompatActivity {
 
     }
 
-    private void signupClick()
+    public void signupClick()
     {
         vLogin.setVisibility(View.GONE);
         vSignup.setVisibility(View.VISIBLE);
