@@ -112,7 +112,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sfproroundedsemibold"
-                        android:text="Ujjwal Bassi"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="@dimen/_18_sp" />
 
@@ -121,7 +121,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sfproroundedregular"
-                        android:text="ubassi15@gmail.com"
+                        android:text=""
                         android:textColor="@color/darkgrey"
                         android:textSize="@dimen/_15_sp" />
 
@@ -136,7 +136,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sfproroundedregular"
-                        android:text="+91 9780512382"
+                        android:text=""
                         android:textColor="@color/darkgrey"
                         android:textSize="@dimen/_15_sp" />
 
@@ -151,7 +151,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/sfproroundedregular"
-                        android:text="I need more whiskey."
+                        android:text=""
                         android:textColor="@color/darkgrey"
                         android:textSize="@dimen/_15_sp" />
 

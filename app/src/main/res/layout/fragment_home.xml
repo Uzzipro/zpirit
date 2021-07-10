@@ -159,12 +159,12 @@
     </RelativeLayout>
 
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/llRv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/bggrey"
         android:orientation="vertical"
         android:padding="10dp"
-        android:id="@+id/llRv"
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/rlDrinkType">
 

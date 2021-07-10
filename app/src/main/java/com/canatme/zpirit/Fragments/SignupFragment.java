@@ -222,7 +222,7 @@ public class SignupFragment extends Fragment {
 
                             }
                         } else {
-                            UserDto registerUserDto = new UserDto(etFirstName.getText().toString().trim(), etLastName.getText().toString().trim(), etPhNumber.getText().toString().trim(), etEmailAddress.getText().toString().trim(), etPassword.getText().toString().trim(), "0", "0", "0", "false");
+                            UserDto registerUserDto = new UserDto(etFirstName.getText().toString().trim(), etLastName.getText().toString().trim(), etPhNumber.getText().toString().trim(), etEmailAddress.getText().toString().trim(), etPassword.getText().toString().trim(), "0", "0", "0", "false", "", "");
                             dbRefSignup.push().setValue(registerUserDto);
                             showToast("Registered");
 

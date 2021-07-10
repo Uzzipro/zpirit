@@ -82,6 +82,57 @@
             android:textColor="@color/white"
             android:textSize="@dimen/_10_sp" />
 
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+            android:gravity="center"
+            android:visibility="gone"
+            android:paddingHorizontal="5dp"
+            android:id="@+id/llPlusMinus"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/minusQuantity"
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:textColor="@color/white"
+                android:background="@drawable/buttonleft"
+                android:text="-"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/quantityCount"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="0"
+                android:fontFamily="@font/sfproroundedsemibold"
+                android:textColor="#000000"
+                android:textSize="12sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/plusQuantity"
+                android:layout_width="30dp"
+                android:textColor="@color/white"
+                android:layout_height="20dp"
+                android:background="@drawable/buttonright"
+                android:text="+"
+                android:textSize="12sp" />
+
+
+        </LinearLayout>
+
+
+
+
+
+
+
+
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.AppCompatImageView

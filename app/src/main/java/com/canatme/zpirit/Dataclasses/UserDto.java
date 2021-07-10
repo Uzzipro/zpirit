@@ -13,6 +13,25 @@ public class UserDto {
     private String deliveryAddress;
     private String specificOffers;
     private String verifiedAadhaar;
+    private String profilePicture;
+    private String bio;
+
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
 
     public String getfName() {
         return fName;
@@ -86,7 +105,7 @@ public class UserDto {
         this.verifiedAadhaar = verifiedAadhaar;
     }
 
-    public UserDto(String fName, String lName, String phNumber, String emailAddress, String password, String totalOrders, String deliveryAddress, String specificOffers, String verifiedAadhaar) {
+    public UserDto(String fName, String lName, String phNumber, String emailAddress, String password, String totalOrders, String deliveryAddress, String specificOffers, String verifiedAadhaar, String profilePicture, String bio) {
         this.fName = fName;
         this.lName = lName;
         this.phNumber = phNumber;
@@ -96,6 +115,8 @@ public class UserDto {
         this.deliveryAddress = deliveryAddress;
         this.specificOffers = specificOffers;
         this.verifiedAadhaar = verifiedAadhaar;
+        this.profilePicture = profilePicture;
+        this.bio = bio;
     }
 
     public UserDto()
