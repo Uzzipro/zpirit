@@ -8,7 +8,15 @@ public class ProductDto {
     private String productMeasurement;
     private String productPrice;
     private String productInfo;
+    private boolean cartHasItem = false;
 
+    public boolean isCartHasItem() {
+        return cartHasItem;
+    }
+
+    public void setCartHasItem(boolean cartHasItem) {
+        this.cartHasItem = cartHasItem;
+    }
 
     public String getProductID() {
         return productID;
@@ -66,7 +74,7 @@ public class ProductDto {
         this.productInfo = productInfo;
     }
 
-    public ProductDto(String productID, String productImg, String productType, String productName, String productMeasurement, String productPrice, String productInfo) {
+    public ProductDto(String productID, String productImg, String productType, String productName, String productMeasurement, String productPrice, String productInfo, boolean cartHasItem) {
         this.productID = productID;
         this.productImg = productImg;
         this.productType = productType;
@@ -74,6 +82,7 @@ public class ProductDto {
         this.productMeasurement = productMeasurement;
         this.productPrice = productPrice;
         this.productInfo = productInfo;
+        this.cartHasItem = cartHasItem;
     }
 
     public ProductDto() {

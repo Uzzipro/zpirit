@@ -3,7 +3,6 @@ package com.canatme.zpirit.Adapters;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,8 +28,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -61,39 +57,62 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
         final ProductDto cardData = cardinfoList.get(position);
-
         if (cardData.getProductImg() != null) {
             Picasso.get().load(cardData.getProductImg()).into(holder.ivProductImg);
         }
-        Log.e(TAG, "onBindViewHolder: "+cardData.getProductID());
         holder.tvProductName.setText(cardData.getProductName());
         holder.tvProductType.setText(cardData.getProductType());
         holder.tvProductMeasurement.setText(cardData.getProductMeasurement());
-        String price = "Rs. "+cardData.getProductPrice();
+        String price = "Rs. " + cardData.getProductPrice();
         holder.tvProductPrice.setText(price);
         holder.clProductMain.setOnClickListener(view -> productDetailClick(position));
+        holder.btMinus.setOnClickListener(v -> setMinusQuantity(holder, position));
+        holder.btPlus.setOnClickListener(v -> setPlusQuantity(holder, position, false));
 
+        final String phNumber = context.getSharedPreferences(Constants.ACCESS_PREFS, Context.MODE_PRIVATE).getString(Constants.PH_NUMBER, "No phone number detected");
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+        db.child("cart_table").child(phNumber).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChildren()) {
+                    for (DataSnapshot dataSnapshot2 : dataSnapshot.getChildren()) {
+                        CartDto cx = dataSnapshot2.getValue(CartDto.class);
+
+                        if (cardData.getProductID().equalsIgnoreCase(cx.getProductKey())) {
+//                            Log.e(TAG, "onDataChange: " + holder.getAdapterPosition() + " " + pos);
+                            quantityCountint = Integer.parseInt(cx.getProductQuantity());
+                            cardData.setCartHasItem(true);
+                        }
+
+                    }
+                    if(cardData.isCartHasItem())
+                    {
+                        holder.llPlusMinus.setVisibility(View.VISIBLE);
+                        holder.btAddToCart.setVisibility(View.GONE);
+                        holder.quantityCount.setText(String.valueOf(quantityCountint));
+                        Log.e(TAG, "onDataChange: "+quantityCountint);
+                    }
+                    else
+                    {
+                        holder.llPlusMinus.setVisibility(View.GONE);
+                        holder.btAddToCart.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         holder.btAddToCart.setOnClickListener(view -> {
 //            addProductToCart(holder, true, position);
             setPlusQuantity(holder, position, true);
         });
 
-        holder.btMinus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setMinusQuantity(holder, position);
-
-            }
-        });
-
-        holder.btPlus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setPlusQuantity(holder, position, false);
-
-            }
-        });
-        getData(holder, position);
+//        getData(holder, position);
     }
     private void setMinusQuantity(final MyViewHolder holder, int pos) {
         quantityCountint = quantityCountint - 1;
@@ -101,18 +120,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
     }
 
     public void setPlusQuantity(final MyViewHolder holder, int pos, boolean first) {
-        if(first)
-        {
+        if (first) {
             holder.btAddToCart.setVisibility(View.GONE);
             holder.llPlusMinus.setVisibility(View.VISIBLE);
-
         }
-            quantityCountint = quantityCountint + 1;
-            addProductToCart(holder, true, pos);
+        quantityCountint = quantityCountint + 1;
+        addProductToCart(holder, true, pos);
     }
 
-    private void addProductToCart(final MyViewHolder holder, final boolean minusOrPlus, final int pos)
-    {
+    private void addProductToCart(final MyViewHolder holder, final boolean minusOrPlus, final int pos) {
         final String phNumber = context.getSharedPreferences(Constants.ACCESS_PREFS, Context.MODE_PRIVATE).getString(Constants.PH_NUMBER, "No phone number detected");
         final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
 
@@ -195,8 +211,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         });
 
     }
-    private void productDetailClick(int pos)
-    {
+
+    private void productDetailClick(int pos) {
         final ProductDto cardData = cardinfoList.get(pos);
 
         Intent i = new Intent(context, ProductDetailActivity.class);
@@ -212,9 +228,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
 
     private void getData(final MyViewHolder holder, int pos) {
-        final String pKey;
+        final String pKey;//current position product key
         ProductDto productsClass = cardinfoList.get(pos);
         pKey = productsClass.getProductID();
+
+        Log.e(TAG, "getData: " + getItemId(pos));
 
         final String phNumber = context.getSharedPreferences(Constants.ACCESS_PREFS, Context.MODE_PRIVATE).getString(Constants.PH_NUMBER, "No phone number detected");
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
@@ -224,21 +242,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                 if (dataSnapshot.hasChildren()) {
                     for (DataSnapshot dataSnapshot2 : dataSnapshot.getChildren()) {
                         CartDto cx = dataSnapshot2.getValue(CartDto.class);
-                        if (TextUtils.equals(cx.getProductKey(), pKey)) {
-                            quantityCountint = Integer.parseInt(cx.getProductQuantity());
-                            if(quantityCountint >= 1)
-                            {
-                                holder.llPlusMinus.setVisibility(View.VISIBLE);
-                                holder.btAddToCart.setVisibility(View.GONE);
-                                holder.quantityCount.setText(cx.getProductQuantity());
-                            }
-                            else
-                            {
-                                holder.llPlusMinus.setVisibility(View.GONE);
-                                holder.btAddToCart.setVisibility(View.VISIBLE);
-                            }
+                        quantityCountint = Integer.parseInt(cx.getProductQuantity());
+                        if (pKey.equalsIgnoreCase(cx.getProductKey())) {
+                            Log.e(TAG, "onDataChange: " + holder.getAdapterPosition() + " " + pos);
+                            holder.llPlusMinus.setVisibility(View.VISIBLE);
+                            holder.btAddToCart.setVisibility(View.GONE);
+                            holder.quantityCount.setText(String.valueOf(quantityCountint));
                         }
+
                     }
+                } else {
                 }
 
             }
@@ -249,6 +262,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
             }
         });
     }
+
     @Override
     public int getItemCount() {
         return cardinfoList.size();
@@ -270,7 +284,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         private ConstraintLayout clProductMain;
         private LinearLayout llPlusMinus;
         private ImageView ivProductImg;
-        private Button btAddToCart, btMinus, btPlus;;
+        private Button btAddToCart, btMinus, btPlus;
 
         public MyViewHolder(View view) {
             super(view);

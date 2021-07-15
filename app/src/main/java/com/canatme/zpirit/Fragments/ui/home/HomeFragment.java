@@ -253,10 +253,9 @@ public class HomeFragment extends Fragment {
             }
             else {
                 rlDrinkType.setVisibility(View.VISIBLE);
-
             }
             loadingScreen();
-            listProduct.clear();
+
             llRv.setVisibility(View.VISIBLE);
             llProductNotFound.setVisibility(View.GONE);
             animationView.cancelAnimation();
@@ -266,11 +265,12 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                     if (snapshot.hasChildren()) {
+                        listProduct.clear();
+                        adapter.notifyDataSetChanged();
                         for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
                             ProductDto productDto = dataSnapshot1.getValue(ProductDto.class);
                             listProduct.add(productDto);
                             adapter.notifyDataSetChanged();
-
                         }
                         loadingDialog.dismiss();
                     }
