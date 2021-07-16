@@ -27,4 +27,24 @@ public class Constants {
     public static final String PRODUCT_INFO = "PRODUCT_INFO";
     /**/
 
+
+    /*Razor Pay constants*/
+    public static final String RP_NAME = "name";
+    public static final String RP_DESCRIPTION = "description";
+    public static final String RP_IMAGE = "image";
+    public static final String RP_ORDERID = "order_id";
+    public static final String RP_THEMECOLOR = "theme.color";
+    public static final String RP_CURRENCY = "currency";
+    public static final String RP_AMOUNT = "amount";
+    public static final String RP_PREFILLEMAIL = "prefill.email";
+    public static final String RP_PREFILLCONTACT = "prefill.contact";
+    public static final String RP_ENABLED = "enabled";
+    public static final String RP_MAXCOUNT = "max_count";
+    public static final String RP_RETRY = "retry";
+    public static final String RP_SENDSMSHASH = "send_sms_hash";
+    /**/
+
+    /*Api Paths*/
+    public static final String RP_ORDERS = "https://api.razorpay.com/v1/orders/";
+    /**/
 }

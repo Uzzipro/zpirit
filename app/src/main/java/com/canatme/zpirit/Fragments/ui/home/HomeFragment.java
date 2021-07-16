@@ -1,6 +1,7 @@
 package com.canatme.zpirit.Fragments.ui.home;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -27,6 +29,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.canatme.zpirit.Activities.CartActivity;
 import com.canatme.zpirit.Adapters.ProductAdapter;
 import com.canatme.zpirit.Dataclasses.CategoryDto;
 import com.canatme.zpirit.Dataclasses.ProductDto;
@@ -63,6 +66,7 @@ public class HomeFragment extends Fragment {
     private TextView tvLoading;
     private RecyclerView rvProduct;
     private ArrayList<String> productTypesList;
+    private ImageView ivCart;
 
     /*Alert dialog box for loading screen*/
     private AlertDialog loadingDialog;
@@ -116,6 +120,10 @@ public class HomeFragment extends Fragment {
         rvProduct = binding.rvProduct;
         /**/
 
+        /*ImageViews*/
+        ivCart = binding.ivCart;
+        /**/
+
         /*Setting adapters and populating it*/
         listProduct = new ArrayList<>();
         adapter = new ProductAdapter(getActivity(), listProduct);
@@ -142,6 +150,15 @@ public class HomeFragment extends Fragment {
 
         llDrinks.setOnClickListener(view -> drinksClick());
         llSnacks.setOnClickListener(view -> snacksClick());
+
+        ivCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), CartActivity.class);
+                startActivity(i);
+            }
+        });
+
 
         return root;
     }

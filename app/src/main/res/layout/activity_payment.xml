@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bggrey"
+    tools:context=".Activities.PaymentActivity">
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/llToolbarHome"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/bggrey"
+        android:orientation="horizontal"
+        android:padding="@dimen/_10_dp"
+        android:weightSum="1"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivBack"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"
+            android:padding="@dimen/_5_dp"
+            android:src="@drawable/ic_back" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvHomeFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            android:fontFamily="@font/sfproroundedbold"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:text="@string/checkout"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_24_sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbarHome" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/llToolbarHome"
+        android:layout_marginTop="@dimen/_20_sp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPersonalDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_30_dp"
+                android:layout_marginTop="@dimen/_20_dp"
+                android:fontFamily="@font/sfproroundedbold"
+                android:gravity="center_vertical"
+                android:text="@string/personal_details"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_20_sp"
+                app:layout_constraintBottom_toTopOf="@id/llPersonalDetails"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.05"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llPersonalDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_30_dp"
+                android:layout_marginTop="@dimen/_10_dp"
+                android:background="@drawable/llbg"
+                android:orientation="horizontal"
+                android:padding="@dimen/_10_dp"
+                app:layout_constraintTop_toBottomOf="@id/tvPersonalDetails">
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rbPaymentMethod"/>
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_10_dp"
+                    android:id="@+id/ivPaymentMethod"
+                    app:srcCompat="@drawable/ic_payment"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/tvPaymentMethod"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/_5_dp"
+                    android:fontFamily="@font/sfproroundedmedium"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14_sp"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:text="@string/payment_method_text"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llOrders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_30_dp"
+                android:layout_marginTop="@dimen/_10_dp"
+                android:background="@drawable/llbg"
+                android:orientation="horizontal"
+                android:padding="@dimen/_10_dp"
+                android:weightSum="1"
+                app:layout_constraintTop_toBottomOf="@id/llPersonalDetails">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
+                    android:fontFamily="@font/sfproroundedsemibold"
+                    android:padding="@dimen/_10_dp"
+                    android:text="@string/total_amount"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_15_sp" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.6"
+                    android:fontFamily="@font/sfproroundedsemibold"
+                    android:padding="@dimen/_10_dp"
+                    android:text="Rs.30000"
+                    android:id="@+id/tvTotal"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_15_sp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llMakePayment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_30_dp"
+                android:layout_marginTop="@dimen/_10_dp"
+                android:background="@drawable/llbg"
+                android:orientation="horizontal"
+                android:padding="@dimen/_10_dp"
+                android:weightSum="1"
+                app:layout_constraintTop_toBottomOf="@id/llOrders">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="30dp"
+                    android:id="@+id/btMakePayment"
+                    android:text="Make Payment"
+                    android:background="@drawable/btbg"
+                    android:textColor="@color/white"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_80_dp"
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginVertical="20dp"
+    android:background="@drawable/dialog_white_bg"
+    android:elevation="5dp"
+    android:orientation="horizontal"
+    android:paddingVertical="10dp"
+    android:weightSum="1">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivProductImg"
+        android:layout_width="64dp"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        app:srcCompat="@drawable/ic_cart"
+        tools:ignore="VectorDrawableCompat" />
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/llDetails"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.4"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvProductName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sfproroundedmedium"
+            android:textColor="@color/black"
+            android:textSize="16dp" />
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvProductPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"
+                android:fontFamily="@font/sfproroundedregular"
+                android:gravity="bottom"
+                android:textColor="@color/orange"
+                android:textSize="14dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvProductWeight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/sfproroundedmedium"
+                android:maxLines="1"
+                android:textColor="@color/grey"
+                android:textSize="12dp" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.6"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingHorizontal="5dp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/minusQuantity"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:stateListAnimator="@null"
+            android:elevation="0dp"
+            android:background="@drawable/buttonleft"
+            android:text="-"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/quantityCount"
+            android:layout_width="40dp"
+            android:background="@color/orange"
+            android:elevation="0dp"
+            android:layout_height="30dp"
+            android:fontFamily="@font/sfproroundedsemibold"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/plusQuantity"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:elevation="0dp"
+            android:stateListAnimator="@null"
+            android:background="@drawable/buttonright"
+            android:text="+"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+
+    </LinearLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

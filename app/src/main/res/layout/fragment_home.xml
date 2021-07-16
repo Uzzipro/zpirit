@@ -36,6 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.8"
             android:padding="@dimen/_5_dp"
+            android:id="@+id/ivCart"
             android:src="@drawable/ic_cart" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -25,11 +25,23 @@
     <string name="snacks">Snacks</string>
     <string name="select_drink_type">Select drink type</string>
     <string name="add_to_cart">Add to cart</string>
+    <string name="cart_text">Cart</string>
+    <string name="checkout">Checkout</string>
+    <string name="make_payment">Make Payment</string>
+    <string name="total_amount">Total</string>
+    <string name="payment_method">Payment method</string>
+    <string name="payment_method_text">Debit card, Credit card, UPI, Wallets</string>
 
     <!-- Product detail strings -->
     <string name="product_info">Product info</string>
     <string name="product_not_found">Product type not found..</string>
     <string name="product_info_testtext">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
+
+
+    <!--Razor pay details-->
+    <string name="razor_pay_test_key">rzp_test_5Bw6OUKxv7L2LR</string>
+    <string name="razor_pay_live_key">rzp_live_u3Ae8GQIyReAy6</string>
+
 
 
 </resources>
