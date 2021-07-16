@@ -1,9 +1,17 @@
 package com.canatme.zpirit.Activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,6 +20,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.canatme.zpirit.Activities.Service.ApiService;
 import com.canatme.zpirit.Dataclasses.CartDto;
 import com.canatme.zpirit.Dataclasses.OrderCreatedResponseDto;
@@ -51,7 +60,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
     private String phNumber, emailAddress;
     private CartDto cartData;
     private DatabaseReference dbRef;
-
+    private AlertDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +120,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
         });
 
         btMakePayment.setOnClickListener(view -> {
+            loadingScreen();
             String value_in_paisa = String.valueOf(grandTotal * 100);
 //            initializePayment("ref_1", "100", phNumber, emailAddress);
 
@@ -172,7 +182,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
             public void onResponse(Call<OrderCreatedResponseDto> call, Response<OrderCreatedResponseDto> response) {
                 Log.e(TAG, "onResponse: " + rp_key_id + " "+rp_key_secret);
                 String order_id = response.body().getId();
-                initializePayment(description, amounttoInt, phNumber, email, order_id);
+                initializePayment(description, amounttoInt, phNumber, email, order_id, rp_key_id);
             }
 
             @Override
@@ -185,9 +195,9 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
     }
 
 
-    private void initializePayment(String description, int amount, String phNumber, String email, String order_id) {
+    private void initializePayment(String description, int amount, String phNumber, String email, String order_id, String rp_key_id) {
         Checkout checkout = new Checkout();
-        checkout.setKeyID(getResources().getString(R.string.razor_pay_test_key));
+        checkout.setKeyID(rp_key_id);
         checkout.setImage(R.drawable.ic_logozpirit_outlinesfortext);
         final Activity activity = this;
         try {
@@ -210,7 +220,11 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
             retryObj.put(Constants.RP_ENABLED, true);
             retryObj.put(Constants.RP_MAXCOUNT, 4);
             options.put(Constants.RP_RETRY, retryObj);
+
+            loadingDialog.dismiss();
+            
             checkout.open(activity, options);
+
             /**/
 
 
@@ -229,8 +243,25 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
     public void onPaymentError(int i, String s) {
         Log.e(TAG, "Razorpay: onPaymentFailure: " + s + " " + i);
         showToast("Payment Failed");
-
-
+    }
+    private void loadingScreen()
+    {
+        LayoutInflater factory = LayoutInflater.from(this);
+        final View dialogLoading = factory.inflate(R.layout.loading, null);
+        loadingDialog = new AlertDialog.Builder(this).create();
+        Window window = loadingDialog.getWindow();
+        WindowManager.LayoutParams wlp = window.getAttributes();
+        wlp.gravity = Gravity.CENTER;
+//        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        window.setAttributes(wlp);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        loadingDialog.setCancelable(false);
+        loadingDialog.setView(dialogLoading);
+        loadingDialog.show();
+        TextView tvLoading = dialogLoading.findViewById(R.id.tvLoading);
+        LottieAnimationView animation_view = dialogLoading.findViewById(R.id.animation_view);
+        animation_view.setAnimation(R.raw.payment_animation);
+        tvLoading.setText("Initializing payment");
     }
 
     private void showToast(String msg) {
