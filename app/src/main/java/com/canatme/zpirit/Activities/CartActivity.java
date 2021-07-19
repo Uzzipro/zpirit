@@ -30,8 +30,8 @@ import java.util.List;
 
 public class CartActivity extends AppCompatActivity {
     private ImageView ivBack;
-    private RecyclerView rvProduct;
     private List<CartDto> cartDataList;
+    private RecyclerView rvProduct;
     private CartAdapter adapter;
     private Button btMakePayment;
 

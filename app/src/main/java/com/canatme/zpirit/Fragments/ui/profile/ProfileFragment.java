@@ -2,6 +2,7 @@ package com.canatme.zpirit.Fragments.ui.profile;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -16,11 +17,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.canatme.zpirit.Activities.AddressBookActivity;
 import com.canatme.zpirit.Dataclasses.UserDto;
 import com.canatme.zpirit.R;
 import com.canatme.zpirit.Utils.Constants;
@@ -40,6 +43,7 @@ public class ProfileFragment extends Fragment {
     private DatabaseReference dbRefPersonalDetails;
     private ProfileViewModel profileViewModel;
     private FragmentProfileBinding binding;
+    private LinearLayoutCompat llAddresses;
     private String phNumber, fullName, phNumberConcat;
     private AlertDialog loadingDialog;
     private TextView tvName, tvEmailAddress, tvPhNumber, tvBio;
@@ -56,10 +60,18 @@ public class ProfileFragment extends Fragment {
         tvEmailAddress = binding.tvEmailAddress;
         tvPhNumber = binding.tvPhNumber;
         tvBio = binding.tvBio;
+        llAddresses = binding.llAddresses;
 
         phNumber = getActivity().getSharedPreferences(Constants.ACCESS_PREFS, Context.MODE_PRIVATE).getString(Constants.PH_NUMBER, "nophNumberfound");
         dbRefPersonalDetails = FirebaseDatabase.getInstance().getReference("users");
         getPersonalDetails();
+        llAddresses.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), AddressBookActivity.class);
+                startActivity(i);
+            }
+        });
         return root;
     }
 

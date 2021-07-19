@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.OrderPlacedActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llToolbarHome"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/bggrey"
+                android:orientation="horizontal"
+                android:padding="@dimen/_10_dp"
+                android:weightSum="1"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvHomeFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:fontFamily="@font/sfproroundedbold"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="20dp"
+                    android:text="@string/order_placed"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_24_sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/toolbarHome" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivCart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.8"
+                    android:visibility="gone"
+                    android:padding="@dimen/_5_dp"
+                    android:src="@drawable/ic_cart" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animation_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_150_dp"
+                android:layout_marginStart="@dimen/_8_dp"
+                android:layout_marginLeft="@dimen/_8_dp"
+                android:layout_marginTop="@dimen/_20_dp"
+                android:layout_marginEnd="@dimen/_8_dp"
+                android:layout_marginRight="@dimen/_8_dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/llToolbarHome"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/tick_blue" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvOrderPlaced"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sfproroundedsemibold"
+                android:gravity="center"
+                android:text="@string/order_placed_two"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_17sp"
+                app:layout_constraintTop_toBottomOf="@id/animation_view" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvEstDeliveryDateTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sfproroundedmedium"
+                android:gravity="center"
+                android:layout_marginVertical="@dimen/_10_dp"
+                android:text="Estimated Delivery Date\n26-07-2021, 8:00pm"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_15_sp"
+                app:layout_constraintTop_toBottomOf="@id/tvOrderPlaced" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvCheckYourOrderDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sfproroundedmedium"
+                android:gravity="center"
+                android:text="@string/check_details_fororder"
+                android:textColor="@color/orange"
+                android:layout_marginVertical="@dimen/_10_dp"
+                android:textSize="@dimen/_15_sp"
+                app:layout_constraintTop_toBottomOf="@id/tvEstDeliveryDateTime" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btCheckYourOrders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_30_dp"
+                android:layout_marginTop="@dimen/_20_dp"
+                android:background="@drawable/btstrokebg"
+                android:text="@string/go_to_your_orders"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toBottomOf="@id/tvCheckYourOrderDetails" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btShopMore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_30_dp"
+                android:layout_marginTop="@dimen/_30_dp"
+                android:background="@drawable/btbg"
+                android:text="@string/shop_more"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/btCheckYourOrders" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dialog_white_bg2"
+    android:paddingVertical="@dimen/_20_dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llEnterAddressDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/_10_dp"
+                android:weightSum="1"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvEnterAddressDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:fontFamily="@font/sfproroundedmedium"
+                    android:text="@string/enter_address_details"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_20_sp" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/tvCloseDialog"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.9"
+                    android:padding="@dimen/_10_dp"
+                    android:src="@drawable/ic__cross" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <View
+                android:id="@+id/dividingView"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/grey"
+                app:layout_constraintTop_toBottomOf="@id/llEnterAddressDetails" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llAddressDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20_dp"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/_20_dp"
+                app:layout_constraintTop_toBottomOf="@id/dividingView">
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_etHouseNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_house_number">
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etHouseNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:fontFamily="@font/sfproroundedregular"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/grey"
+                    android:textSize="@dimen/textsize_17sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:id="@+id/dividingView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginVertical="@dimen/_10_dp"
+                    android:background="@color/grey"
+                    app:layout_constraintTop_toBottomOf="@id/llEnterAddressDetails" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_etFloor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_floor">
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etFloor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/grey"
+                    android:textSize="@dimen/textsize_17sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:id="@+id/dividingView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginVertical="@dimen/_10_dp"
+                    android:background="@color/grey"
+                    app:layout_constraintTop_toBottomOf="@id/llEnterAddressDetails" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_etTowerBlock"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_tower_block">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etTowerBlock"
+                    android:layout_width="match_parent"
+                    android:maxLines="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/grey"
+                    android:textSize="@dimen/textsize_17sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+                <View
+                    android:id="@+id/dividingView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginVertical="@dimen/_10_dp"
+                    android:background="@color/grey"
+                    app:layout_constraintTop_toBottomOf="@id/llEnterAddressDetails" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_etHowToReach"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_how_to_reach">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etHowToReach"
+                    android:layout_width="match_parent"
+                    android:maxLines="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/grey"
+                    android:textSize="@dimen/textsize_17sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:id="@+id/dividingView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginVertical="@dimen/_10_dp"
+                    android:background="@color/grey"
+                    app:layout_constraintTop_toBottomOf="@id/llEnterAddressDetails" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_etTag"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_customized_tag">
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/etTag"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:maxLines="1"
+                        android:textColorHint="@color/grey"
+                        android:textSize="@dimen/textsize_17sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
+                <View
+                    android:id="@+id/dividingView5"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginVertical="@dimen/_10_dp"
+                    android:background="@color/grey"
+                    app:layout_constraintTop_toBottomOf="@id/llEnterAddressDetails" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btSaveAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btbg"
+                    android:fontFamily="@font/sfproroundedmedium"
+                    android:text="@string/save_address"
+                    android:textColor="@color/white" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

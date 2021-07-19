@@ -3,6 +3,7 @@ package com.canatme.zpirit.Activities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.canatme.zpirit.Activities.Service.ApiService;
 import com.canatme.zpirit.Dataclasses.CartDto;
 import com.canatme.zpirit.Dataclasses.OrderCreatedResponseDto;
+import com.canatme.zpirit.Dataclasses.OrderDto;
 import com.canatme.zpirit.Dataclasses.RazorPayCreateOrderDtoBody;
 import com.canatme.zpirit.Dataclasses.RpKeyDto;
 import com.canatme.zpirit.Dataclasses.UserDto;
@@ -41,6 +43,7 @@ import com.razorpay.PaymentResultListener;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -57,10 +60,12 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
     private Button btMakePayment;
     private TextView tvTotal;
     private int grandTotal;
-    private String phNumber, emailAddress;
+    private String phNumber, emailAddress, orderID;
     private CartDto cartData;
     private DatabaseReference dbRef;
     private AlertDialog loadingDialog;
+    private ArrayList<CartDto> cdcList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +75,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
         phNumber = getSharedPreferences(Constants.ACCESS_PREFS, Context.MODE_PRIVATE).getString(Constants.PH_NUMBER, "No phone number detected");
         ivBack = findViewById(R.id.ivBack);
         tvTotal = findViewById(R.id.tvTotal);
+        cdcList = new ArrayList<>();
         dbRef = FirebaseDatabase.getInstance().getReference();
         btMakePayment = findViewById(R.id.btMakePayment);
         ivBack.setOnClickListener(view -> {
@@ -82,6 +88,8 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
                 if (snapshot.hasChildren()) {
                     for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
                         cartData = dataSnapshot1.getValue(CartDto.class);
+                        cdcList.add(cartData);
+
                         int price = Integer.parseInt(cartData.getProductTotalPrice());
                         grandTotal = grandTotal + price;
                     }
@@ -149,8 +157,6 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
     }
 
     private Retrofit getClient(final Context context, String description, String amount, String phNumber, String email, String rp_key_id, String rp_key_secret) {
-
-
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient.Builder client = new OkHttpClient.Builder();
@@ -180,8 +186,8 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
         call.enqueue(new Callback<OrderCreatedResponseDto>() {
             @Override
             public void onResponse(Call<OrderCreatedResponseDto> call, Response<OrderCreatedResponseDto> response) {
-                Log.e(TAG, "onResponse: " + rp_key_id + " "+rp_key_secret);
                 String order_id = response.body().getId();
+                orderID = response.body().getId();
                 initializePayment(description, amounttoInt, phNumber, email, order_id, rp_key_id);
             }
 
@@ -222,7 +228,6 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
             options.put(Constants.RP_RETRY, retryObj);
 
             loadingDialog.dismiss();
-            
             checkout.open(activity, options);
 
             /**/
@@ -235,17 +240,39 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
 
     @Override
     public void onPaymentSuccess(String s) {
-        Log.e(TAG, "Razorpay: onPaymentSuccess: " + s);
-        showToast("Payment Successfull");
+
+        placeOrder(s);
+        Log.e(TAG, "onPaymentSuccess: " + s);
+        showToast("Payment Successfull" + s);
+    }
+
+    private void placeOrder(String paymentID) {
+        Log.e(TAG, "placeOrder: " + orderID);
+        String orderTime = String.valueOf(System.currentTimeMillis());
+
+        OrderDto orderDto = new OrderDto(orderID, phNumber, String.valueOf(grandTotal), cdcList, orderTime, "paid", paymentID);
+
+        dbRef.child("orders").child(phNumber).child(orderID).setValue(orderDto);
+        dbRef.child("cart_table").child(phNumber).removeValue();
+
+        Intent i = new Intent(PaymentActivity.this, OrderPlacedActivity.class);
+        Log.e(TAG, "placeOrder: "+orderTime);
+        i.putExtra("deliveryDate", orderTime);
+        startActivity(i);
+//        String orderTime = String.valueOf(System.currentTimeMillis());
+//        OrderDto orderDataClass = new OrderDto(orderID, phNumber, String.valueOf(grandTotal), cdcList, orderTime, "Not Paid");
+
+//        dbRef = FirebaseDatabase.getInstance().getReference();
+//        dbRef.child("orders").child(phNumber).child(orderID).setValue(orderDataClass);
+//        dbRef.child("cart_table").child(phNumber).removeValue();
     }
 
     @Override
     public void onPaymentError(int i, String s) {
-        Log.e(TAG, "Razorpay: onPaymentFailure: " + s + " " + i);
         showToast("Payment Failed");
     }
-    private void loadingScreen()
-    {
+
+    private void loadingScreen() {
         LayoutInflater factory = LayoutInflater.from(this);
         final View dialogLoading = factory.inflate(R.layout.loading, null);
         loadingDialog = new AlertDialog.Builder(this).create();

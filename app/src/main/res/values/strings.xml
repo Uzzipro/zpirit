@@ -27,10 +27,18 @@
     <string name="add_to_cart">Add to cart</string>
     <string name="cart_text">Cart</string>
     <string name="checkout">Checkout</string>
+    <string name="address_book">Address book</string>
     <string name="make_payment">Make Payment</string>
     <string name="total_amount">Total</string>
     <string name="payment_method">Payment method</string>
     <string name="payment_method_text">Debit card, Credit card, UPI, Wallets</string>
+    <string name="order_placed">Order Placed</string>
+    <string name="order_placed_two">Your order has been successfully placed.</string>
+    <string name="shop_more">Shop for more</string>
+    <string name="go_to_your_orders">Go to your orders</string>
+    <string name="check_details_fororder">Check your order details here</string>
+    <string name="add_address">Add Address</string>
+    <string name="enter_address_details">Enter address details</string>
 
     <!-- Product detail strings -->
     <string name="product_info">Product info</string>
@@ -42,6 +50,15 @@
     <string name="razor_pay_test_key">rzp_test_5Bw6OUKxv7L2LR</string>
     <string name="razor_pay_live_key">rzp_live_u3Ae8GQIyReAy6</string>
 
+
+
+    <!--Address dialogbox hints-->
+    <string name="hint_house_number">House number*</string>
+    <string name="hint_floor">Floor*</string>
+    <string name="hint_tower_block">Tower/Block*</string>
+    <string name="hint_how_to_reach">How to reach(Optional)</string>
+    <string name="hint_customized_tag">Tag(Friend’s house, My House)</string>
+    <string name="save_address">Save address</string>
 
 
 </resources>

@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.canatme.zpirit">
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,8 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Zpirit"
         android:windowSoftInputMode="adjustResize|stateHidden">
-        <activity android:name=".Activities.PaymentActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        <activity android:name=".Activities.AddressBookActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" ></activity>
+        <activity
+            android:name=".Activities.OrderPlacedActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".Activities.PaymentActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".Activities.CartActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
