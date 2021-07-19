@@ -67,8 +67,6 @@
                 app:layout_constraintHorizontal_bias="0.05"
                 app:layout_constraintStart_toStartOf="parent" />
 
-
-
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/llPersonalDetails"
                 android:layout_width="match_parent"
@@ -106,7 +104,7 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/llOrders"
+                android:id="@+id/llDeliveryAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_30_dp"
@@ -120,10 +118,105 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:fontFamily="@font/sfproroundedsemibold"
+                    android:padding="@dimen/_10_dp"
+                    android:id="@+id/tvDeliveryAddress"
+                    android:text="@string/select_delivery_address"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_15_sp" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.8"
+                    android:padding="@dimen/_5_dp"
+                    android:src="@drawable/ic_keyboard_arrow_down_black_24dp"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llOrders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_30_dp"
+                android:layout_marginTop="@dimen/_10_dp"
+                android:background="@drawable/llbg"
+                android:orientation="vertical"
+                android:padding="@dimen/_10_dp"
+                android:weightSum="1"
+                app:layout_constraintTop_toBottomOf="@id/llDeliveryAddress">
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:orientation="horizontal">
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4"
+                        android:fontFamily="@font/sfproroundedsemibold"
+                        android:padding="@dimen/_10_dp"
+                        android:text="Product total"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_15_sp" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.6"
+                        android:fontFamily="@font/sfproroundedsemibold"
+                        android:padding="@dimen/_10_dp"
+                        android:text=""
+                        android:gravity="right"
+                        android:id="@+id/tvProductTotal"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_15_sp" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4"
+                        android:fontFamily="@font/sfproroundedsemibold"
+                        android:padding="@dimen/_10_dp"
+                        android:text="Delivery Charge"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_15_sp" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.6"
+                        android:fontFamily="@font/sfproroundedsemibold"
+                        android:padding="@dimen/_10_dp"
+                        android:text=""
+                        android:gravity="right"
+                        android:id="@+id/tvDeliveryCharge"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_15_sp" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="0.4"
                     android:fontFamily="@font/sfproroundedsemibold"
                     android:padding="@dimen/_10_dp"
-                    android:text="@string/total_amount"
+                    android:text="Grand total"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_15_sp" />
                 <androidx.appcompat.widget.AppCompatTextView
@@ -132,11 +225,13 @@
                     android:layout_weight="0.6"
                     android:fontFamily="@font/sfproroundedsemibold"
                     android:padding="@dimen/_10_dp"
-                    android:text="Rs.30000"
+                    android:text=""
+                    android:gravity="right"
                     android:id="@+id/tvTotal"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_15_sp" />
 
+            </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
 
 

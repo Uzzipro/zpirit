@@ -20,9 +20,15 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatRadioButton;
+import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.canatme.zpirit.Activities.Service.ApiService;
+import com.canatme.zpirit.Adapters.SelectAddressAdapter;
+import com.canatme.zpirit.Dataclasses.AddressDto;
 import com.canatme.zpirit.Dataclasses.CartDto;
 import com.canatme.zpirit.Dataclasses.OrderCreatedResponseDto;
 import com.canatme.zpirit.Dataclasses.OrderDto;
@@ -44,6 +50,7 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -58,14 +65,16 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
     private static final String TAG = "PaymentActivity";
     private ImageView ivBack;
     private Button btMakePayment;
-    private TextView tvTotal;
+    private TextView tvTotal, tvDeliveryAddress, tvDeliveryCharge, tvProductTotal;
     private int grandTotal;
+    private LinearLayoutCompat llDeliveryAddress;
     private String phNumber, emailAddress, orderID;
     private CartDto cartData;
     private DatabaseReference dbRef;
-    private AlertDialog loadingDialog;
+    private AlertDialog loadingDialog, addressDialog;
     private ArrayList<CartDto> cdcList;
-
+    private String deliverOrderID;
+    private AppCompatRadioButton rbPaymentMethod;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,12 +84,19 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
         phNumber = getSharedPreferences(Constants.ACCESS_PREFS, Context.MODE_PRIVATE).getString(Constants.PH_NUMBER, "No phone number detected");
         ivBack = findViewById(R.id.ivBack);
         tvTotal = findViewById(R.id.tvTotal);
+        rbPaymentMethod = findViewById(R.id.rbPaymentMethod);
+        tvDeliveryAddress = findViewById(R.id.tvDeliveryAddress);
+        llDeliveryAddress = findViewById(R.id.llDeliveryAddress);
+        tvDeliveryCharge = findViewById(R.id.tvDeliveryCharge);
+        tvProductTotal = findViewById(R.id.tvProductTotal);
         cdcList = new ArrayList<>();
         dbRef = FirebaseDatabase.getInstance().getReference();
         btMakePayment = findViewById(R.id.btMakePayment);
+        llDeliveryAddress.setOnClickListener(view -> addAddressDialog());
         ivBack.setOnClickListener(view -> {
             onBackPressed();
         });
+        //Calculating the total
         Query q1 = dbRef.child("cart_table").child(phNumber);
         q1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -95,10 +111,10 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
                     }
                     //add here
                     String tvText = "Rs. " + String.valueOf(grandTotal);
-                    tvTotal.setText(tvText);
+                    tvProductTotal.setText(tvText);
+                    getDeliveryCharges(grandTotal);
 
                 }
-
             }
 
             @Override
@@ -128,30 +144,126 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
         });
 
         btMakePayment.setOnClickListener(view -> {
-            loadingScreen();
-            String value_in_paisa = String.valueOf(grandTotal * 100);
+            if (!rbPaymentMethod.isChecked()) {
+                showToast("Please select a payment method");
+            } else {
+                if (tvDeliveryAddress.getText().toString().equalsIgnoreCase("Delivery address")) {
+                    showToast("Please select a delivery address");
+                } else {
+
+                    loadingScreen();
+                    String value_in_paisa = String.valueOf(grandTotal * 100);
 //            initializePayment("ref_1", "100", phNumber, emailAddress);
 
-            Query q3 = dbRef.child("keys").child("test_key");
-            q3.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                    if (snapshot.hasChildren()) {
-                        RpKeyDto rpKeyDto = snapshot.getValue(RpKeyDto.class);
-                        String rpKeyId = rpKeyDto.getKey_id();
-                        String rpKeySecret = rpKeyDto.getKey_secret();
-                        String description = "zpirit" + phNumber + System.currentTimeMillis();
-                        getClient(PaymentActivity.this, description, value_in_paisa, phNumber, emailAddress, rpKeyId, rpKeySecret);
+                    Query q3 = dbRef.child("keys").child("test_key");
+                    q3.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                            if (snapshot.hasChildren()) {
+                                RpKeyDto rpKeyDto = snapshot.getValue(RpKeyDto.class);
+                                String rpKeyId = rpKeyDto.getKey_id();
+                                String rpKeySecret = rpKeyDto.getKey_secret();
+                                String description = "zpirit" + phNumber + System.currentTimeMillis();
+                                getClient(PaymentActivity.this, description, value_in_paisa, phNumber, emailAddress, rpKeyId, rpKeySecret);
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                        }
+                    });
+                }
+
+            }
+
+        });
+
+//        getDeliveryCharges();
+
+    }
+    private void getDeliveryCharges(int grandTotal)
+    {
+        Query getDeliveryCharges = dbRef.child(Constants.CONSTANTS_FOR_ANDROID_APP_FIREBASE);
+        getDeliveryCharges.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                Log.e(TAG, "onDataChange: deliverCharge"+snapshot.child(Constants.CONSTANTS_DELIVERY_CHARGE).getValue());
+//                int deliveryChargeint = (int) snapshot.child(Constants.CONSTANTS_DELIVERY_CHARGE).getValue();
+//                int deliveryChargesum = deliveryChargeint + grandTotal;
+//                String deliveryCharge = "Rs. "+ snapshot.child(Constants.CONSTANTS_DELIVERY_CHARGE).getValue();
+//                tvDeliveryCharge.setText(deliveryCharge);
+//                tvTotal.setText(String.valueOf(deliveryChargesum));
+
+                String deliveryCharges = String.valueOf(snapshot.child(Constants.CONSTANTS_DELIVERY_CHARGE).getValue());
+                int deliveryChargesint = Integer.parseInt(deliveryCharges);
+                int deliveryChargesum = deliveryChargesint + grandTotal;
+                String strDeliveryChargesSum = String.valueOf(deliveryChargesum);
+                String finalTextTotal = "Rs."+strDeliveryChargesSum;
+                String finalTextDeliveryCharge = "Rs."+deliveryCharges;
+                tvTotal.setText(finalTextTotal);
+                tvDeliveryCharge.setText(finalTextDeliveryCharge);
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void addAddressDialog() {
+        LayoutInflater factory = LayoutInflater.from(this);
+        final View dialogLoading = factory.inflate(R.layout.select_delivery_address_dialog, null);
+        addressDialog = new AlertDialog.Builder(this).create();
+        Window window = addressDialog.getWindow();
+
+        WindowManager.LayoutParams wlp = window.getAttributes();
+        wlp.gravity = Gravity.BOTTOM;
+//        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        window.setAttributes(wlp);
+        addressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        addressDialog.setCancelable(true);
+        addressDialog.setView(dialogLoading);
+        addressDialog.show();
+        addressDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.WRAP_CONTENT);
+
+
+        List<AddressDto> addressDataList;
+        RecyclerView rvShowAddress;
+        SelectAddressAdapter adapter;
+        addressDataList = new ArrayList<>();
+        ImageView tvCloseDialog;
+
+
+        tvCloseDialog = addressDialog.findViewById(R.id.tvCloseDialog);
+        tvCloseDialog.setOnClickListener(view -> addressDialog.dismiss());
+        rvShowAddress = addressDialog.findViewById(R.id.rvShowAddress);
+        adapter = new SelectAddressAdapter(this, addressDataList);
+        int numberOfColumns = 1;
+        rvShowAddress.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
+        rvShowAddress.setAdapter(adapter);
+
+
+        Query getAddressBook = dbRef.child("address_book").child(phNumber);
+        getAddressBook.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                if (snapshot.hasChildren()) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        AddressDto addressDto = dataSnapshot.getValue(AddressDto.class);
+                        addressDataList.add(addressDto);
+                        adapter.notifyDataSetChanged();
                     }
-
                 }
+            }
 
-                @Override
-                public void onCancelled(@NonNull @NotNull DatabaseError error) {
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
-                }
-            });
-
+            }
         });
 
     }
@@ -240,25 +352,50 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
 
     @Override
     public void onPaymentSuccess(String s) {
-
         placeOrder(s);
         Log.e(TAG, "onPaymentSuccess: " + s);
         showToast("Payment Successfull" + s);
+    }
+
+    public void getDeliverAddress(String addressID) {
+        deliverOrderID = addressID;
+        Query getDeliverAddressQuery = dbRef.child("address_book").child(phNumber).orderByChild("addressID").equalTo(addressID);
+        getDeliverAddressQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                if (snapshot.hasChildren()) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        AddressDto addressDto = dataSnapshot.getValue(AddressDto.class);
+                        String fullAddress = addressDto.getTag() + " - " + addressDto.getHouseNumber();
+                        tvDeliveryAddress.setText(fullAddress);
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+
+        addressDialog.dismiss();
     }
 
     private void placeOrder(String paymentID) {
         Log.e(TAG, "placeOrder: " + orderID);
         String orderTime = String.valueOf(System.currentTimeMillis());
 
-        OrderDto orderDto = new OrderDto(orderID, phNumber, String.valueOf(grandTotal), cdcList, orderTime, "paid", paymentID);
+        OrderDto orderDto = new OrderDto(orderID, phNumber, String.valueOf(grandTotal), cdcList, orderTime, "paid", paymentID, deliverOrderID);
 
         dbRef.child("orders").child(phNumber).child(orderID).setValue(orderDto);
         dbRef.child("cart_table").child(phNumber).removeValue();
 
         Intent i = new Intent(PaymentActivity.this, OrderPlacedActivity.class);
-        Log.e(TAG, "placeOrder: "+orderTime);
         i.putExtra("deliveryDate", orderTime);
         startActivity(i);
+        finish();
 //        String orderTime = String.valueOf(System.currentTimeMillis());
 //        OrderDto orderDataClass = new OrderDto(orderID, phNumber, String.valueOf(grandTotal), cdcList, orderTime, "Not Paid");
 

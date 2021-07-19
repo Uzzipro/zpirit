@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +25,6 @@ import com.canatme.zpirit.Adapters.AddressAdapter;
 import com.canatme.zpirit.Dataclasses.AddressDto;
 import com.canatme.zpirit.R;
 import com.canatme.zpirit.Utils.Constants;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,7 +44,7 @@ public class AddressBookActivity extends AppCompatActivity {
     private RecyclerView rvAddress;
     private AddressAdapter adapter;
     private DatabaseReference addressDbRef;
-    private AlertDialog loadingDialog;
+    private AlertDialog addressDialog;
     private TextView tvAddAddress;
     private String phNumber;
 
@@ -76,7 +74,7 @@ public class AddressBookActivity extends AppCompatActivity {
         final String phNumber = getSharedPreferences(Constants.ACCESS_PREFS, Context.MODE_PRIVATE).getString(Constants.PH_NUMBER, "No phone number detected");
         Query q1 = addressDbRef.child("address_book").child(phNumber);
 
-        q1.addValueEventListener(new ValueEventListener() {
+        q1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 if (snapshot.hasChildren()) {
@@ -95,32 +93,47 @@ public class AddressBookActivity extends AppCompatActivity {
         });
     }
 
+//
+//    @Override
+//    public boolean onMenuItemClick(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.edit_address:
+////                archive(item);
+//                return true;
+//            case R.id.delete_address:
+////                delete(item);
+//                return true;
+//            default:
+//                return false;
+//        }
+//    }
+
     private void addAddressDialog() {
         LayoutInflater factory = LayoutInflater.from(this);
         final View dialogLoading = factory.inflate(R.layout.addaddressdialogbox, null);
-        loadingDialog = new AlertDialog.Builder(this).create();
-        Window window = loadingDialog.getWindow();
+        addressDialog = new AlertDialog.Builder(this).create();
+        Window window = addressDialog.getWindow();
 
         WindowManager.LayoutParams wlp = window.getAttributes();
         wlp.gravity = Gravity.BOTTOM;
 //        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         window.setAttributes(wlp);
-        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        loadingDialog.setCancelable(true);
-        loadingDialog.setView(dialogLoading);
-        loadingDialog.show();
-        loadingDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+        addressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        addressDialog.setCancelable(true);
+        addressDialog.setView(dialogLoading);
+        addressDialog.show();
+        addressDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.WRAP_CONTENT);
-        ImageView tvCloseDialog = loadingDialog.findViewById(R.id.tvCloseDialog);
-        Button btSaveAddress = loadingDialog.findViewById(R.id.btSaveAddress);
+        ImageView tvCloseDialog = addressDialog.findViewById(R.id.tvCloseDialog);
+        Button btSaveAddress = addressDialog.findViewById(R.id.btSaveAddress);
         TextView etHouseNumber, etFloor, etTowerBlock, etHowToReach, etTag;
-        etHouseNumber = loadingDialog.findViewById(R.id.etHouseNumber);
-        etFloor = loadingDialog.findViewById(R.id.etFloor);
-        etTowerBlock = loadingDialog.findViewById(R.id.etTowerBlock);
-        etHowToReach = loadingDialog.findViewById(R.id.etHowToReach);
-        etTag = loadingDialog.findViewById(R.id.etTag);
+        etHouseNumber = addressDialog.findViewById(R.id.etHouseNumber);
+        etFloor = addressDialog.findViewById(R.id.etFloor);
+        etTowerBlock = addressDialog.findViewById(R.id.etTowerBlock);
+        etHowToReach = addressDialog.findViewById(R.id.etHowToReach);
+        etTag = addressDialog.findViewById(R.id.etTag);
 
-        tvCloseDialog.setOnClickListener(view -> loadingDialog.dismiss());
+        tvCloseDialog.setOnClickListener(view -> addressDialog.dismiss());
         btSaveAddress.setOnClickListener(view -> {
             if (TextUtils.isEmpty(etHouseNumber.getText().toString().trim())) {
                 showToast("Please enter your house number");
@@ -137,21 +150,17 @@ public class AddressBookActivity extends AppCompatActivity {
                 String strFloor = etFloor.getText().toString().trim();
                 String strTowerBlock = etTowerBlock.getText().toString().trim();
                 String strHowToReach;
-                if(!TextUtils.isEmpty(etHowToReach.getText().toString().trim()))
-                {
+                if (!TextUtils.isEmpty(etHowToReach.getText().toString().trim())) {
                     strHowToReach = etHowToReach.getText().toString().trim();
-                }
-                else
-                {
+                } else {
                     strHowToReach = "empty";
                 }
                 String strTag = etTag.getText().toString().trim();
-
-
                 AddressDto addressDto = new AddressDto(addressID, strHouseNumber, strFloor, strTowerBlock, strHowToReach, strTag);
-                        showToast("Address saved");
-               Log.e(TAG, "addAddressDialog: "+addressID);
-               addressDbRef.child("address_book").child(phNumber).child(addressID).setValue(addressDto);
+                addressDbRef.child("address_book").child(phNumber).child(addressID).setValue(addressDto);
+                showToast("Address saved");
+                adapter.notifyDataSetChanged();
+                addressDialog.dismiss();
             }
         });
     }

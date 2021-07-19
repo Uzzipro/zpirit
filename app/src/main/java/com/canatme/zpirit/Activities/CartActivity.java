@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,6 +35,7 @@ public class CartActivity extends AppCompatActivity {
     private RecyclerView rvProduct;
     private CartAdapter adapter;
     private Button btMakePayment;
+    private LinearLayoutCompat llNoItems, llRv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,8 @@ public class CartActivity extends AppCompatActivity {
         btMakePayment = findViewById(R.id.btMakePayment);
         ivBack.setOnClickListener(view -> onBackPressed());
         rvProduct = findViewById(R.id.rvProduct);
+        llNoItems = findViewById(R.id.llNoItems);
+        llRv = findViewById(R.id.llRv);
         cartDataList = new ArrayList<>();
         adapter = new CartAdapter(this, cartDataList);
         int numberOfColumns = 1;
@@ -72,6 +76,26 @@ public class CartActivity extends AppCompatActivity {
                         CartDto cartData = dataSnapshot1.getValue(CartDto.class);
                         cartDataList.add(cartData);
                         adapter.notifyDataSetChanged();
+                    }
+                    if (cartDataList.size() == 0) {
+                        llNoItems.setVisibility(View.VISIBLE);
+                        llRv.setVisibility(View.GONE);
+                        btMakePayment.setVisibility(View.GONE);
+                    } else {
+                        llNoItems.setVisibility(View.GONE);
+                        llRv.setVisibility(View.VISIBLE);
+                        btMakePayment.setVisibility(View.VISIBLE);
+                    }
+                }
+                else {
+                    if (cartDataList.size() == 0) {
+                        llNoItems.setVisibility(View.VISIBLE);
+                        llRv.setVisibility(View.GONE);
+                        btMakePayment.setVisibility(View.GONE);
+                    } else {
+                        llNoItems.setVisibility(View.GONE);
+                        llRv.setVisibility(View.VISIBLE);
+                        btMakePayment.setVisibility(View.VISIBLE);
                     }
                 }
             }

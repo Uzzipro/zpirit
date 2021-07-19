@@ -30,6 +30,7 @@
     <string name="address_book">Address book</string>
     <string name="make_payment">Make Payment</string>
     <string name="total_amount">Total</string>
+    <string name="select_delivery_address">Delivery address</string>
     <string name="payment_method">Payment method</string>
     <string name="payment_method_text">Debit card, Credit card, UPI, Wallets</string>
     <string name="order_placed">Order Placed</string>
@@ -39,6 +40,8 @@
     <string name="check_details_fororder">Check your order details here</string>
     <string name="add_address">Add Address</string>
     <string name="enter_address_details">Enter address details</string>
+    <string name="select_delivery_address_text">Select delivery address</string>
+    <string name="delivery_charges">Select delivery address</string>
 
     <!-- Product detail strings -->
     <string name="product_info">Product info</string>

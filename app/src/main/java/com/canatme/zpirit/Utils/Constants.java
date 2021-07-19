@@ -25,6 +25,8 @@ public class Constants {
     public static final String PRODUCT_MEASUREMENT = "PRODUCT_MEASUREMENT";
     public static final String PRODUCT_PRICE = "PRODUCT_PRICE";
     public static final String PRODUCT_INFO = "PRODUCT_INFO";
+    public static final String CONSTANTS_FOR_ANDROID_APP_FIREBASE = "constants_for_android_app";
+    public static final String CONSTANTS_DELIVERY_CHARGE = "delivery_charges";
     /**/
 
 
