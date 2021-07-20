@@ -98,6 +98,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                         holder.btAddToCart.setVisibility(View.VISIBLE);
                     }
                 } else {
+                    holder.llPlusMinus.setVisibility(View.GONE);
+                    holder.btAddToCart.setVisibility(View.VISIBLE);
                 }
 
             }
