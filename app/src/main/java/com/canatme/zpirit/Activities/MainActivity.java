@@ -24,10 +24,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        if (getIntent() != null) {
+        if (getIntent().hasExtra(Constants.WELCOME_BACK) && getIntent() != null) {
             Intent intent = getIntent();
             String welcome_back_msg = intent.getStringExtra(Constants.WELCOME_BACK);
             showToast(welcome_back_msg);

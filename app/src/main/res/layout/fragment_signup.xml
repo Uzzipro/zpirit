@@ -199,6 +199,95 @@
                             android:fontFamily="@font/sfproroundedsemibold"
                             android:textColor="@color/orange" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+
+
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/llGender"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvGender"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sfproroundedsemibold"
+                            android:text="Gender"
+                            android:textColor="@color/grey"
+                            android:textSize="16dp" />
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:weightSum="9"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatRadioButton
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="Male"
+                                android:layout_weight="3"
+                                android:textColor="@color/black"
+                                android:button="@drawable/custom_checkbox"
+                                android:fontFamily="@font/sfproroundedmedium"
+                                android:id="@+id/rbMale"/>
+
+                            <androidx.appcompat.widget.AppCompatRadioButton
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="Female"
+                                android:layout_weight="3"
+                                android:textColor="@color/black"
+                                android:button="@drawable/custom_checkbox"
+                                android:fontFamily="@font/sfproroundedmedium"
+                                android:id="@+id/rbFemale"/>
+
+
+                            <androidx.appcompat.widget.AppCompatRadioButton
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="I'd rather not say"
+                                android:layout_weight="3"
+                                android:textColor="@color/black"
+                                android:button="@drawable/custom_checkbox"
+                                android:fontFamily="@font/sfproroundedmedium"
+                                android:id="@+id/rbNotSay"/>
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
 

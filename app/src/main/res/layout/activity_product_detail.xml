@@ -44,6 +44,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="360dp"
                     app:srcCompat="@drawable/testbottleimg" />
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvProductType"
                     android:layout_width="match_parent"
@@ -95,19 +96,63 @@
                     android:textColor="@color/grey"
                     android:textSize="@dimen/_18_sp" />
 
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/llPlusMinus"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_30_dp"
+                    android:layout_weight="0.6"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="5dp"
+                    android:visibility="visible">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/minusQuantity"
+                        android:layout_width="30dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/buttonleft"
+                        android:text="-"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/quantityCount"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sfproroundedsemibold"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textColor="#000000"
+                        android:textSize="12sp" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/plusQuantity"
+                        android:layout_width="30dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/buttonright"
+                        android:text="+"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btAddToCart"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_50_dp"
                     android:layout_marginTop="@dimen/_30_dp"
-                    android:background="@drawable/btbg"
-                    android:textAllCaps="false"
-                    android:fontFamily="@font/sfproroundedsemibold"
                     android:layout_marginBottom="@dimen/_20_dp"
+                    android:background="@drawable/btbg"
+                    android:fontFamily="@font/sfproroundedsemibold"
                     android:text="@string/add_to_cart"
+                    android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_15_sp" />
+                    android:textSize="@dimen/_15_sp"
+                    android:visibility="gone" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.constraintlayout.widget.ConstraintLayout>

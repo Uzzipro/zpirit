@@ -7,6 +7,7 @@ public class UserDto {
     private String phNumber;
     private String emailAddress;
     private String password;
+    private String gender;
 
     /*Non essential fiels*/
     private String totalOrders;
@@ -16,6 +17,14 @@ public class UserDto {
     private String profilePicture;
     private String bio;
 
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 
     public String getProfilePicture() {
         return profilePicture;
@@ -105,12 +114,14 @@ public class UserDto {
         this.verifiedAadhaar = verifiedAadhaar;
     }
 
-    public UserDto(String fName, String lName, String phNumber, String emailAddress, String password, String totalOrders, String deliveryAddress, String specificOffers, String verifiedAadhaar, String profilePicture, String bio) {
+
+    public UserDto(String fName, String lName, String phNumber, String emailAddress, String password, String gender, String totalOrders, String deliveryAddress, String specificOffers, String verifiedAadhaar, String profilePicture, String bio) {
         this.fName = fName;
         this.lName = lName;
         this.phNumber = phNumber;
         this.emailAddress = emailAddress;
         this.password = password;
+        this.gender = gender;
         this.totalOrders = totalOrders;
         this.deliveryAddress = deliveryAddress;
         this.specificOffers = specificOffers;

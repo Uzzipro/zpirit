@@ -16,7 +16,7 @@
             android:orientation="vertical">
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/llEnterAddressDetails"
+                android:id="@+id/llEnterPersoanlDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -25,12 +25,12 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvEnterAddressDetails"
+                    android:id="@+id/tvEnterPersonalDetails"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.1"
                     android:fontFamily="@font/sfproroundedmedium"
-                    android:text="@string/enter_address_details"
+                    android:text="@string/personal_details_change"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_20_sp" />
 
@@ -51,7 +51,7 @@
                 app:layout_constraintTop_toBottomOf="@id/llEnterAddressDetails" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/llAddressDetails"
+                android:id="@+id/llPersonalDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_20_dp"
@@ -61,19 +61,19 @@
 
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_etHouseNumber"
+                    android:id="@+id/til_etfName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/hint_house_number">
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/etHouseNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:fontFamily="@font/sfproroundedregular"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/grey"
-                    android:textSize="@dimen/textsize_17sp" />
+                    android:hint="@string/first_name">
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/etFirstName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:fontFamily="@font/sfproroundedregular"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/grey"
+                        android:textSize="@dimen/textsize_17sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <View
@@ -85,19 +85,19 @@
                     app:layout_constraintTop_toBottomOf="@id/llEnterAddressDetails" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_etFloor"
+                    android:id="@+id/til_etlName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/hint_floor">
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/etFloor"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:fontFamily="@font/sfproroundedregular"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/grey"
-                    android:textSize="@dimen/textsize_17sp" />
+                    android:hint="@string/last_name">
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/etLastName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:fontFamily="@font/sfproroundedregular"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/grey"
+                        android:textSize="@dimen/textsize_17sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <View
@@ -109,20 +109,20 @@
                     app:layout_constraintTop_toBottomOf="@id/llEnterAddressDetails" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_etTowerBlock"
+                    android:id="@+id/til_etEmailAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/hint_tower_block">
+                    android:hint="@string/email_address">
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/etTowerBlock"
-                    android:layout_width="match_parent"
-                    android:maxLines="1"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/sfproroundedregular"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/grey"
-                    android:textSize="@dimen/textsize_17sp" />
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/etEmailAddress"
+                        android:layout_width="match_parent"
+                        android:maxLines="1"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/grey"
+                        android:fontFamily="@font/sfproroundedregular"
+                        android:textSize="@dimen/textsize_17sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
                 <View
@@ -134,20 +134,21 @@
                     app:layout_constraintTop_toBottomOf="@id/llEnterAddressDetails" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_etHowToReach"
+                    android:id="@+id/til_etPhNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/hint_how_to_reach">
+                    android:background="#CCCCCC"
+                    android:hint="@string/ph_number">
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/etHowToReach"
-                    android:layout_width="match_parent"
-                    android:maxLines="1"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/grey"
-                    android:fontFamily="@font/sfproroundedregular"
-                    android:textSize="@dimen/textsize_17sp" />
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/etPhoneNumber"
+                        android:layout_width="match_parent"
+                        android:maxLines="1"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sfproroundedregular"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/grey"
+                        android:textSize="@dimen/textsize_17sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <View
@@ -159,18 +160,18 @@
                     app:layout_constraintTop_toBottomOf="@id/llEnterAddressDetails" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_etTag"
+                    android:id="@+id/til_etBio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/hint_customized_tag">
+                    android:hint="@string/personal_bio">
 
                     <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/etTag"
+                        android:id="@+id/etBio"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:maxLines="1"
                         android:fontFamily="@font/sfproroundedregular"
+                        android:maxLines="1"
                         android:textColorHint="@color/grey"
                         android:textSize="@dimen/textsize_17sp" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -186,12 +187,13 @@
                     app:layout_constraintTop_toBottomOf="@id/llEnterAddressDetails" />
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btSaveAddress"
+                    android:id="@+id/btUpdateDetails"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textAllCaps="false"
                     android:background="@drawable/btbg"
                     android:fontFamily="@font/sfproroundedmedium"
-                    android:text="@string/save_address"
+                    android:text="@string/update_details"
                     android:textColor="@color/white" />
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -71,7 +72,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
     private String phNumber, emailAddress, orderID;
     private CartDto cartData;
     private DatabaseReference dbRef;
-    private AlertDialog loadingDialog, addressDialog;
+    private AlertDialog loadingDialog, addressDialog, addAddressDialog;
     private ArrayList<CartDto> cdcList;
     private String deliverOrderID;
     private AppCompatRadioButton rbPaymentMethod;
@@ -92,7 +93,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
         cdcList = new ArrayList<>();
         dbRef = FirebaseDatabase.getInstance().getReference();
         btMakePayment = findViewById(R.id.btMakePayment);
-        llDeliveryAddress.setOnClickListener(view -> addAddressDialog());
+        llDeliveryAddress.setOnClickListener(view -> selectAddressDialog());
         ivBack.setOnClickListener(view -> {
             onBackPressed();
         });
@@ -213,7 +214,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
         });
     }
 
-    private void addAddressDialog() {
+    private void selectAddressDialog() {
         LayoutInflater factory = LayoutInflater.from(this);
         final View dialogLoading = factory.inflate(R.layout.select_delivery_address_dialog, null);
         addressDialog = new AlertDialog.Builder(this).create();
@@ -232,31 +233,45 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
 
 
         List<AddressDto> addressDataList;
+        LinearLayoutCompat llRv;
         RecyclerView rvShowAddress;
+        TextView tvAddAddress;
         SelectAddressAdapter adapter;
         addressDataList = new ArrayList<>();
         ImageView tvCloseDialog;
 
 
         tvCloseDialog = addressDialog.findViewById(R.id.tvCloseDialog);
+        llRv  = addressDialog.findViewById(R.id.llRv);
+        tvAddAddress = addressDialog.findViewById(R.id.tvAddAddress);
         tvCloseDialog.setOnClickListener(view -> addressDialog.dismiss());
         rvShowAddress = addressDialog.findViewById(R.id.rvShowAddress);
         adapter = new SelectAddressAdapter(this, addressDataList);
         int numberOfColumns = 1;
         rvShowAddress.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
         rvShowAddress.setAdapter(adapter);
-
-
         Query getAddressBook = dbRef.child("address_book").child(phNumber);
         getAddressBook.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 if (snapshot.hasChildren()) {
+                    llRv.setVisibility(View.VISIBLE);
+                    tvAddAddress.setVisibility(View.GONE);
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         AddressDto addressDto = dataSnapshot.getValue(AddressDto.class);
                         addressDataList.add(addressDto);
                         adapter.notifyDataSetChanged();
                     }
+                }
+                else {
+                    Log.e(TAG, "onDataChange: else");
+                    llRv.setVisibility(View.GONE);
+                    tvAddAddress.setVisibility(View.VISIBLE);
+                    tvAddAddress.setOnClickListener(view -> {
+                        addAddressDialog();
+                        addressDialog.dismiss();
+
+                    });
                 }
             }
 
@@ -266,6 +281,65 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
             }
         });
 
+    }
+
+    private void addAddressDialog() {
+        LayoutInflater factory = LayoutInflater.from(this);
+        final View dialogLoading = factory.inflate(R.layout.addaddressdialogbox, null);
+        addAddressDialog = new AlertDialog.Builder(this).create();
+        Window window = addAddressDialog.getWindow();
+
+        WindowManager.LayoutParams wlp = window.getAttributes();
+        wlp.gravity = Gravity.BOTTOM;
+//        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        window.setAttributes(wlp);
+        addAddressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        addAddressDialog.setCancelable(true);
+        addAddressDialog.setView(dialogLoading);
+        addAddressDialog.show();
+        addAddressDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.WRAP_CONTENT);
+        ImageView tvCloseDialog = addAddressDialog.findViewById(R.id.tvCloseDialog);
+        Button btSaveAddress = addAddressDialog.findViewById(R.id.btSaveAddress);
+        TextView etHouseNumber, etFloor, etTowerBlock, etHowToReach, etTag;
+        etHouseNumber = addAddressDialog.findViewById(R.id.etHouseNumber);
+        etFloor = addAddressDialog.findViewById(R.id.etFloor);
+        etTowerBlock = addAddressDialog.findViewById(R.id.etTowerBlock);
+        etHowToReach = addAddressDialog.findViewById(R.id.etHowToReach);
+        etTag = addAddressDialog.findViewById(R.id.etTag);
+        DatabaseReference addressDbRef;
+        addressDbRef = FirebaseDatabase.getInstance().getReference();
+
+        tvCloseDialog.setOnClickListener(view -> addressDialog.dismiss());
+        btSaveAddress.setOnClickListener(view -> {
+            if (TextUtils.isEmpty(etHouseNumber.getText().toString().trim())) {
+                showToast("Please enter your house number");
+            } else if (TextUtils.isEmpty(etFloor.getText().toString().trim())) {
+                showToast("Please enter your floor");
+            } else if (TextUtils.isEmpty(etTowerBlock.getText().toString().trim())) {
+                showToast("Please enter your tower/block number");
+
+            } else if (TextUtils.isEmpty(etTag.getText().toString().trim())) {
+                showToast("Please set a tag for your address");
+            } else {
+                String addressID = phNumber + System.currentTimeMillis();
+                String strHouseNumber = etHouseNumber.getText().toString().trim();
+                String strFloor = etFloor.getText().toString().trim();
+                String strTowerBlock = etTowerBlock.getText().toString().trim();
+                String strHowToReach;
+                if (!TextUtils.isEmpty(etHowToReach.getText().toString().trim())) {
+                    strHowToReach = etHowToReach.getText().toString().trim();
+                } else {
+                    strHowToReach = "empty";
+                }
+                String strTag = etTag.getText().toString().trim();
+                AddressDto addressDto = new AddressDto(addressID, strHouseNumber, strFloor, strTowerBlock, strHowToReach, strTag);
+                addressDbRef.child("address_book").child(phNumber).child(addressID).setValue(addressDto);
+                showToast("Address saved");
+                addressDialog.dismiss();
+                addAddressDialog.dismiss();
+            }
+        });
     }
 
     private Retrofit getClient(final Context context, String description, String amount, String phNumber, String email, String rp_key_id, String rp_key_secret) {
@@ -353,7 +427,6 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
     @Override
     public void onPaymentSuccess(String s) {
         placeOrder(s);
-        Log.e(TAG, "onPaymentSuccess: " + s);
         showToast("Payment Successfull" + s);
     }
 

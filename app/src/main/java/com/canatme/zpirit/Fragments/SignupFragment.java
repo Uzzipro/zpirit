@@ -17,11 +17,13 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatRadioButton;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -51,6 +53,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class SignupFragment extends Fragment {
     /*Strings*/
     private final static String TAG = "SignupFragment";
+    private String gender;
     /**/
 
     /*Alert dialog box for loading screen*/
@@ -74,6 +77,10 @@ public class SignupFragment extends Fragment {
     /**/
     /*Buttons*/
     private Button btSignUp;
+    /**/
+
+    /*Radiobuttons*/
+    AppCompatRadioButton rbMale, rbFemale, rbNotSay;
     /**/
 
     /*TextViews*/
@@ -135,6 +142,9 @@ public class SignupFragment extends Fragment {
         btSignUp = v.findViewById(R.id.btSignUp);
         tvPasswordMatch = v.findViewById(R.id.tvPasswordMatch);
         parentLayout = v.findViewById(android.R.id.content);
+        rbMale = v.findViewById(R.id.rbMale);
+        rbFemale = v.findViewById(R.id.rbFemale);
+        rbNotSay = v.findViewById(R.id.rbNotSay);
 
         dbRefSignup = FirebaseDatabase.getInstance().getReference("users");
         btSignUp.setOnClickListener(view -> btSignUpClick());
@@ -165,6 +175,36 @@ public class SignupFragment extends Fragment {
             }
         });
 
+
+        rbMale.setOnCheckedChangeListener((compoundButton, b) -> {
+            if(b)
+            {
+                rbFemale.setChecked(false);
+                rbNotSay.setChecked(false);
+                gender = "male";
+            }
+        });
+
+        rbFemale.setOnCheckedChangeListener((compoundButton, b) -> {
+            if(b)
+            {
+                rbMale.setChecked(false);
+                rbNotSay.setChecked(false);
+                gender = "female";
+
+            }
+        });
+
+        rbNotSay.setOnCheckedChangeListener((compoundButton, b) -> {
+            if(b)
+            {
+                rbFemale.setChecked(false);
+                rbMale.setChecked(false);
+                gender = "notsay";
+
+            }
+        });
+
         return v;
     }
 
@@ -192,6 +232,7 @@ public class SignupFragment extends Fragment {
     }
 
     private void btSignUpClick() {
+        Log.e(TAG, "btSignUpClick: "+rbMale.isChecked() + " " + rbFemale.isChecked()+ " "+rbNotSay.isChecked());
         if (TextUtils.isEmpty(etFirstName.getText().toString().trim())) {
             showToast("Please fill first name");
         } else if (TextUtils.isEmpty(etLastName.getText().toString().trim())) {
@@ -204,8 +245,13 @@ public class SignupFragment extends Fragment {
             showToast("Please enter a Password");
         } else if (TextUtils.isEmpty(etConfirmPassword.getText().toString().trim())) {
             showToast("Please Confirm your password");
-        } else {
+        } else if(!rbMale.isChecked() && !rbFemale.isChecked() && !rbNotSay.isChecked())
+        {
+            showToast("Please select the Gender");
+        }
+        else {
             if (passwordMatch) {
+
                 loadingScreen();
                 Query checkIfAlreadyRegistered = dbRefSignup.orderByChild("phNumber").equalTo(etPhNumber.getText().toString().trim());
                 checkIfAlreadyRegistered.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -222,7 +268,7 @@ public class SignupFragment extends Fragment {
 
                             }
                         } else {
-                            UserDto registerUserDto = new UserDto(etFirstName.getText().toString().trim(), etLastName.getText().toString().trim(), etPhNumber.getText().toString().trim(), etEmailAddress.getText().toString().trim(), etPassword.getText().toString().trim(), "0", "0", "0", "false", "", "");
+                            UserDto registerUserDto = new UserDto(etFirstName.getText().toString().trim(), etLastName.getText().toString().trim(), etPhNumber.getText().toString().trim(), etEmailAddress.getText().toString().trim(), etPassword.getText().toString().trim(), gender, "0", "0", "0", "false", "", "");
                             dbRefSignup.push().setValue(registerUserDto);
                             showToast("Registered");
 

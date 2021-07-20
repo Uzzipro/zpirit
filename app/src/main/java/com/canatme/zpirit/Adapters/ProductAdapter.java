@@ -227,41 +227,41 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
     }
 
 
-    private void getData(final MyViewHolder holder, int pos) {
-        final String pKey;//current position product key
-        ProductDto productsClass = cardinfoList.get(pos);
-        pKey = productsClass.getProductID();
-
-        Log.e(TAG, "getData: " + getItemId(pos));
-
-        final String phNumber = context.getSharedPreferences(Constants.ACCESS_PREFS, Context.MODE_PRIVATE).getString(Constants.PH_NUMBER, "No phone number detected");
-        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
-        db.child("cart_table").child(phNumber).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChildren()) {
-                    for (DataSnapshot dataSnapshot2 : dataSnapshot.getChildren()) {
-                        CartDto cx = dataSnapshot2.getValue(CartDto.class);
-                        quantityCountint = Integer.parseInt(cx.getProductQuantity());
-                        if (pKey.equalsIgnoreCase(cx.getProductKey())) {
-                            Log.e(TAG, "onDataChange: " + holder.getAdapterPosition() + " " + pos);
-                            holder.llPlusMinus.setVisibility(View.VISIBLE);
-                            holder.btAddToCart.setVisibility(View.GONE);
-                            holder.quantityCount.setText(String.valueOf(quantityCountint));
-                        }
-
-                    }
-                } else {
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
+//    private void getData(final MyViewHolder holder, int pos) {
+//        final String pKey;//current position product key
+//        ProductDto productsClass = cardinfoList.get(pos);
+//        pKey = productsClass.getProductID();
+//
+//        Log.e(TAG, "getData: " + getItemId(pos));
+//
+//        final String phNumber = context.getSharedPreferences(Constants.ACCESS_PREFS, Context.MODE_PRIVATE).getString(Constants.PH_NUMBER, "No phone number detected");
+//        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+//        db.child("cart_table").child(phNumber).addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if (dataSnapshot.hasChildren()) {
+//                    for (DataSnapshot dataSnapshot2 : dataSnapshot.getChildren()) {
+//                        CartDto cx = dataSnapshot2.getValue(CartDto.class);
+//                        quantityCountint = Integer.parseInt(cx.getProductQuantity());
+//                        if (pKey.equalsIgnoreCase(cx.getProductKey())) {
+//                            Log.e(TAG, "onDataChange: " + holder.getAdapterPosition() + " " + pos);
+//                            holder.llPlusMinus.setVisibility(View.VISIBLE);
+//                            holder.btAddToCart.setVisibility(View.GONE);
+//                            holder.quantityCount.setText(String.valueOf(quantityCountint));
+//                        }
+//
+//                    }
+//                } else {
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+//    }
 
     @Override
     public int getItemCount() {

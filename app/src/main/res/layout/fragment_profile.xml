@@ -172,22 +172,23 @@
                 android:weightSum="1"
                 app:layout_constraintTop_toBottomOf="@id/llPersonalDetails">
 
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.9"
+                    app:srcCompat="@drawable/ic_orders" />
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.2"
+                    android:layout_weight="0.1"
                     android:fontFamily="@font/sfproroundedsemibold"
                     android:padding="@dimen/_10_dp"
                     android:text="Orders"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_15_sp" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="0.8"
-                    app:srcCompat="@drawable/ic_chevron_left" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
 
@@ -203,22 +204,23 @@
                 android:weightSum="1"
                 app:layout_constraintTop_toBottomOf="@id/llOrders">
 
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.9"
+                    app:srcCompat="@drawable/ic_addressbook" />
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.2"
+                    android:layout_weight="0.1"
                     android:fontFamily="@font/sfproroundedsemibold"
                     android:padding="@dimen/_10_dp"
                     android:text="Address Book"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_15_sp" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="0.8"
-                    app:srcCompat="@drawable/ic_chevron_left" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
 
@@ -234,22 +236,23 @@
                 android:weightSum="1"
                 app:layout_constraintTop_toBottomOf="@id/llAddresses">
 
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.9"
+                    app:srcCompat="@drawable/ic_faq" />
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.2"
+                    android:layout_weight="0.1"
                     android:fontFamily="@font/sfproroundedsemibold"
                     android:padding="@dimen/_10_dp"
                     android:text="Faq"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_15_sp" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="0.8"
-                    app:srcCompat="@drawable/ic_chevron_left" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
 
@@ -265,23 +268,57 @@
                 android:weightSum="1"
                 app:layout_constraintTop_toBottomOf="@id/llFaq">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.2"
-                    android:fontFamily="@font/sfproroundedsemibold"
-                    android:padding="@dimen/_10_dp"
-                    android:text="Help"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_15_sp" />
+
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_weight="0.8"
-                    app:srcCompat="@drawable/ic_chevron_left" />
+                    android:layout_weight="0.9"
+                    app:srcCompat="@drawable/ic_help" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:fontFamily="@font/sfproroundedsemibold"
+                    android:padding="@dimen/_10_dp"
+                    android:text="Help"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_15_sp" />
             </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_30_dp"
+                android:layout_marginTop="@dimen/_10_dp"
+                android:background="@drawable/llbg"
+                android:orientation="horizontal"
+                android:padding="@dimen/_10_dp"
+                android:weightSum="1"
+                app:layout_constraintTop_toBottomOf="@id/llHelp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.9"
+                    app:srcCompat="@drawable/ic_logout" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:fontFamily="@font/sfproroundedsemibold"
+                    android:padding="@dimen/_10_dp"
+                    android:text="Logout"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_15_sp" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

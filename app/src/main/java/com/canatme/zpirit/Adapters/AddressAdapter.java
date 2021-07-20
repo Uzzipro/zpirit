@@ -74,7 +74,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHo
                     editAddress(addressDto, pos);
                     return true;
                 case R.id.delete_address:
-                    deleteAddress();
+                    deleteAddress(addressDto, pos);
                     return true;
                 default:
                     return false;
@@ -86,8 +86,13 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.MyViewHo
         addAddressDialog(addressDto, pos);
     }
 
-    private void deleteAddress() {
-
+    private void deleteAddress(AddressDto addressDto, int pos) {
+        final String phNumber = context.getSharedPreferences(Constants.ACCESS_PREFS, Context.MODE_PRIVATE).getString(Constants.PH_NUMBER, "No phone number detected");
+        DatabaseReference dbRef;
+        dbRef = FirebaseDatabase.getInstance().getReference();
+        dbRef.child("address_book").child(phNumber).child(addressDto.getAddressID()).removeValue();
+        notifyItemRemoved(pos);
+//        cardinfoList.remove(pos);
     }
 
     private void addAddressDialog(AddressDto addressDto, int pos) {

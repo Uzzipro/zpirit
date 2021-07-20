@@ -53,6 +53,7 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
     private LinearLayoutCompat llDrinks, llSnacks;
+    private String selectedItemType;
     private TextView tvDrinks, tvSnacks;
     private View vDrinks, vSnacks;
     private LinearLayoutCompat llProductNotFound, llRv;
@@ -272,7 +273,6 @@ public class HomeFragment extends Fragment {
                 rlDrinkType.setVisibility(View.VISIBLE);
             }
             loadingScreen();
-
             llRv.setVisibility(View.VISIBLE);
             llProductNotFound.setVisibility(View.GONE);
             animationView.cancelAnimation();
@@ -342,7 +342,6 @@ public class HomeFragment extends Fragment {
 //    String[] arraySpinner = new Stri/**/ng[]{
 //            "Select Drink type", "Whiskey", "Beer", "Breezer", "Vodka", "Rum", "Gin", "Wine", "Desi"};
 
-
         spinnerDrinkType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -352,6 +351,7 @@ public class HomeFragment extends Fragment {
                     getProducts2("drinks");
                 } else {
                     getProducts2(spinnerDrinkType.getSelectedItem().toString());
+                    selectedItemType = spinnerDrinkType.getSelectedItem().toString();
                 }
             }
 
@@ -413,5 +413,14 @@ public class HomeFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(selectedItemType!=null)
+        {
+            getProducts2(selectedItemType);
+        }
     }
 }
