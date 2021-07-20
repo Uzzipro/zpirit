@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.LinearLayoutCompat;
 
 import com.canatme.zpirit.Dataclasses.CartDto;
-import com.canatme.zpirit.Dataclasses.FavouritesDto;
 import com.canatme.zpirit.Dataclasses.ProductDto;
 import com.canatme.zpirit.R;
 import com.canatme.zpirit.Utils.Constants;
@@ -62,7 +61,6 @@ public class ProductDetailActivity extends AppCompatActivity {
         ivBack.setOnClickListener(view -> onBackPressed());
         dbSetFav = FirebaseDatabase.getInstance().getReference();
         phNumber = getSharedPreferences(Constants.ACCESS_PREFS, Context.MODE_PRIVATE).getString(Constants.PH_NUMBER, "nophNumberfound");
-
 
 
         if (getIntent() != null) {
@@ -134,27 +132,19 @@ public class ProductDetailActivity extends AppCompatActivity {
         minusQuantity.setOnClickListener(v -> setMinusQuantity());
         plusQuantity.setOnClickListener(v -> setPlusQuantity(false));
 //        setFav();
-        Query getFavs = dbSetFav.child("favourites").child(phNumber);
+        Query getFavs = dbSetFav.child("favourites").child(phNumber).orderByChild("productID").equalTo(productID);
         getFavs.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                if(snapshot.hasChildren())
-                {
-                    for(DataSnapshot dataSnapshot : snapshot.getChildren())
-                    {
-                        FavouritesDto favouritesDto = dataSnapshot.getValue(FavouritesDto.class);
-                        if(favouritesDto.getProductID().equalsIgnoreCase(productID))
+                if (snapshot.hasChildren()) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        ProductDto p = dataSnapshot.getValue(ProductDto.class);
+                        if(p.getProductID().equalsIgnoreCase(productID))
                         {
-                            Log.e(TAG, "onDataChange: "+favouritesDto.getProductID());
                             fav = true;
+                            productFavKey = dataSnapshot.getKey();
                             ivFav.setImageResource(R.drawable.ic_heart);
-                            productFavKey = favouritesDto.getPushKey();
                         }
-//                        else
-//                        {
-//                            fav = false;
-//                            ivFav.setImageResource(R.drawable.ic_borderheart);
-//                        }
                     }
                 }
 
@@ -168,22 +158,16 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
 
-    private void setFav()
-    {
-        if(fav)
-        {
+    private void setFav() {
+        if (fav) {
             fav = false;
             ivFav.setImageResource(R.drawable.ic_borderheart);
             dbSetFav.child("favourites").child(phNumber).child(productFavKey).removeValue();
-        }
-        else
-        {
+        } else {
             fav = true;
             ivFav.setImageResource(R.drawable.ic_heart);
-//            dbSetFav.child("favourites").child(phNumber).orderByChild("productID").equalTo(productID)();
-            String pushKeydb = dbSetFav.child("favourites").child(phNumber).push().getKey();
-            FavouritesDto favouritesDto = new FavouritesDto(productID, pushKeydb);
-            dbSetFav.child("favourites").child(phNumber).child(pushKeydb).setValue(favouritesDto);
+            productFavKey = dbSetFav.child("favourites").child(phNumber).push().getKey();
+            dbSetFav.child("favourites").child(phNumber).child(productFavKey).setValue(productDto);
 
         }
     }

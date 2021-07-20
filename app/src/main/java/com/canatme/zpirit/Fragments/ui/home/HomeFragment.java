@@ -60,11 +60,11 @@ public class HomeFragment extends Fragment {
     private Spinner spinnerDrinkType;
     private LottieAnimationView animationView;
     /*Adapter components, lists and adapters*/
-    private List<ProductDto> listProduct;
     private DatabaseReference dbRefProductType, dbRefGetProducts;
     private RelativeLayout rlDrinkType;
     private TextView tvLoading;
     private ProductAdapter adapter;
+    private List<ProductDto> listProduct;
     private RecyclerView rvProduct;
     private ArrayList<String> productTypesList;
     private ImageView ivCart;
