@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/_10_dp"
     android:background="@drawable/dialog_white_bg2">
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -55,15 +57,17 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvAddAddress"
-        android:layout_marginLeft="@dimen/_20_dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/_20_dp"
+        android:drawableLeft="@drawable/ic_plus"
+        android:fontFamily="@font/sfproroundedmedium"
         android:text="@string/add_address"
         android:textColor="@color/black"
         android:textSize="@dimen/_15_sp"
-        android:drawableLeft="@drawable/ic_plus"
-        android:fontFamily="@font/sfproroundedmedium"
-        app:layout_constraintTop_toBottomOf="@id/llEnterAddressDetails"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llEnterAddressDetails"
+        tools:layout_editor_absoluteX="20dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

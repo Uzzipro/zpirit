@@ -312,7 +312,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
         DatabaseReference addressDbRef;
         addressDbRef = FirebaseDatabase.getInstance().getReference();
 
-        tvCloseDialog.setOnClickListener(view -> addressDialog.dismiss());
+        tvCloseDialog.setOnClickListener(view -> addAddressDialog.dismiss());
         btSaveAddress.setOnClickListener(view -> {
             if (TextUtils.isEmpty(etHouseNumber.getText().toString().trim())) {
                 showToast("Please enter your house number");
@@ -462,7 +462,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
         Log.e(TAG, "placeOrder: " + orderID);
         String orderTime = String.valueOf(System.currentTimeMillis());
 
-        OrderDto orderDto = new OrderDto(orderID, phNumber, String.valueOf(grandTotal), cdcList, orderTime, "paid", paymentID, deliverOrderID, deliveryCharges);
+        OrderDto orderDto = new OrderDto(orderID, phNumber, String.valueOf(grandTotal), cdcList, orderTime, "paid", paymentID, deliverOrderID, deliveryCharges, "not_delivered", "", "");
 
         dbRef.child("orders").child(phNumber).child(orderID).setValue(orderDto);
         dbRef.child("cart_table").child(phNumber).removeValue();

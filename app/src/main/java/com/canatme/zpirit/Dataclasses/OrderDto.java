@@ -12,14 +12,9 @@ public class OrderDto {
     private String paymentID;
     private String deliverAddress;
     private String deliveryCharge;
-
-    public String getPaymentID() {
-        return paymentID;
-    }
-
-    public void setPaymentID(String paymentID) {
-        this.paymentID = paymentID;
-    }
+    private String orderStatus;
+    private String starRating;
+    private String textFeedback;
 
     public String getOrderID() {
         return orderID;
@@ -69,6 +64,14 @@ public class OrderDto {
         this.paymentStatus = paymentStatus;
     }
 
+    public String getPaymentID() {
+        return paymentID;
+    }
+
+    public void setPaymentID(String paymentID) {
+        this.paymentID = paymentID;
+    }
+
     public String getDeliverAddress() {
         return deliverAddress;
     }
@@ -85,7 +88,31 @@ public class OrderDto {
         this.deliveryCharge = deliveryCharge;
     }
 
-    public OrderDto(String orderID, String phNumber, String grandTotal, ArrayList<CartDto> cdc, String orderTime, String paymentStatus, String paymentID, String deliverAddress, String deliveryCharge) {
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    public String getStarRating() {
+        return starRating;
+    }
+
+    public void setStarRating(String starRating) {
+        this.starRating = starRating;
+    }
+
+    public String getTextFeedback() {
+        return textFeedback;
+    }
+
+    public void setTextFeedback(String textFeedback) {
+        this.textFeedback = textFeedback;
+    }
+
+    public OrderDto(String orderID, String phNumber, String grandTotal, ArrayList<CartDto> cdc, String orderTime, String paymentStatus, String paymentID, String deliverAddress, String deliveryCharge, String orderStatus, String starRating, String textFeedback) {
         this.orderID = orderID;
         this.phNumber = phNumber;
         this.grandTotal = grandTotal;
@@ -95,6 +122,9 @@ public class OrderDto {
         this.paymentID = paymentID;
         this.deliverAddress = deliverAddress;
         this.deliveryCharge = deliveryCharge;
+        this.orderStatus = orderStatus;
+        this.starRating = starRating;
+        this.textFeedback = textFeedback;
     }
 
     public OrderDto()

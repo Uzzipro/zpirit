@@ -88,7 +88,7 @@
                 android:layout_weight="0.5"
                 android:fontFamily="@font/sfproroundedmedium"
                 android:gravity="right"
-                android:text="Rs. 200"
+                android:text=""
                 android:textSize="@dimen/_15_sp" />
 
 
@@ -116,7 +116,7 @@
                 android:layout_weight="0.5"
                 android:fontFamily="@font/sfproroundedmedium"
                 android:gravity="right"
-                android:text="Rs. 200"
+                android:text=""
                 android:textSize="@dimen/_15_sp" />
 
 
@@ -150,7 +150,7 @@
                 android:layout_weight="0.5"
                 android:fontFamily="@font/sfproroundedmedium"
                 android:gravity="right"
-                android:text="Rs. 200"
+                android:text=""
                 android:textSize="@dimen/_15_sp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -160,6 +160,15 @@
             android:background="@color/grey" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:fontFamily="@font/sfproroundedbold"
+        android:layout_marginTop="@dimen/_10_dp"
+        android:id="@+id/tvHappyDrinking"
+        android:text="@string/happy_drinking"
+        app:layout_constraintTop_toBottomOf="@id/llOrderTotal"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

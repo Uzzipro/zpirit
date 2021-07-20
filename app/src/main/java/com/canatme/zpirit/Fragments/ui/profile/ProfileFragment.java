@@ -29,6 +29,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.canatme.zpirit.Activities.AddressBookActivity;
+import com.canatme.zpirit.Activities.FaqActivity;
 import com.canatme.zpirit.Activities.LoginOrSignupActivity;
 import com.canatme.zpirit.Activities.MainActivity;
 import com.canatme.zpirit.Activities.OrdersActivity;
@@ -54,7 +55,7 @@ public class ProfileFragment extends Fragment {
     private FragmentProfileBinding binding;
     private ImageView ivDisplayPicture;
     private UserDto userDtoDialogDto;
-    private LinearLayoutCompat llAddresses, llOrders, llLogout;
+    private LinearLayoutCompat llAddresses, llOrders, llLogout, llFaq;
     private String phNumber, fullName, phNumberConcat, userKey;
     private AlertDialog loadingDialog, profileChangeDetailsDialog, logoutDialog;
     private TextView tvName, tvEmailAddress, tvPhNumber, tvBio, tvChangeDetails;
@@ -76,6 +77,7 @@ public class ProfileFragment extends Fragment {
         ivDisplayPicture = binding.ivDisplayPicture;
         llOrders = binding.llOrders;
         llLogout = binding.llLogout;
+        llFaq = binding.llFaq;
 
         phNumber = getActivity().getSharedPreferences(Constants.ACCESS_PREFS, Context.MODE_PRIVATE).getString(Constants.PH_NUMBER, "nophNumberfound");
         dbRefPersonalDetails = FirebaseDatabase.getInstance().getReference("users");
@@ -95,6 +97,11 @@ public class ProfileFragment extends Fragment {
         llLogout.setOnClickListener(view -> {
 //            logout();
             logoutDialog();
+        });
+        llFaq.setOnClickListener(view -> {
+            Intent i = new Intent(getActivity(), FaqActivity.class);
+            startActivity(i);
+
         });
         return root;
     }

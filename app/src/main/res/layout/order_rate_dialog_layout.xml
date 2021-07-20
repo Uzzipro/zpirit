@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dialog_white_bg"
+    android:padding="@dimen/_10_dp">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/llEnterAddressDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/_10_dp"
+        android:weightSum="1"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvEnterAddressDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:fontFamily="@font/sfproroundedmedium"
+            android:text="@string/rate_order"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_20_sp" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/tvCloseDialog"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.9"
+            android:padding="@dimen/_10_dp"
+            android:src="@drawable/ic__cross" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/llStars"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15_dp"
+        android:orientation="horizontal"
+        android:weightSum="5"
+        app:layout_constraintTop_toBottomOf="@id/llEnterAddressDetails">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivStarOne"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_borderstar" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivStarTwo"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_borderstar" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivStarThree"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_borderstar" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivStarFour"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_borderstar" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivStarFive"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_borderstar" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etFeedBack"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="@dimen/_10_dp"
+        android:background="@color/white"
+        android:fontFamily="@font/sfproroundedsemibold"
+        android:gravity="left"
+        android:hint="@string/write_your_feedback"
+        android:padding="@dimen/_10_dp"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_15_sp"
+        app:layout_constraintTop_toBottomOf="@id/llStars" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btRateOrder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_20_dp"
+        android:layout_marginTop="@dimen/_10_dp"
+        android:background="@drawable/btbg"
+        android:text="Rate Order"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/etFeedBack" />
+</androidx.constraintlayout.widget.ConstraintLayout>
