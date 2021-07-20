@@ -11,6 +11,7 @@ public class OrderDto {
     private String paymentStatus;
     private String paymentID;
     private String deliverAddress;
+    private String deliveryCharge;
 
     public String getPaymentID() {
         return paymentID;
@@ -76,7 +77,15 @@ public class OrderDto {
         this.deliverAddress = deliverAddress;
     }
 
-    public OrderDto(String orderID, String phNumber, String grandTotal, ArrayList<CartDto> cdc, String orderTime, String paymentStatus, String paymentID, String deliverAddress) {
+    public String getDeliveryCharge() {
+        return deliveryCharge;
+    }
+
+    public void setDeliveryCharge(String deliveryCharge) {
+        this.deliveryCharge = deliveryCharge;
+    }
+
+    public OrderDto(String orderID, String phNumber, String grandTotal, ArrayList<CartDto> cdc, String orderTime, String paymentStatus, String paymentID, String deliverAddress, String deliveryCharge) {
         this.orderID = orderID;
         this.phNumber = phNumber;
         this.grandTotal = grandTotal;
@@ -85,6 +94,7 @@ public class OrderDto {
         this.paymentStatus = paymentStatus;
         this.paymentID = paymentID;
         this.deliverAddress = deliverAddress;
+        this.deliveryCharge = deliveryCharge;
     }
 
     public OrderDto()

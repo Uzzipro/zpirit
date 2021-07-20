@@ -68,6 +68,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
     private Button btMakePayment;
     private TextView tvTotal, tvDeliveryAddress, tvDeliveryCharge, tvProductTotal;
     private int grandTotal;
+    private String deliveryCharges;
     private LinearLayoutCompat llDeliveryAddress;
     private String phNumber, emailAddress, orderID;
     private CartDto cartData;
@@ -184,7 +185,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
 //        getDeliveryCharges();
 
     }
-    private void getDeliveryCharges(int grandTotal)
+    private void getDeliveryCharges(int grandTotalx)
     {
         Query getDeliveryCharges = dbRef.child(Constants.CONSTANTS_FOR_ANDROID_APP_FIREBASE);
         getDeliveryCharges.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -197,14 +198,15 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
 //                tvDeliveryCharge.setText(deliveryCharge);
 //                tvTotal.setText(String.valueOf(deliveryChargesum));
 
-                String deliveryCharges = String.valueOf(snapshot.child(Constants.CONSTANTS_DELIVERY_CHARGE).getValue());
+                deliveryCharges = String.valueOf(snapshot.child(Constants.CONSTANTS_DELIVERY_CHARGE).getValue());
                 int deliveryChargesint = Integer.parseInt(deliveryCharges);
-                int deliveryChargesum = deliveryChargesint + grandTotal;
+                int deliveryChargesum = deliveryChargesint + grandTotalx;
                 String strDeliveryChargesSum = String.valueOf(deliveryChargesum);
                 String finalTextTotal = "Rs."+strDeliveryChargesSum;
                 String finalTextDeliveryCharge = "Rs."+deliveryCharges;
                 tvTotal.setText(finalTextTotal);
                 tvDeliveryCharge.setText(finalTextDeliveryCharge);
+                grandTotal = grandTotalx + deliveryChargesint;
             }
 
             @Override
@@ -460,7 +462,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
         Log.e(TAG, "placeOrder: " + orderID);
         String orderTime = String.valueOf(System.currentTimeMillis());
 
-        OrderDto orderDto = new OrderDto(orderID, phNumber, String.valueOf(grandTotal), cdcList, orderTime, "paid", paymentID, deliverOrderID);
+        OrderDto orderDto = new OrderDto(orderID, phNumber, String.valueOf(grandTotal), cdcList, orderTime, "paid", paymentID, deliverOrderID, deliveryCharges);
 
         dbRef.child("orders").child(phNumber).child(orderID).setValue(orderDto);
         dbRef.child("cart_table").child(phNumber).removeValue();

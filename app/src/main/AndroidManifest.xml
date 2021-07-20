@@ -10,8 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Zpirit"
         android:windowSoftInputMode="adjustResize|stateHidden">
-        <activity android:name=".Activities.AddressBookActivity"
+        <activity android:name=".Activities.OrderDetailActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" ></activity>
+        <activity
+            android:name=".Activities.OrdersActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".Activities.AddressBookActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".Activities.OrderPlacedActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />

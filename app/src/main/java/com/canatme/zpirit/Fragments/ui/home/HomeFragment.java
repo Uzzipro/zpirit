@@ -62,9 +62,9 @@ public class HomeFragment extends Fragment {
     /*Adapter components, lists and adapters*/
     private List<ProductDto> listProduct;
     private DatabaseReference dbRefProductType, dbRefGetProducts;
-    private ProductAdapter adapter;
     private RelativeLayout rlDrinkType;
     private TextView tvLoading;
+    private ProductAdapter adapter;
     private RecyclerView rvProduct;
     private ArrayList<String> productTypesList;
     private ImageView ivCart;

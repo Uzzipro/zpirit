@@ -19,6 +19,7 @@
     <string name="categories">Categories</string>
     <string name="search">Search</string>
     <string name="personal_details">Personal details</string>
+    <string name="logout_confirmation">Are you sure you want to logout?</string>
 
 
     <string name="drinks">Drinks</string>
@@ -54,7 +55,6 @@
     <!--Razor pay details-->
     <string name="razor_pay_test_key">rzp_test_5Bw6OUKxv7L2LR</string>
     <string name="razor_pay_live_key">rzp_live_u3Ae8GQIyReAy6</string>
-
 
 
     <!--Address dialogbox hints-->

@@ -3,6 +3,7 @@ package com.canatme.zpirit.Fragments.ui.profile;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -28,6 +29,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.canatme.zpirit.Activities.AddressBookActivity;
+import com.canatme.zpirit.Activities.LoginOrSignupActivity;
+import com.canatme.zpirit.Activities.MainActivity;
+import com.canatme.zpirit.Activities.OrdersActivity;
 import com.canatme.zpirit.Dataclasses.AddressDto;
 import com.canatme.zpirit.Dataclasses.UserDto;
 import com.canatme.zpirit.R;
@@ -50,9 +54,9 @@ public class ProfileFragment extends Fragment {
     private FragmentProfileBinding binding;
     private ImageView ivDisplayPicture;
     private UserDto userDtoDialogDto;
-    private LinearLayoutCompat llAddresses;
+    private LinearLayoutCompat llAddresses, llOrders, llLogout;
     private String phNumber, fullName, phNumberConcat, userKey;
-    private AlertDialog loadingDialog, profileChangeDetailsDialog;
+    private AlertDialog loadingDialog, profileChangeDetailsDialog, logoutDialog;
     private TextView tvName, tvEmailAddress, tvPhNumber, tvBio, tvChangeDetails;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -70,6 +74,8 @@ public class ProfileFragment extends Fragment {
         llAddresses = binding.llAddresses;
         tvChangeDetails = binding.tvChangeDetails;
         ivDisplayPicture = binding.ivDisplayPicture;
+        llOrders = binding.llOrders;
+        llLogout = binding.llLogout;
 
         phNumber = getActivity().getSharedPreferences(Constants.ACCESS_PREFS, Context.MODE_PRIVATE).getString(Constants.PH_NUMBER, "nophNumberfound");
         dbRefPersonalDetails = FirebaseDatabase.getInstance().getReference("users");
@@ -80,9 +86,36 @@ public class ProfileFragment extends Fragment {
         });
 
         tvChangeDetails.setOnClickListener(view -> getPersonalDetailsDialog());
+        llOrders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToOrdersActivity();
+            }
+        });
+        llLogout.setOnClickListener(view -> {
+//            logout();
+            logoutDialog();
+        });
         return root;
     }
 
+    private void logout()
+    {
+        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.ACCESS_PREFS,Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.apply();
+        showToast("Logged out successfully");
+        Intent i = new Intent(getActivity(), LoginOrSignupActivity.class);
+        startActivity(i);
+        getActivity().finish();
+    }
+
+    private void goToOrdersActivity()
+    {
+        Intent i = new Intent(getActivity(), OrdersActivity.class);
+        startActivity(i);
+    }
     private void loadingScreen() {
         LayoutInflater factory = LayoutInflater.from(getActivity());
         final View dialogLoading = factory.inflate(R.layout.loading, null);
@@ -241,7 +274,34 @@ public class ProfileFragment extends Fragment {
 
 
 
+    private void logoutDialog() {
+        LayoutInflater factory = LayoutInflater.from(getActivity());
+        final View dialogLoading = factory.inflate(R.layout.logout_dialog, null);
+        logoutDialog = new AlertDialog.Builder(getActivity()).create();
+        Window window = logoutDialog.getWindow();
 
+        WindowManager.LayoutParams wlp = window.getAttributes();
+        wlp.gravity = Gravity.CENTER;
+//        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        window.setAttributes(wlp);
+        logoutDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        logoutDialog.setCancelable(true);
+        logoutDialog.setView(dialogLoading);
+        logoutDialog.show();
+        logoutDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.WRAP_CONTENT);
+
+        Button noButton, yesButton;
+        noButton = logoutDialog.findViewById(R.id.noButton);
+        yesButton = logoutDialog.findViewById(R.id.yesButton);
+
+        noButton.setOnClickListener(view -> {
+            showToast("Nice choice");
+            logoutDialog.dismiss();
+        });
+
+        yesButton.setOnClickListener(view -> logout());
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

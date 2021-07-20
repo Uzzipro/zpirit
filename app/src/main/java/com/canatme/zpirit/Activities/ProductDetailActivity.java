@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.LinearLayoutCompat;
 
 import com.canatme.zpirit.Dataclasses.CartDto;
+import com.canatme.zpirit.Dataclasses.FavouritesDto;
 import com.canatme.zpirit.Dataclasses.ProductDto;
 import com.canatme.zpirit.R;
 import com.canatme.zpirit.Utils.Constants;
@@ -23,18 +24,23 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import org.jetbrains.annotations.NotNull;
+
 public class ProductDetailActivity extends AppCompatActivity {
     private static final String TAG = "ProductDetailActivity";
-    private String productID, productImg, productType, productName, productMeasurement, productPrice, productInfo;
+    private String productID, productImg, productType, productName, productMeasurement, productPrice, productInfo, phNumber, productFavKey;
     private ImageView ivBack, ivProductImg, ivFav;
     private TextView tvProducName, tvProductPrice, tvProductInfo, tvProductType, quantityCount;
     private int quantityCountint = 0;
     private ProductDto productDto;
+    private DatabaseReference dbSetFav;
     private LinearLayoutCompat llPlusMinus;
     private Button minusQuantity, plusQuantity, btAddToCart;
+    private boolean fav;
 
 
     @Override
@@ -54,7 +60,10 @@ public class ProductDetailActivity extends AppCompatActivity {
         plusQuantity = findViewById(R.id.plusQuantity);
         quantityCount = findViewById(R.id.quantityCount);
         ivBack.setOnClickListener(view -> onBackPressed());
-        ivFav.setOnClickListener(view -> ivFav.setImageResource(R.drawable.ic_redheart));
+        dbSetFav = FirebaseDatabase.getInstance().getReference();
+        phNumber = getSharedPreferences(Constants.ACCESS_PREFS, Context.MODE_PRIVATE).getString(Constants.PH_NUMBER, "nophNumberfound");
+
+
 
         if (getIntent() != null) {
             Intent intent = getIntent();
@@ -117,11 +126,66 @@ public class ProductDetailActivity extends AppCompatActivity {
 
             }
         });
-
+        ivFav.setOnClickListener(view -> {
+            setFav();
+        });
 
         btAddToCart.setOnClickListener(v -> setPlusQuantity(true));
         minusQuantity.setOnClickListener(v -> setMinusQuantity());
         plusQuantity.setOnClickListener(v -> setPlusQuantity(false));
+//        setFav();
+        Query getFavs = dbSetFav.child("favourites").child(phNumber);
+        getFavs.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                if(snapshot.hasChildren())
+                {
+                    for(DataSnapshot dataSnapshot : snapshot.getChildren())
+                    {
+                        FavouritesDto favouritesDto = dataSnapshot.getValue(FavouritesDto.class);
+                        if(favouritesDto.getProductID().equalsIgnoreCase(productID))
+                        {
+                            Log.e(TAG, "onDataChange: "+favouritesDto.getProductID());
+                            fav = true;
+                            ivFav.setImageResource(R.drawable.ic_heart);
+                            productFavKey = favouritesDto.getPushKey();
+                        }
+//                        else
+//                        {
+//                            fav = false;
+//                            ivFav.setImageResource(R.drawable.ic_borderheart);
+//                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+    }
+
+
+    private void setFav()
+    {
+        if(fav)
+        {
+            fav = false;
+            ivFav.setImageResource(R.drawable.ic_borderheart);
+            dbSetFav.child("favourites").child(phNumber).child(productFavKey).removeValue();
+        }
+        else
+        {
+            fav = true;
+            ivFav.setImageResource(R.drawable.ic_heart);
+//            dbSetFav.child("favourites").child(phNumber).orderByChild("productID").equalTo(productID)();
+            String pushKeydb = dbSetFav.child("favourites").child(phNumber).push().getKey();
+            FavouritesDto favouritesDto = new FavouritesDto(productID, pushKeydb);
+            dbSetFav.child("favourites").child(phNumber).child(pushKeydb).setValue(favouritesDto);
+
+        }
     }
 
     private void addProductToCart(final boolean minusOrPlus) {
