@@ -53,14 +53,12 @@ public class CartActivity extends AppCompatActivity {
         rvProduct.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
         rvProduct.setAdapter(adapter);
 
-
         btMakePayment.setOnClickListener(view -> {
             Intent i = new Intent(CartActivity.this, PaymentActivity.class);
             startActivity(i);
         });
         getData();
     }
-
 
     private void getData() {
         final DatabaseReference mgetProductRef;

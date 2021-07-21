@@ -59,7 +59,6 @@ public class FaqActivity extends AppCompatActivity {
         getFaqs();
     }
 
-
     private void getFaqs() {
         getFaqs.child("faqs").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

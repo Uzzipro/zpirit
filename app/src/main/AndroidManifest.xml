@@ -10,7 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Zpirit"
         android:windowSoftInputMode="adjustResize|stateHidden">
-        <activity android:name=".Activities.HelpActivity"></activity>
+        <activity android:name=".Activities.HelpActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
         <activity android:name=".Activities.FaqActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
