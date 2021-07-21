@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -41,11 +42,21 @@ public class OrdersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_orders);
         ivBack = findViewById(R.id.ivBack);
-        ivBack.setOnClickListener(view -> onBackPressed());
         rvOrders = findViewById(R.id.rvOrders);
         phNumber = getSharedPreferences(Constants.ACCESS_PREFS, Context.MODE_PRIVATE).getString(Constants.PH_NUMBER, "nophNumberfound");
         dbRefGetOrders = FirebaseDatabase.getInstance().getReference("orders");
 
+        if(getIntent() != null &&  getIntent().hasExtra(Constants.FROM_ORDERS))
+        {
+            ivBack.setOnClickListener(view -> {
+                Intent i = new Intent(OrdersActivity.this, MainActivity.class);
+                startActivity(i);
+            });
+        }
+        else {
+            ivBack.setOnClickListener(view -> onBackPressed());
+
+        }
         ordersList = new ArrayList<>();
         adapter = new MyOrdersAdapter(this, ordersList);
         int numberOfColumns = 1;

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.canatme.zpirit.R;
+import com.canatme.zpirit.Utils.Constants;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -18,7 +19,7 @@ public class OrderPlacedActivity extends AppCompatActivity {
     private static final String TAG = "OrderPlacedActivity";
     private String deliveryDate;
     private TextView tvEstDeliveryDateTime;
-    private Button btShopMore;
+    private Button btShopMore, btCheckYourOrders;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +28,11 @@ public class OrderPlacedActivity extends AppCompatActivity {
         if (getIntent() != null) {
             Intent intent = getIntent();
             deliveryDate = intent.getStringExtra("deliveryDate");
-            Log.e(TAG, "onCreate: " + deliveryDate);
 //            showToast(welcome_back_msg);
         }
         tvEstDeliveryDateTime = findViewById(R.id.tvEstDeliveryDateTime);
         btShopMore = findViewById(R.id.btShopMore);
+        btCheckYourOrders = findViewById(R.id.btCheckYourOrders);
 
 
         long dAt = Long.parseLong(deliveryDate);
@@ -48,9 +49,19 @@ public class OrderPlacedActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(OrderPlacedActivity.this, MainActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
                 finish();
             }
+        });
+
+        btCheckYourOrders.setOnClickListener(view -> {
+            Intent i = new Intent(OrderPlacedActivity.this, OrdersActivity.class);
+            i.putExtra(Constants.FROM_ORDERS, "from_orders");
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(i);
+            finish();
+
         });
     }
 

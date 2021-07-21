@@ -30,6 +30,11 @@ public class Constants {
     /**/
 
 
+    /*Intent constants*/
+    public static final String FROM_ORDERS = "from_orders";
+
+    /**/
+
     /*Razor Pay constants*/
     public static final String RP_NAME = "name";
     public static final String RP_DESCRIPTION = "description";
