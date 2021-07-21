@@ -268,6 +268,7 @@ public class HomeFragment extends Fragment {
             if(itemType.equalsIgnoreCase("snacks"))
             {
                 rlDrinkType.setVisibility(View.GONE);
+                selectedItemType = "Snacks";
             }
             else {
                 rlDrinkType.setVisibility(View.VISIBLE);
@@ -276,6 +277,8 @@ public class HomeFragment extends Fragment {
             llRv.setVisibility(View.VISIBLE);
             llProductNotFound.setVisibility(View.GONE);
             animationView.cancelAnimation();
+            Log.e(TAG, "getProducts2: itemType "+itemType);
+
             Query q1 = dbRefGetProducts.child("products_added").child(itemType);
             Log.e(TAG, "getProducts2: itemType" + itemType);
             q1.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -286,6 +289,8 @@ public class HomeFragment extends Fragment {
                         adapter.notifyDataSetChanged();
                         for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
                             ProductDto productDto = dataSnapshot1.getValue(ProductDto.class);
+                            Log.e(TAG, "getProducts2: itemType"+productDto.getProductName());
+
                             listProduct.add(productDto);
                             adapter.notifyDataSetChanged();
                         }
@@ -418,6 +423,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        Log.e(TAG, "onResume: "+selectedItemType);
         if(selectedItemType!=null)
         {
             getProducts2(selectedItemType);
