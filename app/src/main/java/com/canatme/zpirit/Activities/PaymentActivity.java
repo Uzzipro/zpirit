@@ -27,7 +27,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.canatme.zpirit.Activities.Service.ApiService;
+import com.canatme.zpirit.Service.ApiService;
 import com.canatme.zpirit.Adapters.SelectAddressAdapter;
 import com.canatme.zpirit.Dataclasses.AddressDto;
 import com.canatme.zpirit.Dataclasses.CartDto;
@@ -132,7 +132,6 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
                 if (snapshot.hasChildren()) {
                     for (DataSnapshot dataSnapshot2 : snapshot.getChildren()) {
                         UserDto userDto = dataSnapshot2.getValue(UserDto.class);
-                        Log.e(TAG, "onDataChange: " + userDto.getEmailAddress());
                         emailAddress = userDto.getEmailAddress();
                     }
                 }
@@ -191,7 +190,6 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
         getDeliveryCharges.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                Log.e(TAG, "onDataChange: deliverCharge"+snapshot.child(Constants.CONSTANTS_DELIVERY_CHARGE).getValue());
 //                int deliveryChargeint = (int) snapshot.child(Constants.CONSTANTS_DELIVERY_CHARGE).getValue();
 //                int deliveryChargesum = deliveryChargeint + grandTotal;
 //                String deliveryCharge = "Rs. "+ snapshot.child(Constants.CONSTANTS_DELIVERY_CHARGE).getValue();
@@ -266,7 +264,6 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
                     }
                 }
                 else {
-                    Log.e(TAG, "onDataChange: else");
                     llRv.setVisibility(View.GONE);
                     tvAddAddress.setVisibility(View.VISIBLE);
                     tvAddAddress.setOnClickListener(view -> {
@@ -381,7 +378,6 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
 
             @Override
             public void onFailure(Call<OrderCreatedResponseDto> call, Throwable t) {
-                Log.e(TAG, "onResponse: fail " + t.getMessage());
             }
         });
 
@@ -422,14 +418,12 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
 
 
         } catch (Exception e) {
-            Log.e(TAG, "Error in starting Razorpay Checkout", e);
         }
     }
 
     @Override
     public void onPaymentSuccess(String s) {
         placeOrder(s);
-        showToast("Payment Successfull" + s);
     }
 
     public void getDeliverAddress(String addressID) {
@@ -459,7 +453,6 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
     }
 
     private void placeOrder(String paymentID) {
-        Log.e(TAG, "placeOrder: " + orderID);
         String orderTime = String.valueOf(System.currentTimeMillis());
 
         OrderDto orderDto = new OrderDto(orderID, phNumber, String.valueOf(grandTotal), cdcList, orderTime, "paid", paymentID, deliverOrderID, deliveryCharges, "not_delivered", "", "");

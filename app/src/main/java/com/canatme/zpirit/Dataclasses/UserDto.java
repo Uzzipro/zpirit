@@ -16,6 +16,7 @@ public class UserDto {
     private String verifiedAadhaar;
     private String profilePicture;
     private String bio;
+    private String userFcmNotifToken;
 
 
     public String getGender() {
@@ -115,19 +116,28 @@ public class UserDto {
     }
 
 
-    public UserDto(String fName, String lName, String phNumber, String emailAddress, String password, String gender, String totalOrders, String deliveryAddress, String specificOffers, String verifiedAadhaar, String profilePicture, String bio) {
+    public UserDto(String fName, String lName, String phNumber, String emailAddress, String password, String gender, String userFcmNotifToken, String totalOrders, String deliveryAddress, String specificOffers, String verifiedAadhaar, String profilePicture, String bio) {
         this.fName = fName;
         this.lName = lName;
         this.phNumber = phNumber;
         this.emailAddress = emailAddress;
         this.password = password;
         this.gender = gender;
+        this.userFcmNotifToken = userFcmNotifToken;
         this.totalOrders = totalOrders;
         this.deliveryAddress = deliveryAddress;
         this.specificOffers = specificOffers;
         this.verifiedAadhaar = verifiedAadhaar;
         this.profilePicture = profilePicture;
         this.bio = bio;
+    }
+
+    public String getUserFcmNotifToken() {
+        return userFcmNotifToken;
+    }
+
+    public void setUserFcmNotifToken(String userFcmNotifToken) {
+        this.userFcmNotifToken = userFcmNotifToken;
     }
 
     public UserDto()

@@ -9,6 +9,7 @@ public class Constants {
     public static final String PH_NUMBER = "PH_NUMBER";
     public static final String LOGIN_INFO = "LOGIN_INFO";
     public static final String WELCOME_BACK = "WELCOME_BACK";
+    public static final String FCM_TOKEN = "fcm_token";
     /**/
 
     /* Fragment names */
@@ -53,5 +54,12 @@ public class Constants {
 
     /*Api Paths*/
     public static final String RP_ORDERS = "https://api.razorpay.com/v1/orders/";
+    /**/
+
+
+    /*Notifs*/
+    public static final String PUSH_NOTIFICATION = "pushNotification";
+    public static final int NOTIFICATION_ID = 100;
+    public static final int NOTIFICATION_ID_BIG_IMAGE = 101;
     /**/
 }

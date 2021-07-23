@@ -1,4 +1,4 @@
-package com.canatme.zpirit.Activities.Service;
+package com.canatme.zpirit.Service;
 
 import com.canatme.zpirit.Dataclasses.OrderCreatedResponseDto;
 import com.canatme.zpirit.Dataclasses.RazorPayCreateOrderDtoBody;

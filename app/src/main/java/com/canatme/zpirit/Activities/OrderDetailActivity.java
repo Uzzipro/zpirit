@@ -48,7 +48,6 @@ public class OrderDetailActivity extends AppCompatActivity {
             Intent intent = getIntent();
             orderID = intent.getStringExtra("orderID");
             phNumber = intent.getStringExtra("phNumber");
-            Log.e(TAG, "onCreate: " + orderID + " " + phNumber);
         }
         dbRefGetOrder = FirebaseDatabase.getInstance().getReference();
         ivBack = findViewById(R.id.ivBack);
@@ -81,7 +80,6 @@ public class OrderDetailActivity extends AppCompatActivity {
                         adapter.notifyDataSetChanged();
                         productTotal = productTotal + Integer.parseInt(orderDto.getCdc().get(z).getProductTotalPrice());
                     }
-                    Log.e(TAG, "onDataChange: "+productTotal);
                     String strDeliveryCharge = "Rs. "+orderDto.getDeliveryCharge();
                     String strGrandTotal = "Rs. "+orderDto.getGrandTotal();
                     String strProductTotal = "Rs. "+String.valueOf(productTotal);

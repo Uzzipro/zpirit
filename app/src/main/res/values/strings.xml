@@ -70,4 +70,15 @@
     <string name="update_details">Update</string>
 
 
+    <!--Notifs strings-->
+    <string name="notif_channel_marketing_id">0</string>
+    <string name="notif_channel_marketing">Marketing</string>
+
+    <string name="notif_channel_alerts_id">1</string>
+    <string name="notif_channel_alerts">Alerts</string>
+
+    <string name="notif_channel_reminders_id">2</string>
+    <string name="notif_channel_reminders">Reminders</string>
+
+
 </resources>

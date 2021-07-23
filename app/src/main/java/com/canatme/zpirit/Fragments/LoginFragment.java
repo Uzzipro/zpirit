@@ -156,9 +156,7 @@ public class LoginFragment extends Fragment {
                     if (snapshot.hasChildren()) {
                         for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
                             UserDto UD = dataSnapshot1.getValue(UserDto.class);
-                            Log.e(TAG, "onDataChange: " + UD.getEmailAddress());
                             if (UD.getPassword().equals(etPassword.getText().toString().trim())) {
-                                Log.e(TAG, "onDataChange: correct password");
                                 SharedPreferences.Editor editor = getActivity().getSharedPreferences(Constants.
                                         ACCESS_PREFS, MODE_PRIVATE).edit();
                                 editor.putString(Constants.PH_NUMBER, etPhNumber.getText().toString().trim());

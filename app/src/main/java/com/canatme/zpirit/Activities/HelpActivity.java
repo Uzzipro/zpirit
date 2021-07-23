@@ -58,7 +58,6 @@ public class HelpActivity extends AppCompatActivity {
             String textComplaint = etWriteComplaint.getText().toString().trim();
             String StrtimeSubmitted = String.valueOf(timeSubmitted);
             String strComplaintID = "com"+phNumber+timeSubmitted;
-            Log.e(TAG, "submitComplaint: "+strComplaintID);
             ComplaintDto complaintDto = new ComplaintDto(strComplaintID, StrtimeSubmitted, textComplaint, false);
             dbSendComplaint.child("complaints").child(phNumber).child(strComplaintID).setValue(complaintDto);
             showToast("Complaint has been registered, our team will contact you within 48 hours");

@@ -126,12 +126,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
         CartDto cdc2 = cardinfoList.get(pos);
 
 
-        if (cdc2 != null) {
-            Log.e(TAG, "addToCart2: checking position its not null" + pos);
-        } else {
-            Log.e(TAG, "addToCart2: checking position its null" + pos);
-
-        }
         final ProductDto productsClass = cdc2.getPd();
         final String productDbKey = dbRef.child("cart_table").child(phNumber).push().getKey();
 

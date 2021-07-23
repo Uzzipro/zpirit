@@ -41,7 +41,6 @@ public class OrderPlacedActivity extends AppCompatActivity {
         String months[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"};
         String dayToday = android.text.format.DateFormat.format("EEEE", getDate(dAt)).toString();
         String am_pm = null;
-        Log.e(TAG, "onCreate: " + date + " ," + months[month] + " ," + getDate(dAt).get(Calendar.YEAR));
 
         String deliveryDate = "Estimated Delivery Date\n" + date + " , " + months[month] + " , " + getDate(dAt).get(Calendar.YEAR);
         tvEstDeliveryDateTime.setText(deliveryDate);
@@ -74,7 +73,6 @@ public class OrderPlacedActivity extends AppCompatActivity {
     private Calendar getDate(long time) {
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(time);
-//        Log.e(TAG, "getDate: "+cal.get(Calendar.HOUR_OF_DAY)+"\n"+cal.get(Calendar.AM_PM));
         return cal;
     }
 }

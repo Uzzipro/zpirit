@@ -66,7 +66,6 @@ public class FaqActivity extends AppCompatActivity {
                 if (snapshot.hasChildren()) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         FaqDto faqDto = dataSnapshot.getValue(FaqDto.class);
-                        Log.e(TAG, "onDataChange: " + faqDto.getQuestion());
                         faqList.add(faqDto);
                         adapter.notifyDataSetChanged();
                     }

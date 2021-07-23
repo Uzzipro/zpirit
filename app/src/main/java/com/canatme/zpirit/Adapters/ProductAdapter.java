@@ -79,7 +79,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                         CartDto cx = dataSnapshot2.getValue(CartDto.class);
 
                         if (cardData.getProductID().equalsIgnoreCase(cx.getProductKey())) {
-//                            Log.e(TAG, "onDataChange: " + holder.getAdapterPosition() + " " + pos);
                             quantityCountint = Integer.parseInt(cx.getProductQuantity());
                             cardData.setCartHasItem(true);
                         }
@@ -90,7 +89,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                         holder.llPlusMinus.setVisibility(View.VISIBLE);
                         holder.btAddToCart.setVisibility(View.GONE);
                         holder.quantityCount.setText(String.valueOf(quantityCountint));
-                        Log.e(TAG, "onDataChange: "+quantityCountint);
                     }
                     else
                     {
@@ -234,7 +232,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 //        ProductDto productsClass = cardinfoList.get(pos);
 //        pKey = productsClass.getProductID();
 //
-//        Log.e(TAG, "getData: " + getItemId(pos));
 //
 //        final String phNumber = context.getSharedPreferences(Constants.ACCESS_PREFS, Context.MODE_PRIVATE).getString(Constants.PH_NUMBER, "No phone number detected");
 //        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
@@ -246,7 +243,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 //                        CartDto cx = dataSnapshot2.getValue(CartDto.class);
 //                        quantityCountint = Integer.parseInt(cx.getProductQuantity());
 //                        if (pKey.equalsIgnoreCase(cx.getProductKey())) {
-//                            Log.e(TAG, "onDataChange: " + holder.getAdapterPosition() + " " + pos);
 //                            holder.llPlusMinus.setVisibility(View.VISIBLE);
 //                            holder.btAddToCart.setVisibility(View.GONE);
 //                            holder.quantityCount.setText(String.valueOf(quantityCountint));

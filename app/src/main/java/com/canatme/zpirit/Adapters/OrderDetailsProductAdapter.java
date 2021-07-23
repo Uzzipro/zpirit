@@ -60,7 +60,6 @@ public class OrderDetailsProductAdapter extends RecyclerView.Adapter<OrderDetail
         if (cardData.getPd().getProductImg() != null) {
             Picasso.get().load(cardData.getPd().getProductImg()).into(holder.ivProductImg);
         }
-        Log.e(TAG, "onBindViewHolder: "+cardData.getProductQuantity());
 
         String priceMultipled = cardData.getProductQuantity()+" x "+"Rs. "+cardData.getPd().getProductPrice();
         holder.tvProductPrice.setText(priceMultipled);

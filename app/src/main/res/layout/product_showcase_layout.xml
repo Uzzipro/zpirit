@@ -12,7 +12,7 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/llMain"
         android:layout_width="170dp"
-        android:layout_height="320dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:background="@drawable/productlayoutbg"
         android:elevation="5dp"
@@ -75,6 +75,7 @@
             android:layout_height="@dimen/_35_dp"
             android:layout_marginHorizontal="@dimen/_15_dp"
             android:layout_marginTop="@dimen/_30_dp"
+            android:layout_marginBottom="@dimen/_20_dp"
             android:background="@drawable/btbg"
             android:fontFamily="@font/sfproroundedsemibold"
             android:text="@string/add_to_cart"
@@ -90,6 +91,8 @@
             android:layout_weight="0.6"
             android:gravity="center"
             android:visibility="gone"
+            android:layout_marginTop="@dimen/_30_dp"
+            android:layout_marginBottom="@dimen/_20_dp"
             android:paddingHorizontal="5dp"
             android:id="@+id/llPlusMinus"
             android:orientation="horizontal">

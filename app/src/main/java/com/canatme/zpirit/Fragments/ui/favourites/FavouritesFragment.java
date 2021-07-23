@@ -88,12 +88,10 @@ public class FavouritesFragment extends Fragment {
                             favProductList.add(productDto);
                             adapter.notifyDataSetChanged();
                         }
-                        Log.e(TAG, "onDataChange: firstloading");
                         loadingDialog.dismiss();
                     }
                     else
                     {
-                        Log.e(TAG, "onDataChange: secondloading");
 
                         loadingDialog.dismiss();
                     }
@@ -138,6 +136,5 @@ public class FavouritesFragment extends Fragment {
     public void onResume() {
         super.onResume();
         getProducts2();
-        Log.e(TAG, "onResume: working");
     }
 }

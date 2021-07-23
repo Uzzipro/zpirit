@@ -106,7 +106,6 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyView
         }
 
         String subStringItems = items.substring(2);
-        Log.e(TAG, "onBindViewHolder: " + subStringItems);
         holder.tvItems.setText(subStringItems);
 
         if(orderDataClass.getStarRating() != null && !orderDataClass.getStarRating().isEmpty())
@@ -230,7 +229,6 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyView
     private Calendar getDate(long time) {
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(time);
-//        Log.e(TAG, "getDate: "+cal.get(Calendar.HOUR_OF_DAY)+"\n"+cal.get(Calendar.AM_PM));
         return cal;
     }
 

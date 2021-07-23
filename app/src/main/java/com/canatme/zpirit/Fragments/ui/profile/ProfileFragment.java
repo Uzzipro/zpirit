@@ -126,6 +126,7 @@ public class ProfileFragment extends Fragment {
         showToast("Logged out successfully");
         Intent i = new Intent(getActivity(), LoginOrSignupActivity.class);
         startActivity(i);
+        logoutDialog.dismiss();
         getActivity().finish();
     }
 
@@ -162,7 +163,6 @@ public class ProfileFragment extends Fragment {
                 {
                     for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
                         userKey = dataSnapshot1.getKey();
-                        Log.e(TAG, "onDataChange: Key"+dataSnapshot1.getKey());
                         UserDto userDto = dataSnapshot1.getValue(UserDto.class);
                         userDtoDialogDto = userDto;
                         fullName = userDto.getfName()+" "+userDto.getlName();

@@ -1,6 +1,7 @@
 package com.canatme.zpirit.Fragments.ui.home;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -34,6 +35,7 @@ import com.canatme.zpirit.Adapters.ProductAdapter;
 import com.canatme.zpirit.Dataclasses.CategoryDto;
 import com.canatme.zpirit.Dataclasses.ProductDto;
 import com.canatme.zpirit.R;
+import com.canatme.zpirit.Utils.Constants;
 import com.canatme.zpirit.databinding.FragmentHomeBinding;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -53,14 +55,14 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
     private LinearLayoutCompat llDrinks, llSnacks;
-    private String selectedItemType;
+    private String selectedItemType, phNumber;
     private TextView tvDrinks, tvSnacks;
     private View vDrinks, vSnacks;
     private LinearLayoutCompat llProductNotFound, llRv;
     private Spinner spinnerDrinkType;
     private LottieAnimationView animationView;
     /*Adapter components, lists and adapters*/
-    private DatabaseReference dbRefProductType, dbRefGetProducts;
+    private DatabaseReference dbRefProductType, dbRefGetProducts, dbSetFCMToken;
     private RelativeLayout rlDrinkType;
     private TextView tvLoading;
     private ProductAdapter adapter;
@@ -80,6 +82,7 @@ public class HomeFragment extends Fragment {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        final String phNumber = getActivity().getSharedPreferences(Constants.ACCESS_PREFS, Context.MODE_PRIVATE).getString(Constants.PH_NUMBER, "No phone number detected");
 
 //        final TextView textView = binding.textHome;
         /*Linear layouts*/
@@ -109,6 +112,7 @@ public class HomeFragment extends Fragment {
 
         dbRefProductType = FirebaseDatabase.getInstance().getReference();
         dbRefGetProducts = FirebaseDatabase.getInstance().getReference();
+        dbSetFCMToken = FirebaseDatabase.getInstance().getReference();
 
         productTypesList = new ArrayList<>();
         /*Initializing and setting the spinner*/
@@ -160,13 +164,16 @@ public class HomeFragment extends Fragment {
             }
         });
 
-
         return root;
     }
 
+    private void sendTokenToServer()
+    {
+        final String fcmToken = getActivity().getSharedPreferences(Constants.ACCESS_PREFS, Context.MODE_PRIVATE).getString(Constants.FCM_TOKEN, "No Token Detected");
+
+    }
 
 //    private void getProducts(String itemType) {
-//        Log.e(TAG, "getProducts: " + itemType);
 //        String[] productID = {"pd1", "pd2", "pd3", "pd4"};
 //        String[] productImg = {"https://i.ibb.co/sKrh6xz/brocode.png", "https://i.ibb.co/1s75D5L/allseasonspng.png", "https://i.ibb.co/TbZsDtM/absolut.png", "https://i.ibb.co/mC4Dxss/oldmonk.png"};
 //        String[] productType = {"Beer", "Whiskey", "Vodka", "Rum"};
@@ -212,7 +219,6 @@ public class HomeFragment extends Fragment {
 //            llRv.setVisibility(View.VISIBLE);
 //            for (int x = 0; x < productID.length; x++) {
 //                if (productType[x].equalsIgnoreCase(itemType)) {
-//                    Log.e(TAG, "getProducts: addding product");
 //
 //                    ProductDto productDto = new ProductDto();
 //                    productDto.setProductID(productID[x]);
@@ -227,7 +233,6 @@ public class HomeFragment extends Fragment {
 //                }
 //            }
 //            if (listProduct.size() == 0) {
-//                Log.e(TAG, "getProducts: empty");
 //
 //                llProductNotFound.setVisibility(View.VISIBLE);
 //                llRv.setVisibility(View.GONE);
@@ -237,7 +242,6 @@ public class HomeFragment extends Fragment {
 //        /*If user selects Snacks*/
 //        if (itemType.equalsIgnoreCase("snacks")) {
 //            rlDrinkType.setVisibility(View.GONE);
-//            Log.e(TAG, "getProducts: snacks");
 //            listProduct.clear();
 //            for (int y = 0; y < productIDSnacks.length; y++) {
 //                ProductDto productDto = new ProductDto();
@@ -277,10 +281,8 @@ public class HomeFragment extends Fragment {
             llRv.setVisibility(View.VISIBLE);
             llProductNotFound.setVisibility(View.GONE);
             animationView.cancelAnimation();
-            Log.e(TAG, "getProducts2: itemType "+itemType);
 
             Query q1 = dbRefGetProducts.child("products_added").child(itemType);
-            Log.e(TAG, "getProducts2: itemType" + itemType);
             q1.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
@@ -289,7 +291,6 @@ public class HomeFragment extends Fragment {
                         adapter.notifyDataSetChanged();
                         for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
                             ProductDto productDto = dataSnapshot1.getValue(ProductDto.class);
-                            Log.e(TAG, "getProducts2: itemType"+productDto.getProductName());
 
                             listProduct.add(productDto);
                             adapter.notifyDataSetChanged();
@@ -350,7 +351,6 @@ public class HomeFragment extends Fragment {
         spinnerDrinkType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.e(TAG, "onItemSelected: " + spinnerDrinkType.getSelectedItem().toString());
 
                 if (spinnerDrinkType.getSelectedItem().toString().equalsIgnoreCase("Select Drink type")) {
                     getProducts2("drinks");
@@ -423,7 +423,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.e(TAG, "onResume: "+selectedItemType);
         if(selectedItemType!=null)
         {
             getProducts2(selectedItemType);

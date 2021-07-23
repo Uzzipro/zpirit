@@ -1,9 +1,11 @@
 package com.canatme.zpirit.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,9 +17,16 @@ import androidx.navigation.ui.NavigationUI;
 import com.canatme.zpirit.R;
 import com.canatme.zpirit.Utils.Constants;
 import com.canatme.zpirit.databinding.ActivityMainBinding;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "MainActivity";
+    private String phNumber;
 
     private ActivityMainBinding binding;
 
@@ -54,6 +63,26 @@ public class MainActivity extends AppCompatActivity {
 
         navView.setItemIconTintList(iconColorStates);
         navView.setItemTextColor(iconColorStates);
+
+        phNumber = getSharedPreferences(Constants.ACCESS_PREFS, Context.MODE_PRIVATE).getString(Constants.PH_NUMBER, "nophNumberfound");
+
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                String token = instanceIdResult.getToken();
+                saveFcmTokenToDataBase(token);
+                Log.e(TAG, "onSuccess: "+token);
+                // send it to server
+            }
+        });
+    }
+
+
+    private void saveFcmTokenToDataBase(String token)
+    {
+        DatabaseReference databaseReference;
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
     }
 
     private void showToast(String msg) {

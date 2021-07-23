@@ -96,7 +96,6 @@ public class ProductDetailActivity extends AppCompatActivity {
                         CartDto cx = dataSnapshot2.getValue(CartDto.class);
 
                         if (productID.equalsIgnoreCase(cx.getProductKey())) {
-//                            Log.e(TAG, "onDataChange: " + holder.getAdapterPosition() + " " + pos);
                             quantityCountint = Integer.parseInt(cx.getProductQuantity());
                             productDto.setCartHasItem(true);
                         }
@@ -106,7 +105,6 @@ public class ProductDetailActivity extends AppCompatActivity {
                         llPlusMinus.setVisibility(View.VISIBLE);
                         btAddToCart.setVisibility(View.GONE);
                         quantityCount.setText(String.valueOf(quantityCountint));
-                        Log.e(TAG, "onDataChange: " + quantityCountint);
                     } else {
                         llPlusMinus.setVisibility(View.GONE);
                         btAddToCart.setVisibility(View.VISIBLE);

@@ -33,6 +33,7 @@ import com.canatme.zpirit.Activities.MainActivity;
 import com.canatme.zpirit.Dataclasses.UserDto;
 import com.canatme.zpirit.R;
 import com.canatme.zpirit.Utils.Constants;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,6 +41,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -51,9 +54,11 @@ import static android.content.Context.MODE_PRIVATE;
  * create an instance of this fragment.
  */
 public class SignupFragment extends Fragment {
+
     /*Strings*/
     private final static String TAG = "SignupFragment";
     private String gender;
+    String fcmToken;
     /**/
 
     /*Alert dialog box for loading screen*/
@@ -151,7 +156,6 @@ public class SignupFragment extends Fragment {
         etConfirmPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                Log.e(TAG, "TextWatcher: beforeTextChanged: " + charSequence.toString());
 
             }
 
@@ -232,7 +236,6 @@ public class SignupFragment extends Fragment {
     }
 
     private void btSignUpClick() {
-        Log.e(TAG, "btSignUpClick: "+rbMale.isChecked() + " " + rbFemale.isChecked()+ " "+rbNotSay.isChecked());
         if (TextUtils.isEmpty(etFirstName.getText().toString().trim())) {
             showToast("Please fill first name");
         } else if (TextUtils.isEmpty(etLastName.getText().toString().trim())) {
@@ -268,9 +271,15 @@ public class SignupFragment extends Fragment {
 
                             }
                         } else {
-                            UserDto registerUserDto = new UserDto(etFirstName.getText().toString().trim(), etLastName.getText().toString().trim(), etPhNumber.getText().toString().trim(), etEmailAddress.getText().toString().trim(), etPassword.getText().toString().trim(), gender, "0", "0", "0", "false", "", "");
-                            dbRefSignup.push().setValue(registerUserDto);
-                            showToast("Registered");
+                            FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(instanceIdResult -> {
+                                fcmToken = instanceIdResult.getToken();
+                                Log.e(TAG, "onDataChange: "+fcmToken);
+                                // send it to server
+                                UserDto registerUserDto = new UserDto(etFirstName.getText().toString().trim(), etLastName.getText().toString().trim(), etPhNumber.getText().toString().trim(), etEmailAddress.getText().toString().trim(), etPassword.getText().toString().trim(), gender, fcmToken, "0", "0", "false", "", "", "");
+                                dbRefSignup.push().setValue(registerUserDto);
+                                showToast("Registered");
+                            });
+
 
                             SharedPreferences.Editor editor = getActivity().getSharedPreferences(Constants.
                                     ACCESS_PREFS, MODE_PRIVATE).edit();
@@ -282,7 +291,6 @@ public class SignupFragment extends Fragment {
                             loadingDialog.dismiss();
                             startActivity(loggedinActivity);
                             getActivity().finish();
-
 
                         }
 

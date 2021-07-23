@@ -2,16 +2,18 @@ package com.canatme.zpirit.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
 import com.canatme.zpirit.R;
 import com.canatme.zpirit.Utils.Constants;
+import com.google.common.collect.Lists;
 
 public class SplashActivity extends AppCompatActivity {
     private static final String TAG = "SplashActivity";
@@ -24,6 +26,7 @@ public class SplashActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
 
+        createNotificationChannel();
         final boolean logininfo = getSharedPreferences(Constants.ACCESS_PREFS, Context.MODE_PRIVATE).getBoolean(Constants.LOGIN_INFO, false);
         if(logininfo)
         {
@@ -38,17 +41,31 @@ public class SplashActivity extends AppCompatActivity {
             startActivity(loggedinActivity);
             finish();
         }
+    }
 
-//        final Handler handler = new Handler();
-//        //Change this with login check(if the user is logged in or not)
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                Intent i = new Intent(SplashActivity.this, LoginOrSignupActivity.class);
-//                startActivity(i);
-//            }
-//        }, 1000);
-//        //Change this with login check(if the user is logged in or not)
-//
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel marketing = new NotificationChannel(
+                    getString(R.string.notif_channel_marketing_id),
+                    getString(R.string.notif_channel_marketing),
+                    NotificationManager.IMPORTANCE_HIGH);
+            NotificationChannel alerts = new NotificationChannel(
+                    getString(R.string.notif_channel_alerts_id),
+                    getString(R.string.notif_channel_alerts), NotificationManager.IMPORTANCE_HIGH);
+            NotificationChannel reminders = new NotificationChannel(
+                    getString(R.string.notif_channel_reminders_id),
+                    getString(R.string.notif_channel_reminders),
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannels(Lists.newArrayList(marketing, alerts,
+                        reminders));
+            }
+        }
     }
 }

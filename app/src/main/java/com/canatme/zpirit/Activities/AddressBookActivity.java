@@ -141,7 +141,6 @@ public class AddressBookActivity extends AppCompatActivity {
                 showToast("Please enter your floor");
             } else if (TextUtils.isEmpty(etTowerBlock.getText().toString().trim())) {
                 showToast("Please enter your tower/block number");
-
             } else if (TextUtils.isEmpty(etTag.getText().toString().trim())) {
                 showToast("Please set a tag for your address");
             } else {
