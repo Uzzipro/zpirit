@@ -146,11 +146,8 @@ public class HomeFragment extends Fragment {
         /**/
 
 
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
+        homeViewModel.getText().observe(getViewLifecycleOwner(), s -> {
 //                textView.setText(s);
-            }
         });
 
         llDrinks.setOnClickListener(view -> drinksClick());

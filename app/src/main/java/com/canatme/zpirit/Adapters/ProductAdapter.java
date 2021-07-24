@@ -53,7 +53,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         return new MyViewHolder(itemView);
 
     }
-
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
         final ProductDto cardData = cardinfoList.get(position);

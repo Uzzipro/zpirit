@@ -156,7 +156,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
                     String value_in_paisa = String.valueOf(grandTotal * 100);
 //            initializePayment("ref_1", "100", phNumber, emailAddress);
 
-                    Query q3 = dbRef.child("keys").child("test_key");
+                    Query q3 = dbRef.child("keys").child("live_key");
                     q3.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
