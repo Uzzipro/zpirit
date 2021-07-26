@@ -148,14 +148,26 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                         int totalprice = 0;
                         int productPrice = Integer.parseInt(productsClass.getProductPrice());
                         if (quantityDb != 0) {
+                            Log.e(TAG, "onDataChange: "+quantityDb);
+
                             if (minusOrPlus) {
-                                quantityDb = quantityDb + 1;
-                                totalprice = productPrice * quantityDb;
-                                c3.setProductTotalPrice(String.valueOf(totalprice));
-                                c3.setProductQuantity(String.valueOf(quantityDb));
-                                dbRef.child("cart_table").child(phNumber).child(c3.getNodeKey()).child("productTotalPrice").setValue(String.valueOf(totalprice));
-                                dbRef.child("cart_table").child(phNumber).child(c3.getNodeKey()).child("productQuantity").setValue(String.valueOf(quantityDb));
-                                progressDialog.dismiss();
+                                if(quantityDb == 1)
+                                {
+                                    Toast.makeText(context, "Quantity for test purposes is set to only 1 for whiskey", Toast.LENGTH_LONG).show();
+                                    progressDialog.dismiss();
+
+                                }
+                                else
+                                {
+                                    quantityDb = quantityDb + 1;
+                                    totalprice = productPrice * quantityDb;
+                                    c3.setProductTotalPrice(String.valueOf(totalprice));
+                                    c3.setProductQuantity(String.valueOf(quantityDb));
+                                    dbRef.child("cart_table").child(phNumber).child(c3.getNodeKey()).child("productTotalPrice").setValue(String.valueOf(totalprice));
+                                    dbRef.child("cart_table").child(phNumber).child(c3.getNodeKey()).child("productQuantity").setValue(String.valueOf(quantityDb));
+                                    progressDialog.dismiss();
+                                }
+
                             }
                             if (minusOrPlus == false) {
                                 if (quantityDb == 1) {

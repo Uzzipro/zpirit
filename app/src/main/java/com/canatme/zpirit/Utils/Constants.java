@@ -28,12 +28,13 @@ public class Constants {
     public static final String PRODUCT_INFO = "PRODUCT_INFO";
     public static final String CONSTANTS_FOR_ANDROID_APP_FIREBASE = "constants_for_android_app";
     public static final String CONSTANTS_DELIVERY_CHARGE = "delivery_charges";
+    public static final String FROM_ORDERS = "from_orders";
     /**/
 
 
     /*Intent constants*/
-    public static final String FROM_ORDERS = "from_orders";
-
+    public static final String QUANTITY_BEER = "quantity_beer";
+    public static final String QUANTITY_WHISKEY = "quantity_beer";
     /**/
 
     /*Razor Pay constants*/

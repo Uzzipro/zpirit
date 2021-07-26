@@ -140,6 +140,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
                         int productPrice = Integer.parseInt(productsClass.getProductPrice());
                         if (quantityDb != 0) {
                             if (minusOrPlus) {
+                                if(quantityDb == 1)
+                                {
+                                    Toast.makeText(context, "Quantity for test purposes is set to only 1 for whiskey", Toast.LENGTH_LONG).show();
+                                    progressDialog.dismiss();
+
+                                }
+                                else
+                                {
+
                                 quantityDb = quantityDb + 1;
                                 totalprice = productPrice * quantityDb;
                                 cardinfoList.remove(pos);
@@ -150,6 +159,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
 //                                dbRef.child("cart_table").child(phNumber).child(c3.getNodeKey()).child("productQuantity").setValue(String.valueOf(quantityDb));
                                 dbRef.child("cart_table").child(phNumber).child(c3.getNodeKey()).setValue(c3);
                                 progressDialog.dismiss();
+                                }
+
                             }
                             if (minusOrPlus == false) {
                                 if (quantityDb == 1) {
