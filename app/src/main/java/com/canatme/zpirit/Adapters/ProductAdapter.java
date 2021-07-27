@@ -26,8 +26,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -37,6 +40,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
     private Context context;
     private List<ProductDto> cardinfoList;
     private int quantityCountint = 0;
+    private int quantityCap = 0;
+    private int quantityDb;
+    private int totalprice;
+    private int productPrice;
 
 
     public ProductAdapter(Context mContext, List<ProductDto> cardinfoList) {
@@ -53,6 +60,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         return new MyViewHolder(itemView);
 
     }
+
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
         final ProductDto cardData = cardinfoList.get(position);
@@ -83,14 +91,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                         }
 
                     }
-                    if(cardData.isCartHasItem())
-                    {
+                    if (cardData.isCartHasItem()) {
                         holder.llPlusMinus.setVisibility(View.VISIBLE);
                         holder.btAddToCart.setVisibility(View.GONE);
                         holder.quantityCount.setText(String.valueOf(quantityCountint));
-                    }
-                    else
-                    {
+                    } else {
                         holder.llPlusMinus.setVisibility(View.GONE);
                         holder.btAddToCart.setVisibility(View.VISIBLE);
                     }
@@ -113,6 +118,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
 //        getData(holder, position);
     }
+
     private void setMinusQuantity(final MyViewHolder holder, int pos) {
         quantityCountint = quantityCountint - 1;
         addProductToCart(holder, false, pos);
@@ -135,38 +141,75 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         progressDialog.setTitle("Adding products to your cart.......");
         progressDialog.show();
 
+        Log.e(TAG, "addProductToCart: "+cardinfoList.size() + " "+pos);
         final ProductDto productsClass = cardinfoList.get(pos);
+//        quantityCheck(productsClass.getProductType());
         final String productDbKey = dbRef.child("cart_table").child(phNumber).push().getKey();
         dbRef.child("cart_table").child(phNumber).orderByChild("productKey").equalTo(productsClass.getProductID()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                 if (dataSnapshot.hasChildren()) {//cart has already been made
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                         CartDto c3 = dataSnapshot1.getValue(CartDto.class);
-                        int quantityDb = Integer.parseInt(c3.getProductQuantity());
-                        int totalprice = 0;
-                        int productPrice = Integer.parseInt(productsClass.getProductPrice());
+                        quantityDb = Integer.parseInt(c3.getProductQuantity());
+                        totalprice = 0;
+                        productPrice = Integer.parseInt(productsClass.getProductPrice());
                         if (quantityDb != 0) {
-                            Log.e(TAG, "onDataChange: "+quantityDb);
-
                             if (minusOrPlus) {
-                                if(quantityDb == 1)
-                                {
-                                    Toast.makeText(context, "Quantity for test purposes is set to only 1 for whiskey", Toast.LENGTH_LONG).show();
-                                    progressDialog.dismiss();
+                                DatabaseReference dbRef2;
+                                dbRef2 = FirebaseDatabase.getInstance().getReference().getRef();
+                                Query getDeliveryCharges = dbRef2.child(Constants.CONSTANTS_FOR_ANDROID_APP_FIREBASE);
+                                getDeliveryCharges.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                                        String getQuantityForType = "quantity_" + productsClass.getProductType().toLowerCase();
+                                        String quantityForCategory = String.valueOf(snapshot.child(getQuantityForType).getValue());
+                                        quantityCap = Integer.parseInt(quantityForCategory);
+                                        if (quantityDb == quantityCap) {
+                                            Toast.makeText(context, "Quantity is set to only " + quantityCap + " for " + productsClass.getProductType(), Toast.LENGTH_LONG).show();
+                                            progressDialog.dismiss();
 
-                                }
-                                else
-                                {
-                                    quantityDb = quantityDb + 1;
-                                    totalprice = productPrice * quantityDb;
-                                    c3.setProductTotalPrice(String.valueOf(totalprice));
-                                    c3.setProductQuantity(String.valueOf(quantityDb));
-                                    dbRef.child("cart_table").child(phNumber).child(c3.getNodeKey()).child("productTotalPrice").setValue(String.valueOf(totalprice));
-                                    dbRef.child("cart_table").child(phNumber).child(c3.getNodeKey()).child("productQuantity").setValue(String.valueOf(quantityDb));
-                                    progressDialog.dismiss();
-                                }
+                                        } else {
+                                            quantityDb = quantityDb + 1;
+                                            totalprice = productPrice * quantityDb;
+                                            c3.setProductTotalPrice(String.valueOf(totalprice));
+                                            c3.setProductQuantity(String.valueOf(quantityDb));
+                                            dbRef.child("cart_table").child(phNumber).child(c3.getNodeKey()).child("productTotalPrice").setValue(String.valueOf(totalprice));
+                                            dbRef.child("cart_table").child(phNumber).child(c3.getNodeKey()).child("productQuantity").setValue(String.valueOf(quantityDb));
+                                            progressDialog.dismiss();
+//                                            quantityDb = quantityDb + 1;
+//                                            totalprice = productPrice * quantityDb;
+//                                            cardinfoList.remove(pos);
+//                                            cardinfoList.clear();
+//                                            c3.setProductTotalPrice(String.valueOf(totalprice));
+//                                            c3.setProductQuantity(String.valueOf(quantityDb));
+//                                dbRef.child("cart_table").child(phNumber).child(c3.getNodeKey()).child("productTotalPrice").setValue(String.valueOf(totalprice));
+//                                dbRef.child("cart_table").child(phNumber).child(c3.getNodeKey()).child("productQuantity").setValue(String.valueOf(quantityDb));
+//                                            dbRef.child("cart_table").child(phNumber).child(c3.getNodeKey()).setValue(c3);
+//                                            progressDialog.dismiss();
+                                            holder.quantityCount.setText(String.valueOf(quantityDb));
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                                    }
+
+                                });
+
+//                                if (quantityDb == quantityCap) {
+//                                    Toast.makeText(context, "Quantity for test purposes is set to only " + quantityCap + " for " + productsClass.getProductType(), Toast.LENGTH_LONG).show();
+//                                    progressDialog.dismiss();
+//                                } else {
+//                                    quantityDb = quantityDb + 1;
+//                                    totalprice = productPrice * quantityDb;
+//                                    c3.setProductTotalPrice(String.valueOf(totalprice));
+//                                    c3.setProductQuantity(String.valueOf(quantityDb));
+//                                    dbRef.child("cart_table").child(phNumber).child(c3.getNodeKey()).child("productTotalPrice").setValue(String.valueOf(totalprice));
+//                                    dbRef.child("cart_table").child(phNumber).child(c3.getNodeKey()).child("productQuantity").setValue(String.valueOf(quantityDb));
+//                                    progressDialog.dismiss();
+//                                }
 
                             }
                             if (minusOrPlus == false) {
@@ -222,7 +265,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         });
 
     }
-
     private void productDetailClick(int pos) {
         final ProductDto cardData = cardinfoList.get(pos);
 

@@ -24,8 +24,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -35,6 +38,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
     private Activity context;
     private List<CartDto> cardinfoList;
     private int quantityCountint = 0;
+    private int quantityCap = 0;
+    private int quantityDb;
+    private int totalprice;
+    private int productPrice;
 
 
     public CartAdapter(Activity mContext, List<CartDto> cardinfoList) {
@@ -60,17 +67,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
         if (cardData.getPd().getProductImg() != null) {
             Picasso.get().load(cardData.getPd().getProductImg()).into(holder.ivProductImg);
         }
-        String price = "Rs. "+cardData.getPd().getProductPrice();
+        String price = "Rs. " + cardData.getPd().getProductPrice();
         holder.tvProductPrice.setText(price);
         holder.tvProductName.setText(cardData.getPd().getProductName());
-        holder.btMinus.setOnClickListener(v -> setMinusQuantity(holder, position));
 
-        holder.btPlus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setPlusQuantity(holder, position);
-            }
-        });
+        holder.btMinus.setOnClickListener(v -> setMinusQuantity(holder, position));
+        holder.btPlus.setOnClickListener(v -> setPlusQuantity(holder, position));
+
         getData(holder, position);
     }
 
@@ -78,12 +81,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
     private void setMinusQuantity(final MyViewHolder holder, int pos) {
         quantityCountint = quantityCountint - 1;
         addToCart2(holder, false, pos);
+//        quantityCheck(holder, false, pos);
     }
 
     public void setPlusQuantity(final MyViewHolder holder, int pos) {
         quantityCountint = quantityCountint + 1;
         addToCart2(holder, true, pos);
+//        quantityCheck(holder, true, pos);
     }
+
 
     private void getData(final MyViewHolder holder, int pos) {
         final String pKey;
@@ -127,6 +133,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
 
 
         final ProductDto productsClass = cdc2.getPd();
+
         final String productDbKey = dbRef.child("cart_table").child(phNumber).push().getKey();
 
         dbRef.child("cart_table").child(phNumber).orderByChild("productKey").equalTo(productsClass.getProductID()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -135,31 +142,57 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
                 if (dataSnapshot.hasChildren()) {//cart has already been made
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                         CartDto c3 = dataSnapshot1.getValue(CartDto.class);
-                        int quantityDb = Integer.parseInt(c3.getProductQuantity());
-                        int totalprice = 0;
-                        int productPrice = Integer.parseInt(productsClass.getProductPrice());
+                        quantityDb = Integer.parseInt(c3.getProductQuantity());
+                        totalprice = 0;
+                        productPrice = Integer.parseInt(productsClass.getProductPrice());
                         if (quantityDb != 0) {
                             if (minusOrPlus) {
-                                if(quantityDb == 1)
-                                {
-                                    Toast.makeText(context, "Quantity for test purposes is set to only 1 for whiskey", Toast.LENGTH_LONG).show();
-                                    progressDialog.dismiss();
+                                DatabaseReference dbRef2;
+                                dbRef2 = FirebaseDatabase.getInstance().getReference().getRef();
+                                Query getDeliveryCharges = dbRef2.child(Constants.CONSTANTS_FOR_ANDROID_APP_FIREBASE);
+                                getDeliveryCharges.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                                        String getQuantityForType = "quantity_" + productsClass.getProductType().toLowerCase();
+                                        String quantityForCategory = String.valueOf(snapshot.child(getQuantityForType).getValue());
+                                        quantityCap = Integer.parseInt(quantityForCategory);
+                                        Log.e(TAG, "onDataChange: " + quantityDb + " " + quantityCap);
+                                        if (quantityDb == quantityCap) {
+                                            Toast.makeText(context, "Quantity is set to only " + quantityCap + " for " + productsClass.getProductType(), Toast.LENGTH_LONG).show();
+                                            progressDialog.dismiss();
+                                        } else {
+                                            quantityDb = quantityDb + 1;
+                                            totalprice = productPrice * quantityDb;
+                                            cardinfoList.remove(pos);
+                                            cardinfoList.clear();
+                                            c3.setProductTotalPrice(String.valueOf(totalprice));
+                                            c3.setProductQuantity(String.valueOf(quantityDb));
+//                                            dbRef.child("cart_table").child(phNumber).child(c3.getNodeKey()).child("productTotalPrice").setValue(String.valueOf(totalprice));
+//                                            dbRef.child("cart_table").child(phNumber).child(c3.getNodeKey()).child("productQuantity").setValue(String.valueOf(quantityDb));
+                                            dbRef.child("cart_table").child(phNumber).child(c3.getNodeKey()).setValue(c3);
 
-                                }
-                                else
-                                {
-
-                                quantityDb = quantityDb + 1;
-                                totalprice = productPrice * quantityDb;
-                                cardinfoList.remove(pos);
-                                cardinfoList.clear();
-                                c3.setProductTotalPrice(String.valueOf(totalprice));
-                                c3.setProductQuantity(String.valueOf(quantityDb));
+                                            progressDialog.dismiss();
+//                                            quantityDb = quantityDb + 1;
+//                                            totalprice = productPrice * quantityDb;
+//                                            cardinfoList.remove(pos);
+//                                            cardinfoList.clear();
+//                                            c3.setProductTotalPrice(String.valueOf(totalprice));
+//                                            c3.setProductQuantity(String.valueOf(quantityDb));
 //                                dbRef.child("cart_table").child(phNumber).child(c3.getNodeKey()).child("productTotalPrice").setValue(String.valueOf(totalprice));
 //                                dbRef.child("cart_table").child(phNumber).child(c3.getNodeKey()).child("productQuantity").setValue(String.valueOf(quantityDb));
-                                dbRef.child("cart_table").child(phNumber).child(c3.getNodeKey()).setValue(c3);
-                                progressDialog.dismiss();
-                                }
+//                                            dbRef.child("cart_table").child(phNumber).child(c3.getNodeKey()).setValue(c3);
+//                                            progressDialog.dismiss();
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                                    }
+
+                                });
+
 
                             }
                             if (minusOrPlus == false) {

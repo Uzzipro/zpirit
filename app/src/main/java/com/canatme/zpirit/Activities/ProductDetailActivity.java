@@ -35,6 +35,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     private ImageView ivBack, ivProductImg, ivFav;
     private TextView tvProducName, tvProductPrice, tvProductInfo, tvProductType, quantityCount;
     private int quantityCountint = 0;
+    private int quantityCap = 0;
     private ProductDto productDto;
     private DatabaseReference dbSetFav;
     private LinearLayoutCompat llPlusMinus;
@@ -153,8 +154,44 @@ public class ProductDetailActivity extends AppCompatActivity {
 
             }
         });
+        quantityCheck(productType);
     }
 
+
+    private void quantityCheck(String itemType) {
+        DatabaseReference dbRef;
+        dbRef = FirebaseDatabase.getInstance().getReference().getRef();
+        Query getDeliveryCharges = dbRef.child(Constants.CONSTANTS_FOR_ANDROID_APP_FIREBASE);
+        getDeliveryCharges.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+//                int deliveryChargeint = (int) snapshot.child(Constants.CONSTANTS_DELIVERY_CHARGE).getValue();
+//                int deliveryChargesum = deliveryChargeint + grandTotal;
+//                String deliveryCharge = "Rs. "+ snapshot.child(Constants.CONSTANTS_DELIVERY_CHARGE).getValue();
+//                tvDeliveryCharge.setText(deliveryCharge);
+//                tvTotal.setText(String.valueOf(deliveryChargesum));
+                String getQuantityForType = "quantity_"+itemType.toLowerCase();
+                String quantityForCategory = String.valueOf(snapshot.child(getQuantityForType).getValue());
+                quantityCap = Integer.parseInt(quantityForCategory);
+                Log.e(TAG, "onDataChange: "+quantityForCategory);
+//                int deliveryChargesint = Integer.parseInt(deliveryCharges);
+//                int deliveryChargesum = deliveryChargesint + grandTotalx;
+//                String strDeliveryChargesSum = String.valueOf(deliveryChargesum);
+//                String finalTextTotal = "Rs."+strDeliveryChargesSum;
+//                String finalTextDeliveryCharge = "Rs."+deliveryCharges;
+//                tvTotal.setText(finalTextTotal);
+//                tvDeliveryCharge.setText(finalTextDeliveryCharge);
+//                grandTotal = grandTotalx + deliveryChargesint;
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+
+        });
+    }
 
     private void setFav() {
         if (fav) {
@@ -192,13 +229,23 @@ public class ProductDetailActivity extends AppCompatActivity {
                         int productPrice = Integer.parseInt(productDto.getProductPrice());
                         if (quantityDb != 0) {
                             if (minusOrPlus) {
-                                quantityDb = quantityDb + 1;
-                                totalprice = productPrice * quantityDb;
-                                c3.setProductTotalPrice(String.valueOf(totalprice));
-                                c3.setProductQuantity(String.valueOf(quantityDb));
-                                dbRef.child("cart_table").child(phNumber).child(c3.getNodeKey()).child("productTotalPrice").setValue(String.valueOf(totalprice));
-                                dbRef.child("cart_table").child(phNumber).child(c3.getNodeKey()).child("productQuantity").setValue(String.valueOf(quantityDb));
-                                progressDialog.dismiss();
+                                if(quantityDb == quantityCap)
+                                {
+                                    Toast.makeText(getApplicationContext(), "Quantity is set to only " + quantityCap + " for " + productType, Toast.LENGTH_LONG).show();
+                                    progressDialog.dismiss();
+
+                                }
+                                else
+                                {
+                                    quantityDb = quantityDb + 1;
+                                    totalprice = productPrice * quantityDb;
+                                    c3.setProductTotalPrice(String.valueOf(totalprice));
+                                    c3.setProductQuantity(String.valueOf(quantityDb));
+                                    dbRef.child("cart_table").child(phNumber).child(c3.getNodeKey()).child("productTotalPrice").setValue(String.valueOf(totalprice));
+                                    dbRef.child("cart_table").child(phNumber).child(c3.getNodeKey()).child("productQuantity").setValue(String.valueOf(quantityDb));
+                                    progressDialog.dismiss();
+                                }
+
                             }
                             if (minusOrPlus == false) {
                                 if (quantityDb == 1) {

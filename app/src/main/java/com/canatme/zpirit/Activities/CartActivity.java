@@ -1,11 +1,19 @@
 package com.canatme.zpirit.Activities;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +21,7 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.canatme.zpirit.Adapters.CartAdapter;
 import com.canatme.zpirit.Dataclasses.CartDto;
 import com.canatme.zpirit.R;
@@ -36,6 +45,7 @@ public class CartActivity extends AppCompatActivity {
     private CartAdapter adapter;
     private Button btMakePayment;
     private LinearLayoutCompat llNoItems, llRv;
+    private AlertDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +67,7 @@ public class CartActivity extends AppCompatActivity {
             Intent i = new Intent(CartActivity.this, PaymentActivity.class);
             startActivity(i);
         });
+        loadingScreen();
         getData();
     }
 
@@ -96,6 +107,7 @@ public class CartActivity extends AppCompatActivity {
                         btMakePayment.setVisibility(View.VISIBLE);
                     }
                 }
+                loadingDialog.dismiss();
             }
 
             @Override
@@ -103,5 +115,24 @@ public class CartActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void loadingScreen() {
+        LayoutInflater factory = LayoutInflater.from(this);
+        final View dialogLoading = factory.inflate(R.layout.loading, null);
+        loadingDialog = new AlertDialog.Builder(this).create();
+        Window window = loadingDialog.getWindow();
+        WindowManager.LayoutParams wlp = window.getAttributes();
+        wlp.gravity = Gravity.CENTER;
+//        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        window.setAttributes(wlp);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        loadingDialog.setCancelable(false);
+        loadingDialog.setView(dialogLoading);
+        loadingDialog.show();
+        TextView tvLoading = dialogLoading.findViewById(R.id.tvLoading);
+        LottieAnimationView animation_view = dialogLoading.findViewById(R.id.animation_view);
+        animation_view.setAnimation(R.raw.two_bottles);
+        tvLoading.setText("Initializing payment");
     }
 }

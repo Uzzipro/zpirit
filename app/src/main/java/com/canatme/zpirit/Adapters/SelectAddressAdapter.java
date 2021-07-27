@@ -2,20 +2,9 @@ package com.canatme.zpirit.Adapters;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,17 +15,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.canatme.zpirit.Activities.PaymentActivity;
 import com.canatme.zpirit.Dataclasses.AddressDto;
 import com.canatme.zpirit.R;
-import com.canatme.zpirit.Utils.Constants;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
 public class SelectAddressAdapter extends RecyclerView.Adapter<SelectAddressAdapter.MyViewHolder> {
 
-    private static String TAG = "SelectAddressAdapter";
-    private Activity context;
-    private List<AddressDto> cardinfoList;
+    private static final String TAG = "SelectAddressAdapter";
+    private final Activity context;
+    private final List<AddressDto> cardinfoList;
     private AlertDialog addressDialog;
 
 
@@ -64,7 +50,7 @@ public class SelectAddressAdapter extends RecyclerView.Adapter<SelectAddressAdap
         holder.tvAddressTag.setText(cardData.getTag());
         holder.llAddressParent.setOnClickListener(view -> {
             if (context instanceof PaymentActivity) {
-                ((PaymentActivity)context).getDeliverAddress(cardData.getAddressID());
+                ((PaymentActivity) context).getDeliverAddress(cardData.getAddressID());
             }
         });
     }
@@ -84,8 +70,9 @@ public class SelectAddressAdapter extends RecyclerView.Adapter<SelectAddressAdap
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView tvAddressTag, tvFullAddress;
-        private LinearLayoutCompat llAddressParent;
+        private final TextView tvAddressTag;
+        private final TextView tvFullAddress;
+        private final LinearLayoutCompat llAddressParent;
 
         public MyViewHolder(View view) {
             super(view);
