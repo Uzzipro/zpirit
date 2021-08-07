@@ -173,7 +173,6 @@ public class ProductDetailActivity extends AppCompatActivity {
                 String getQuantityForType = "quantity_"+itemType.toLowerCase();
                 String quantityForCategory = String.valueOf(snapshot.child(getQuantityForType).getValue());
                 quantityCap = Integer.parseInt(quantityForCategory);
-                Log.e(TAG, "onDataChange: "+quantityForCategory);
 //                int deliveryChargesint = Integer.parseInt(deliveryCharges);
 //                int deliveryChargesum = deliveryChargesint + grandTotalx;
 //                String strDeliveryChargesSum = String.valueOf(deliveryChargesum);

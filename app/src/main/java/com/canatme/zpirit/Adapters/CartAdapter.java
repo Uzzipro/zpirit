@@ -156,7 +156,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
                                         String getQuantityForType = "quantity_" + productsClass.getProductType().toLowerCase();
                                         String quantityForCategory = String.valueOf(snapshot.child(getQuantityForType).getValue());
                                         quantityCap = Integer.parseInt(quantityForCategory);
-                                        Log.e(TAG, "onDataChange: " + quantityDb + " " + quantityCap);
                                         if (quantityDb == quantityCap) {
                                             Toast.makeText(context, "Quantity is set to only " + quantityCap + " for " + productsClass.getProductType(), Toast.LENGTH_LONG).show();
                                             progressDialog.dismiss();

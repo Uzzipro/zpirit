@@ -76,8 +76,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-
     private void saveFcmTokenToDataBase(String token)
     {
         DatabaseReference databaseReference;

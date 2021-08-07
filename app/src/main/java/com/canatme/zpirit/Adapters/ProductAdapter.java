@@ -103,7 +103,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                     holder.llPlusMinus.setVisibility(View.GONE);
                     holder.btAddToCart.setVisibility(View.VISIBLE);
                 }
-
             }
 
             @Override
@@ -141,7 +140,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         progressDialog.setTitle("Adding products to your cart.......");
         progressDialog.show();
 
-        Log.e(TAG, "addProductToCart: "+cardinfoList.size() + " "+pos);
         final ProductDto productsClass = cardinfoList.get(pos);
 //        quantityCheck(productsClass.getProductType());
         final String productDbKey = dbRef.child("cart_table").child(phNumber).push().getKey();

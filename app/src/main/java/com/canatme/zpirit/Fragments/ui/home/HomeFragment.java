@@ -170,93 +170,6 @@ public class HomeFragment extends Fragment {
 
     }
 
-//    private void getProducts(String itemType) {
-//        String[] productID = {"pd1", "pd2", "pd3", "pd4"};
-//        String[] productImg = {"https://i.ibb.co/sKrh6xz/brocode.png", "https://i.ibb.co/1s75D5L/allseasonspng.png", "https://i.ibb.co/TbZsDtM/absolut.png", "https://i.ibb.co/mC4Dxss/oldmonk.png"};
-//        String[] productType = {"Beer", "Whiskey", "Vodka", "Rum"};
-//        String[] productName = {"Bro Code", "All Seasons", "Absolut", "Old Monk"};
-//        String[] productMeasurement = {"250ml", "750ml", "700ml", "300ml"};
-//        String[] productPrice = {"120", "700", "1200", "400"};
-//        String[] productInfo = {getResources().getString(R.string.product_info_testtext), getResources().getString(R.string.product_info_testtext), getResources().getString(R.string.product_info_testtext), getResources().getString(R.string.product_info_testtext)};
-//
-//        String[] productIDSnacks = {"pd1", "pd2"};
-//        String[] productImgSnacks = {"https://i.ibb.co/zGF2Wyg/sp.png", "https://i.ibb.co/82drqDP/bluelays.jpg"};
-//        String[] productTypeSnacks = {"snacks", "snacks"};
-//        String[] productNameSnacks = {"Salted Peanuts", "Blue Lays"};
-//        String[] productMeasurementSnacks = {"450gm", "52gm"};
-//        String[] productPriceSnacks = {"20", "20"};
-//        String[] productInfoSnacks = {getResources().getString(R.string.product_info_testtext), getResources().getString(R.string.product_info_testtext)};
-//
-//        if (listProduct != null) {
-//            listProduct.clear();
-//        }
-//
-//
-//        /*If user selects Drinks and the default screen is drinks*/
-//        if (itemType.equalsIgnoreCase("drinks") || itemType.equalsIgnoreCase("Select Drink type")) {
-//            rlDrinkType.setVisibility(View.VISIBLE);
-//            for (int i = 0; i < productID.length; i++) {
-//                llRv.setVisibility(View.VISIBLE);
-//                llProductNotFound.setVisibility(View.GONE);
-//                ProductDto productDto = new ProductDto();
-//                productDto.setProductID(productID[i]);
-//                productDto.setProductType(productType[i]);
-//                productDto.setProductImg(productImg[i]);
-//                productDto.setProductName(productName[i]);
-//                productDto.setProductMeasurement(productMeasurement[i]);
-//                productDto.setProductPrice(productPrice[i]);
-//                productDto.setProductInfo(productInfo[i]);
-//                listProduct.add(productDto);
-//                adapter.notifyDataSetChanged();
-//            }
-//        }
-//        if (!itemType.equalsIgnoreCase("snacks")) {
-//            rlDrinkType.setVisibility(View.VISIBLE);
-//            llProductNotFound.setVisibility(View.GONE);
-//            llRv.setVisibility(View.VISIBLE);
-//            for (int x = 0; x < productID.length; x++) {
-//                if (productType[x].equalsIgnoreCase(itemType)) {
-//
-//                    ProductDto productDto = new ProductDto();
-//                    productDto.setProductID(productID[x]);
-//                    productDto.setProductType(productType[x]);
-//                    productDto.setProductImg(productImg[x]);
-//                    productDto.setProductName(productName[x]);
-//                    productDto.setProductMeasurement(productMeasurement[x]);
-//                    productDto.setProductPrice(productPrice[x]);
-//                    productDto.setProductInfo(productInfo[x]);
-//                    listProduct.add(productDto);
-//                    adapter.notifyDataSetChanged();
-//                }
-//            }
-//            if (listProduct.size() == 0) {
-//
-//                llProductNotFound.setVisibility(View.VISIBLE);
-//                llRv.setVisibility(View.GONE);
-//            }
-//        }
-//
-//        /*If user selects Snacks*/
-//        if (itemType.equalsIgnoreCase("snacks")) {
-//            rlDrinkType.setVisibility(View.GONE);
-//            listProduct.clear();
-//            for (int y = 0; y < productIDSnacks.length; y++) {
-//                ProductDto productDto = new ProductDto();
-//                productDto.setProductID(productIDSnacks[y]);
-//                productDto.setProductType(productTypeSnacks[y]);
-//                productDto.setProductImg(productImgSnacks[y]);
-//                productDto.setProductName(productNameSnacks[y]);
-//                productDto.setProductMeasurement(productMeasurementSnacks[y]);
-//                productDto.setProductPrice(productPriceSnacks[y]);
-//                productDto.setProductInfo(productInfoSnacks[y]);
-//                listProduct.add(productDto);
-//                adapter.notifyDataSetChanged();
-//            }
-//        }
-//
-//    }
-
-
     private void getProducts2(String itemType) {
         if (itemType.equalsIgnoreCase("drinks")) {
             rlDrinkType.setVisibility(View.VISIBLE);
@@ -288,7 +201,6 @@ public class HomeFragment extends Fragment {
                         adapter.notifyDataSetChanged();
                         for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
                             ProductDto productDto = dataSnapshot1.getValue(ProductDto.class);
-
                             listProduct.add(productDto);
                             adapter.notifyDataSetChanged();
                         }
@@ -296,12 +208,12 @@ public class HomeFragment extends Fragment {
                     }
                     else
                     {
-                        loadingDialog.dismiss();
                         llRv.setVisibility(View.GONE);
                         animationView.setVisibility(View.VISIBLE);
                         animationView.playAnimation();
                         llProductNotFound.setVisibility(View.VISIBLE);
                         tvLoading.setText("No products found with this category");
+                        loadingDialog.dismiss();
                     }
 
                 }
